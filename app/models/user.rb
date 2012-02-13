@@ -17,6 +17,33 @@ class User < ActiveRecord::Base
   validates_presence_of :username
   validates_uniqueness_of :username
   validates_confirmation_of :password , :message => "Password doesn't match password confirmation"
+  
+  
+  # student, teacher, admin belongs to school through enrollments
+  has_many :schools, :through => :enrollments
+  has_many :enrollments
+  
+  # subject has many teachers through subject_teaching_assignments
+  has_many :subjects, :through => :subject_teaching_assignments
+  has_many :subject_teaching_assignments
+  
+  #teacher has many courses through course teaching assignment
+  has_many :courses, :through => :course_teaching_assignments
+  has_many :course_teaching_assignments
+  
+  # student, registering for the subject
+  has_many :subjects, :through => :subject_registrations
+  has_many :subject_registrations
+  
+  
+  # student. registering for the course 
+  has_many :courses, :through => :course_registrations
+  has_many :course_registrations
+  
+  # student, registered to a group
+  has_many :groups , :through => :group_memberships
+  has_many :group_memberships
+  
     
   
   def User.create_and_assign_roles( new_user, role_id_array)
