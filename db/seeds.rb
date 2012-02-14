@@ -27,53 +27,53 @@ school_admin_role = Role.create :name => "SchoolAdmin"
   After the user role has been created, we will continue with the user creation.
 =end
 
-# school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
-#                             :password_confirmation => "school_admin", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-# school_admin.roles << school_admin_role
-# school_admin.save 
-# 
-# teacher_1 = User.create :email => "teacher_1@potoschool.com", :password => "teacher_1", 
-#                             :password_confirmation => "teacher_1", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#  
-# teacher_2 = User.create :email => "teacher_2@potoschool.com", :password => "teacher_2", 
-#                             :password_confirmation => "teacher_2", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-# teacher_1.roles << teacher_role
-# teacher_1.save
-# 
-# teacher_2.roles << teacher_role
-# teacher_2.save
-# 
-# student_1 = User.create :email => "student_1@potoschool.com", :password => "student_1", 
-#                             :password_confirmation => "student_1", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-# student_1.roles << student_role
-# student_1.save
-# 
-# student_2 = User.create :email => "student_2@potoschool.com", :password => "student_2", 
-#                             :password_confirmation => "student_2", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-# student_2.roles << student_role
-# student_2.save
-# 
-# student_3 = User.create :email => "student_3@potoschool.com", :password => "student_3", 
-#                             :password_confirmation => "student_3", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-# student_3.roles << student_role
-# student_3.save
+school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
+                            :password_confirmation => "school_admin", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+                            
+school_admin.roles << school_admin_role
+school_admin.save 
+
+teacher_1 = User.create :email => "teacher_1@potoschool.com", :password => "teacher_1", 
+                            :password_confirmation => "teacher_1", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+ 
+teacher_2 = User.create :email => "teacher_2@potoschool.com", :password => "teacher_2", 
+                            :password_confirmation => "teacher_2", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+                            
+teacher_1.roles << teacher_role
+teacher_1.save
+
+teacher_2.roles << teacher_role
+teacher_2.save
+
+student_1 = User.create :email => "student_1@potoschool.com", :password => "student_1", 
+                            :password_confirmation => "student_1", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+                            
+student_1.roles << student_role
+student_1.save
+
+student_2 = User.create :email => "student_2@potoschool.com", :password => "student_2", 
+                            :password_confirmation => "student_2", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+                            
+student_2.roles << student_role
+student_2.save
+
+student_3 = User.create :email => "student_3@potoschool.com", :password => "student_3", 
+                            :password_confirmation => "student_3", 
+                            :username => UUIDTools::UUID.timestamp_create.to_s
+                            
+student_3.roles << student_role
+student_3.save
 
 =begin
   Now, we assign the students, teacher, and admin to the school.
   The school will have:
   1 admin
-  1 teacher 
+  2 teachers 
   3 students 
 =end
 
@@ -86,42 +86,42 @@ school_admin_role = Role.create :name => "SchoolAdmin"
   For each enrollment, create their own role 
 =end
 
-
-school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
-                            :password_confirmation => "school_admin", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-          
-teacher_1 = User.create :email => "teacher_1@potoschool.com", :password => "teacher_1", 
-                            :password_confirmation => "teacher_1", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-
-teacher_2 = User.create :email => "teacher_2@potoschool.com", :password => "teacher_2", 
-                            :password_confirmation => "teacher_2", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-                            
-                
-student_1 = User.create :email => "student_1@potoschool.com", :password => "student_1", 
-                            :password_confirmation => "student_1", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-                            
-                    
-student_2 = User.create :email => "student_2@potoschool.com", :password => "student_2", 
-                            :password_confirmation => "student_2", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-     
-     
-student_3 = User.create :email => "student_3@potoschool.com", :password => "student_3", 
-                            :password_confirmation => "student_3", 
-                            :username => UUIDTools::UUID.timestamp_create.to_s
-
-school.users << student_1
-school.users << student_2
-school.users << student_3
-
-school.users << teacher_1
-school.users << teacher_2
-school.users << school_admin
-school.save
+# 
+# school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
+#                             :password_confirmation => "school_admin", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+#           
+# teacher_1 = User.create :email => "teacher_1@potoschool.com", :password => "teacher_1", 
+#                             :password_confirmation => "teacher_1", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+# 
+# teacher_2 = User.create :email => "teacher_2@potoschool.com", :password => "teacher_2", 
+#                             :password_confirmation => "teacher_2", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+#                             
+#                 
+# student_1 = User.create :email => "student_1@potoschool.com", :password => "student_1", 
+#                             :password_confirmation => "student_1", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+#                             
+#                     
+# student_2 = User.create :email => "student_2@potoschool.com", :password => "student_2", 
+#                             :password_confirmation => "student_2", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+#      
+#      
+# student_3 = User.create :email => "student_3@potoschool.com", :password => "student_3", 
+#                             :password_confirmation => "student_3", 
+#                             :username => UUIDTools::UUID.timestamp_create.to_s
+# 
+# school.users << student_1
+# school.users << student_2
+# school.users << student_3
+# 
+# school.users << teacher_1
+# school.users << teacher_2
+# school.users << school_admin
+# school.save
 
 =begin
 Assign the role to each enrollment 
@@ -131,41 +131,41 @@ Assign the role to each enrollment
     Possible, not common. In the first iteration, assume that it is impossible.
     If he really wnats it, make a new user 
 =end
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => school_admin.id})
-enrollment.roles << school_admin_role
-enrollment.save
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_1.id} )
-enrollment.roles << student_role
-enrollment.save
-
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_2.id})
-enrollment.roles << student_role
-enrollment.save
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_3.id} )
-enrollment.roles << student_role
-enrollment.save
-
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_1.id})
-enrollment.roles << teacher_role
-enrollment.save
-
-
-
-
-enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_2.id})
-enrollment.roles << teacher_role
-enrollment.save
-
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => school_admin.id})
+# enrollment.roles << school_admin_role
+# enrollment.save
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_1.id} )
+# enrollment.roles << student_role
+# enrollment.save
+# 
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_2.id})
+# enrollment.roles << student_role
+# enrollment.save
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_3.id} )
+# enrollment.roles << student_role
+# enrollment.save
+# 
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_1.id})
+# enrollment.roles << teacher_role
+# enrollment.save
+# 
+# 
+# 
+# 
+# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_2.id})
+# enrollment.roles << teacher_role
+# enrollment.save
+# 
 
 
 

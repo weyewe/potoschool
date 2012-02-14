@@ -1,0 +1,42 @@
+<h2><%= title %></h2>
+
+
+<%= form_for new_enrollment  , :html => {:class => "form-horizontal"} do |f| %>
+
+
+  <fieldset>
+    <%= fields_for User.new do |user| %>
+      <div class="control-group">
+        <%= user.label :email, "Email" %>
+        <div class="controls">
+          <%= user.email_field :email, :class=>"input-xlarge"  %>
+          <p class="help-block">Enter the <%= agent %> email</p>
+        </div>
+      </div>
+
+ 
+    <% end %>
+    
+  </fieldset>
+  
+  
+  
+  <div class="control-group">
+    <%= f.label :enrollment_code, "Nomor Induk" %>
+    <div class="controls">
+      <%= f.text_field :enrollment_code, :class=>"input-xlarge" %>
+      <p class="help-block">Enter the Nomor Induk</p>
+    </div>
+  </div>
+
+  
+  
+  <%= hidden_field_tag 'role_id', role_id   %>
+  
+  
+  <div class="form-actions">
+    <button class="btn btn-primary" type="submit">Create Student</button>
+  </div>
+  
+  
+<% end %>

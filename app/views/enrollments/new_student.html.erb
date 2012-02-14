@@ -1,0 +1,32 @@
+
+<div class="span9 content">
+  <%= create_guide("New Student", 
+        "Create new student by filling out the details.").html_safe %>
+  
+
+  
+  <div class="row-fluid">
+    <div class="span8">
+      <%= render :partial => "new_enrollment_form", :locals => {
+        :title => "New Student", 
+        :role_id => Role.find_by_name(ROLE_NAME[:student]).id ,
+        :new_enrollment => @new_enrollment,
+        :agent => "student"
+      }%>
+      
+      
+      
+
+    </div><!--/span-->
+
+    <div class="span4">
+      <h2>Statistics</h2>
+      <p>1 School Admin</p>
+      <p>5 Teacher</p>
+      <p>100 Students</p>
+      <p><a class="btn" href="#">View details »</a></p>
+    </div><!--/span-->
+    
+  </div><!--/row-->
+
+</div><!--/span-->

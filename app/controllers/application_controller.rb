@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
 
 
 
-
+  def ensure_has_school_admin_role
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url 
+    end
+  end
   
 end

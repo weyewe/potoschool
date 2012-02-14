@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
   attr_accessor :login
   
-  # Models  => Role locking is moved to the enrollment
-  # has_many :assignments
-  #   has_many :roles, :through => :assignments
+  # Models  => Role locking is based on user
+  has_many :assignments
+  has_many :roles, :through => :assignments
   
   
   # validation
@@ -48,6 +48,22 @@ class User < ActiveRecord::Base
   has_many :projects, :through => :project_submissions
   has_many :project_submissions
   
+  
+  
+  def User.retrieve_or_create( user_params )
+    user = User.find_by_email user_params[:email]
+    
+    if user.nil?
+      new_password = UUIDTools::UUID.timestamp_create.to_s[0..7]
+      User.create :username => (User.count + 1).to_s,
+                  :password => new_password ,
+                  :password_confirmation => new_password , 
+                  :email => user_params[:email]
+    else
+      return user 
+    end
+  end
+  
     
   
   def User.create_and_assign_roles( new_user, role_id_array)
@@ -80,17 +96,33 @@ class User < ActiveRecord::Base
     
   end
   
-
-  def User.all_user_except_role( role  )
-    
-  end
-   
-   
   
   
   def has_role?(role_sym)
     roles.any? { |r| r.name.underscore.to_sym == role_sym }
   end
+  
+  def add_role_if_not_exist(role_id)
+    result = Assignment.find(:all, :conditions => {
+      :user_id => self.id,
+      :role_id => role_id
+    })
+    
+    if result.size == 0 
+      Assignment.create :user_id => self.id, :role_id => role_id
+    end
+    
+    
+  end
+  
+  
+
+  
+   
+   
+  
+  
+ 
   
   
     

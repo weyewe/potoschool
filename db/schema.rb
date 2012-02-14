@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
-    t.integer  "enrollment_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
   create_table "enrollments", :force => true do |t|
     t.integer  "school_id"
     t.integer  "user_id"
+    t.string   "enrollment_code"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -135,6 +136,9 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
     t.string   "code"
     t.string   "name"
     t.text     "description"
+    t.boolean  "is_closed",     :default => false
+    t.date     "starting_date"
+    t.date     "ending_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
