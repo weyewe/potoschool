@@ -44,6 +44,10 @@ class User < ActiveRecord::Base
   has_many :groups , :through => :group_memberships
   has_many :group_memberships
   
+  # student, submit project
+  has_many :projects, :through => :project_submissions
+  has_many :project_submissions
+  
     
   
   def User.create_and_assign_roles( new_user, role_id_array)

@@ -12,4 +12,7 @@ class Course < ActiveRecord::Base
   
   #course has many groups
   has_many :groups
+  
+  has_many :projects 
+  
 end

@@ -173,7 +173,7 @@ group_membership_1 = GroupMembership.create :group_id => group.id,
       
       
       
-      #model this shit tomorrow                          
+    # model this shit tomorrow                          
 =begin
  A course has many projects ( can be the type group, or personal )
  The teacher has to post them one by one, for each course
