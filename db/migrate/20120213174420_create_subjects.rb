@@ -3,7 +3,7 @@ class CreateSubjects < ActiveRecord::Migration
     create_table :subjects do |t|
       t.integer :school_id
       t.string :code
-      t.string :title
+      t.string :name
       t.text :description
 
       t.timestamps

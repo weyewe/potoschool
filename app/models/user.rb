@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
   attr_accessor :login
   
-  # Models
-  has_many :assignments
-  has_many :roles, :through => :assignments
+  # Models  => Role locking is moved to the enrollment
+  # has_many :assignments
+  #   has_many :roles, :through => :assignments
   
   
   # validation
