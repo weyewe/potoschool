@@ -19,6 +19,8 @@ gem 'acts_as_commentable_with_threading',
 
 gem "squeel" 
 
+# http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
+#  breadcrumb
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

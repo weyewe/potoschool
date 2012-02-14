@@ -114,14 +114,14 @@ student_3.save
 #                             :password_confirmation => "student_3", 
 #                             :username => UUIDTools::UUID.timestamp_create.to_s
 # 
-# school.users << student_1
-# school.users << student_2
-# school.users << student_3
-# 
-# school.users << teacher_1
-# school.users << teacher_2
-# school.users << school_admin
-# school.save
+school.users << student_1
+school.users << student_2
+school.users << student_3
+
+school.users << teacher_1
+school.users << teacher_2
+school.users << school_admin
+school.save
 
 =begin
 Assign the role to each enrollment 

@@ -111,12 +111,16 @@ class User < ActiveRecord::Base
     if result.size == 0 
       Assignment.create :user_id => self.id, :role_id => role_id
     end
-    
-    
+  end
+  
+  # assumption -> the current_user's enrollment is only 1 
+  # and the current user is the SchoolAdmin
+  def get_managed_school
+    self.schools.first 
   end
   
   
-
+  
   
    
    

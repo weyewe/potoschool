@@ -1,0 +1,53 @@
+
+<div class="span9 content">
+  <%#= render :partial => "layouts/guide/index_client_loans", :locals => {:client => @client} %>
+
+  <%#= render :partial => "payments/breadcrumb", :locals => {:client => @client, :loan => nil} %>
+  
+  
+  
+  <%= create_guide("New Course", 
+        "First, select the subject which course you are about to add.").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+
+  
+  <div class="row-fluid">
+    <!-- <div class="span12"> -->
+      
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Subject Name</th>
+            <th>Subject Code</th>
+            <th>Total Course</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Subject.all.each do |subject| %>
+            <tr>
+              <td><%= link_to "#{subject.name}", new_subject_course_url(subject) %></td>
+              <td><%= subject.code %></td>
+              <td><%= subject.courses.count %></td>
+            </tr>
+          <% end %>
+
+
+         
+        </tbody>
+      </table>
+
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->
+
+<%# content_for :additional_js  do %>
+ 
+  <%#= javascript_include_tag "DT.js" %> 
+  <%#= javascript_include_tag "DT_bootstrap.js" %> 
+<%# end %>

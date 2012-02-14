@@ -7,12 +7,68 @@
   
   <div class="row-fluid">
     <div class="span8">
-      <%= render :partial => "new_enrollment_form", :locals => {
-        :title => "New Student", 
-        :role_id => Role.find_by_name(ROLE_NAME[:student]).id ,
-        :new_enrollment => @new_enrollment,
-        :agent => "student"
-      }%>
+
+
+      <%= form_for @new_subject  , :html => {:class => "form-horizontal"} do |f| %>
+
+
+
+        <div class="control-group">
+          <%= f.label :name, "Nama Pelajaran" %>
+          <div class="controls">
+            <%= f.text_field :name, :class=>"input-xlarge" %>
+            <p class="help-block">Masukkan nama pelajaran.</p>
+          </div>
+        </div>
+        
+        
+        
+        <div class="control-group">
+          <%= f.label :code, "Kode Pelajaran" %>
+          <div class="controls">
+            <%= f.text_field :code, :class=>"input-xlarge" %>
+            <p class="help-block">Masukkan kode pelajaran (jika ada).</p>
+          </div>
+        </div>
+        
+        
+        <div class="control-group">
+          <%= f.label :starting_date, "Tanggal Mulai" %>
+          <div class="controls">
+            <%= f.text_field :starting_date, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker'  %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :ending_date, "Tanggal Selesai" %>
+          <div class="controls">
+            <%= f.text_field :ending_date, :class=>"input-xlarge" ,'data-datepicker'=>'datepicker' %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        
+        
+        <div class="control-group">
+          <%= f.label :description, "Deskripsi Pelajaran" %>
+          <div class="controls">
+            <%= f.text_area :description, :class=>"input-xlarge", :rows => 5 %>
+            <p class="help-block">Masukkan deskripsi pelajaran.</p>
+          </div>
+        </div>
+
+
+
+        <%= hidden_field_tag 'school_id', current_user.get_managed_school.id   %>
+
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Create Subject</button>
+        </div>
+
+
+      <% end %>
       
       
       
@@ -20,11 +76,20 @@
     </div><!--/span-->
 
     <div class="span4">
-      <h2>Statistics</h2>
-      <p>1 School Admin</p>
-      <p>5 Teacher</p>
-      <p>100 Students</p>
-      <p><a class="btn" href="#">View details »</a></p>
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr><th>Total Subjects: <%= Subject.all.count %></th></tr>
+        </thead>
+        <tbody>
+          <% Subject.all.each do |subject| %>
+            <tr>
+              <td><%= subject.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
     </div><!--/span-->
     
   </div><!--/row-->

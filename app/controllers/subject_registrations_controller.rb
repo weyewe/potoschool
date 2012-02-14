@@ -1,0 +1,2 @@
+class SubjectRegistrationsController < ApplicationController
+end

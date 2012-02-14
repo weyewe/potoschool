@@ -1,0 +1,2 @@
+module SubjectTeachingAssignmentsHelper
+end

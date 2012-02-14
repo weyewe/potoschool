@@ -11,8 +11,10 @@ Debita46::Application.routes.draw do
   resources :enrollments
   resources :subjects do
     resources :courses 
+    resources :subject_teaching_assignments
   end
   
+  match 'new_subject_teaching_assignment' => "subjects#new_subject_teaching_assignment", :as => :new_subject_teaching_assignment
   match 'new_teacher'           => 'enrollments#new_teacher'  , :as => :new_teacher
   match 'new_student'           => 'enrollments#new_student'  , :as => :new_student
 
