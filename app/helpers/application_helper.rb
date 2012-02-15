@@ -1,6 +1,15 @@
 module ApplicationHelper
   ACTIVE = 'active'
   
+  
+  def get_checkbox_value(checkbox_value )
+    if checkbox_value == true
+      return TRUE_CHECK
+    else
+      return FALSE_CHECK
+    end
+  end
+  
   def create_guide(title, description)
     result = ""
     result << "<div class='explanation-unit'>"
@@ -219,6 +228,10 @@ module ApplicationHelper
             {
               :controller => "subjects", 
               :action => "new_subject_teaching_assignment"
+             },
+             {
+               :controller => "subject_teaching_assignments",
+               :action => "new"
              }
             ]
           }

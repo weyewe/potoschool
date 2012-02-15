@@ -11,5 +11,9 @@ class Subject < ActiveRecord::Base
   has_many :users, :through => :subject_registrations
   has_many :users
   
+  def teachers
+  end
   
+  def students
+  end
 end

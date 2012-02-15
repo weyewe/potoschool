@@ -113,6 +113,11 @@ class User < ActiveRecord::Base
     end
   end
   
+  
+  
+=begin
+  Code for school_admin
+=end
   # assumption -> the current_user's enrollment is only 1 
   # and the current user is the SchoolAdmin
   def get_managed_school
@@ -120,7 +125,39 @@ class User < ActiveRecord::Base
   end
   
   
+=begin
+  Code for teacher
+=end
+
+  def enrollment_code_for(subject)
+    Enrollment.find(:first, :conditions => {
+      :user_id => self.id, :school_id => subject.school.id
+    }).enrollment_code
+  end
   
+  def total_courses_count
+    self.courses.count
+  end
+  
+  def total_subjects_count
+    self.subjects.count
+  end
+  
+  def total_courses_count_for(subject)
+    SubjectTeachingAssignment.find(:all, :conditions => {
+      :user_id => self.id, :subject_id => subject.id
+    }).count
+  end
+  
+  def is_teaching_subject?(subject)
+    not SubjectTeachingAssignment.find(:first, :conditions => {
+      :user_id => self.id, :subject_id => subject.id
+    }).nil? 
+  end
+
+=begin
+  Code for student
+=end
   
    
    

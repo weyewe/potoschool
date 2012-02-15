@@ -13,6 +13,7 @@ class SubjectsController < ApplicationController
     @school = current_user.get_managed_school
     @subjects = @school.subjects
     @teachers = @school.teachers
+    add_breadcrumb "Pick the subject", 'new_subject_teaching_assignment'
   end
   
   def create

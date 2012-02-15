@@ -1,36 +1,55 @@
 
 <div class="span9 content">
-  <%= create_guide("Subject Teaching ", 
-        "Assign the teacher to the related subjects.").html_safe %>
+  <%#= render :partial => "layouts/guide/index_client_loans", :locals => {:client => @client} %>
+
+  <%#= render :partial => "payments/breadcrumb", :locals => {:client => @client, :loan => nil} %>
   
+  
+  
+  <%= create_guide("Assign Subject Teacher", 
+        "First, select the subject which teacher you are about to assign.").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
 
   
   <div class="row-fluid">
-    <div class="span8">
-
-
-      <p>Ahahaha</p>
+    <!-- <div class="span12"> -->
       
-
-    </div><!--/span-->
-
-    <div class="span4">
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
         <thead>
-          <tr><th>Total Subjects: <%= @subjects.count %></th></tr>
+          <tr>
+            <th>Subject Name</th>
+            <th>Subject Code</th>
+            <th>Total Course</th>
+            <th>Teachers Assigned</th>
+          </tr>
         </thead>
         <tbody>
           <% @subjects.each do |subject| %>
             <tr>
-              <td><%= subject.name %></td>
+              <td><%= link_to "#{subject.name}", new_subject_subject_teaching_assignment_url(subject) %></td>
+              <td><%= subject.code %></td>
+              <td><%= subject.courses.count %></td>
+              <td>5</td>
             </tr>
           <% end %>
+
+
+         
         </tbody>
       </table>
+
       
-    </div><!--/span-->
-    
+      
+      
+    <!-- </div> -->   <!--/span12-->
   </div><!--/row-->
 
 </div><!--/span-->
+
+<%# content_for :additional_js  do %>
+ 
+  <%#= javascript_include_tag "DT.js" %> 
+  <%#= javascript_include_tag "DT_bootstrap.js" %> 
+<%# end %>

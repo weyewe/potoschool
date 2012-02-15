@@ -1,0 +1,96 @@
+
+<div class="span9 content">
+  <%#= render :partial => "layouts/guide/index_client_loans", :locals => {:client => @client} %>
+
+  <%#= render :partial => "payments/breadcrumb", :locals => {:client => @client, :loan => nil} %>
+  
+  
+  
+  <%= create_guide("Assign Subject Teacher", 
+        "Select the teachers to teach subject: <b>#{@subject.name}</b>.").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+  <h3>Total Teachers: 3</h3>
+  <hr />
+  
+  
+  <div class="row-fluid">
+    <!-- <div class="span12"> -->
+      
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Subject Name</th>
+            <th>Total Subjects</th>
+            <th>Total Courses</th>
+            <th>Total Courses for this subject</th>
+            <th>Assign Teacher</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @teachers.each do |teacher| %>
+            <tr>
+              <td><%#= "#{teacher.enrollment_code_for(@subject)}" %>
+                xxx </td>
+              <td><%= teacher.total_subjects_count %></td>
+              <td><%= teacher.total_courses_count %></td>
+              <td><%= teacher.total_courses_count_for(@subject) %></td>
+              
+              <td class="well">
+                <label class="checkbox">
+                  <% checkbox_value = teacher.is_teaching_subject?(@subject) %>
+                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+                      checkbox_value, :class => 'is_checked_class', 
+                      :id => "teacherId_#{teacher.id}" %> Teaching
+                </label>
+
+              </td>
+            </tr>
+          <% end %>
+
+
+         
+        </tbody>
+      </table>
+      
+      <div class="alert alert-success allert-message">
+        <a class="close" href="#">&times;</a>
+        <strong>Well done!</strong> You successfully read this important alert message.
+      </div>
+
+      
+      <div class="form-actions">
+        <%= hidden_field_tag 'destination_url', 
+                subject_subject_teaching_assignments_url(@subject) ,
+                 :id => "destination_url" %>
+
+        <button class="btn btn-large btn-primary"
+              type="submit" id="save_button">Save changes</button>
+      </div>
+
+
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->
+
+<%# content_for :additional_js  do %>
+ 
+  <%#= javascript_include_tag "DT.js" %> 
+  <%#= javascript_include_tag "DT_bootstrap.js" %> 
+<%# end %>
+
+
+
+
+
+
+
+
+
+

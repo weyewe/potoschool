@@ -11,4 +11,8 @@ ROLE_NAME = {
 }
 
 
+TRUE_CHECK = 1
+FALSE_CHECK = 0
+
+
 
