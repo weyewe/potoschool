@@ -17,4 +17,22 @@ class Subject < ActiveRecord::Base
   def students_count
     self.subject_registrations.count
   end
+  
+=begin
+Teacher code
+=end
+
+  def add_teacher(teacher)
+    SubjectTeachingAssignment.create :user_id => teacher.id, :subject_id => self.id
+  end
+  
+=begin
+Student code
+=end
+
+  def add_student( student )
+    SubjectRegistration.create :user_id => student.id, :subject_id => self.id
+  end
+  
+  
 end

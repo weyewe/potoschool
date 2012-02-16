@@ -136,11 +136,29 @@ class User < ActiveRecord::Base
   end
   
   def total_courses_count
-    self.courses.count
+    CourseTeachingAssignment.find(:all, :conditions => {
+      :user_id => self.id
+    }).count
+  end
+  
+  def all_courses_taught
+
+    Subject.joins(:course_teaching_assignments => :user ).
+          where(:course_teaching_assignments => {:user => {:id => self.id } } )
+    
   end
   
   def total_subjects_count
-    self.subjects.count
+    SubjectTeachingAssignment.find(:all, :conditions => {
+      :user_id => self.id
+    }).count
+  end
+  
+  def all_subjects_taught 
+
+    Subject.joins(:subject_teaching_assignments => :user ).
+          where(:subject_teaching_assignments => {:user => {:id => self.id } } )
+    
   end
   
   def total_courses_count_for(subject)
@@ -160,6 +178,9 @@ class User < ActiveRecord::Base
       :user_id => self.id, :course_id => course.id
     }).nil? 
   end
+  
+  
+  
   
 
 =begin

@@ -287,9 +287,29 @@ module ApplicationHelper
         }
       ]
     }
-  
-
-  
-  
-  
+    
+    
+  TEACHER_PROCESS_LIST = {
+    :header_title => "TEACHER",
+    :processes => [
+     {
+       :title => "Create Project",
+       :destination_link => "select_subject_for_project_url",
+       :conditions => [
+         {
+           :controller => "projects", 
+           :action => "select_subject_for_project"
+         },
+         {
+            :controller => "projects", 
+            :action => "select_course_for_project"
+         }, 
+         {
+             :controller => "projects", 
+             :action => "new"
+         }
+       ]
+     }
+    ]
+  }
 end

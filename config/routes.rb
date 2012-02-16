@@ -20,7 +20,9 @@ Debita46::Application.routes.draw do
     resources :course_teaching_assignments
     #for student 
     resources :course_registrations
+    resources :projects
   end
+  
   
   # assign teacher to the subject and course 
   # use the course_teaching assignment 
@@ -43,6 +45,12 @@ Debita46::Application.routes.draw do
   
   match 'new_teacher'           => 'enrollments#new_teacher'  , :as => :new_teacher
   match 'new_student'           => 'enrollments#new_student'  , :as => :new_student
+  
+  
+  # FOR THE TEACHER
+  #   create project for course (can be group project or personal project) 
+  match 'select_subject_for_project' => "projects#select_subject_for_project", :as => :select_subject_for_project
+  match 'select_course_for_project/subject/:subject_id' => "projects#select_course_for_project", :as => :select_course_for_project
 
   
   

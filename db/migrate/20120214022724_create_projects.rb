@@ -7,6 +7,8 @@ class CreateProjects < ActiveRecord::Migration
       t.boolean :is_group_project , :default => false 
       t.date :deadline_date
       t.time :deadline_time 
+      
+      t.integer :course_id
 
       t.timestamps
     end

@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
     t.boolean  "is_group_project", :default => false
     t.date     "deadline_date"
     t.time     "deadline_time"
+    t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

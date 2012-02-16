@@ -16,7 +16,30 @@ class Course < ActiveRecord::Base
   has_many :projects 
   
   
+  #  wtf is this?
   def teachers_count_for(subject)
     self.course_teaching_assignments.where(:course_id => self.id ).count
   end
+  
+  def students
+    self.course_registrations
+  end
+  
+  
+=begin
+Teacher code
+=end
+
+  def add_teacher(teacher)
+    CourseTeachingAssignment.create :user_id => teacher.id, :course_id => self.id
+  end
+  
+=begin
+Student code
+=end
+
+  def add_student( student )
+    CourseRegistration.create :user_id => student.id, :course_id => self.id
+  end
+  
 end

@@ -69,6 +69,7 @@ student_3 = User.create :email => "student_3@potoschool.com", :password => "stud
 student_3.roles << student_role
 student_3.save
 
+puts "Done with user creation"
 =begin
   Now, we assign the students, teacher, and admin to the school.
   The school will have:
@@ -194,13 +195,22 @@ subject_3 = Subject.create :code => "POTO7777", :name => "Advanced Photography",
   Subject has_many :subject_teaching_assignments
 =end
 
-subject_1.users << teacher_1 
-subject_1.users << teacher_2
-subject_1.save
+# subject_1.users << teacher_1 
+# subject_1.users << teacher_2
+# subject_1.save
 
-subject_3.users << teacher_2
-subject_3.save
+puts teacher_1 
+puts "before add teacher \n"*10
+puts teacher_1.email 
+subject_1.add_teacher(  teacher_1 )
+puts "after add teacher "
+subject_1.add_teacher( teacher_2)
 
+# subject_3.users << teacher_2
+# subject_3.save
+subject_3.add_teacher( teacher_2 )
+
+puts "after add teacher"
 
 =begin
   Each Subject is offering several Courses
@@ -226,11 +236,16 @@ course_3_subject_3 = Course.create :name => "3-3", :subject_id => subject_3.id
   teacher has_many :teaching_assignments
 =end
 
-teacher_1.courses << course_1_subject_1
-teacher_1.courses << course_3_subject_1
-teacher_1.courses << course_3_subject_3
-teacher_1.save
+# teacher_1.courses << course_1_subject_1
+# teacher_1.courses << course_3_subject_1
+# teacher_1.courses << course_3_subject_3
+# teacher_1.save
+puts "before adding teacher to the course"
+course_1_subject_1.add_teacher( teacher_1 )
+course_3_subject_1.add_teacher( teacher_1 )
+course_3_subject_3.add_teacher( teacher_1 )
 
+puts "after add_teacher to the course \n"*10
 
 =begin
   a subject has_many students,   through :subject_registrations
@@ -238,21 +253,29 @@ teacher_1.save
 =end
 
 
-subject_1.users <<  student_1
-subject_1.users << student_3 
-subject_1.save
+# subject_1.users <<  student_1
+# subject_1.users << student_3 
+# subject_1.save
+subject_1.add_student( student_1 )
+subject_1.add_student( student_3 )
 
-subject_2.users << student_2
-subject_2.save
+
+# subject_2.users << student_2
+# subject_2.save
+
+subject_2.add_student( student_2)
 
 =begin
   a course has_many students, through :course_registrations
   a course has_many :course_registrations
 =end
 
-course_1_subject_1.users << student_1
-course_1_subject_1.users << student_2
-course_1_subject_1.save
+# course_1_subject_1.users << student_1
+# course_1_subject_1.users << student_2
+# course_1_subject_1.save
+
+course_1_subject_1.add_student( student_1 )
+course_1_subject_1.add_student( student_2 )
 
 
 

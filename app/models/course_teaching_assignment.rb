@@ -1,4 +1,5 @@
 class CourseTeachingAssignment < ActiveRecord::Base
-  belongs_to :user_id
-  belongs_to :course_id
+  belongs_to :user
+  belongs_to :course
+  
 end
