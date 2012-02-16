@@ -9,11 +9,12 @@ class Subject < ActiveRecord::Base
   
   # student, registering for the subject
   has_many :users, :through => :subject_registrations
-  has_many :users
+  has_many :subject_registrations
   
   def teachers
   end
   
-  def students
+  def students_count
+    self.subject_registrations.count
   end
 end

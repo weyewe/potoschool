@@ -15,4 +15,8 @@ class Course < ActiveRecord::Base
   
   has_many :projects 
   
+  
+  def teachers_count_for(subject)
+    self.course_teaching_assignments.where(:course_id => self.id ).count
+  end
 end

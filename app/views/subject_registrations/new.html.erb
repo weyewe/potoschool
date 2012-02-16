@@ -1,13 +1,8 @@
 
 <div class="span9 content">
-  <%#= render :partial => "layouts/guide/index_client_loans", :locals => {:client => @client} %>
-
-  <%#= render :partial => "payments/breadcrumb", :locals => {:client => @client, :loan => nil} %>
   
-  
-  
-  <%= create_guide("Assign Subject Teacher", 
-        "Select the teachers to teach subject: <b>#{@subject.name}</b>.").html_safe %>
+  <%= create_guide("Subject registration", 
+        "Register student to the subject. ").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
@@ -22,28 +17,23 @@
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th>Teacher</th>
-            <th>Total Subjects taught</th>
-            <th>Total Courses taught</th>
-            <th>Total Courses for this subject</th>
-            <th>Assign Teacher</th>
+            <th>Student ID</th>
+            <th>Subjects Taken</th>
+            <th>Assign Subject</th>
           </tr>
         </thead>
         <tbody>
-          <% @teachers.each do |teacher| %>
+          <% @students.each do |student| %>
             <tr>
-              <td><%#= "#{teacher.enrollment_code_for(@subject)}" %>
-                xxx </td>
-              <td><%= teacher.total_subjects_count %></td>
-              <td><%= teacher.total_courses_count %></td>
-              <td><%= teacher.total_courses_count_for(@subject) %></td>
+              <td><%= "xxx"  %></td>
+              <td><%=  student.subject_registrations.count %></td>
               
               <td class="well">
                 <label class="checkbox">
-                  <% checkbox_value = teacher.is_teaching_subject?(@subject) %>
+                  <% checkbox_value = student.is_subject_registered?(@subject) %>
                   <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
                       checkbox_value, :class => 'is_checked_class', 
-                      :id => "teacherId_#{teacher.id}" %> Teaching
+                      :id => "studentId_#{student.id}" %> Assign
                 </label>
 
               </td>
@@ -56,14 +46,14 @@
       </table>
       
       <div class="alert alert-success allert-message">
-        <a class="close" href="#">&times;</a>
-        <strong>Well done!</strong> You successfully read this important alert message.
-      </div>
+                <a class="close" href="#">&times;</a>
+                <strong>Well done!</strong> You successfully read this important alert message.
+              </div>
 
       
       <div class="form-actions">
         <%= hidden_field_tag 'destination_url', 
-                subject_subject_teaching_assignments_url(@subject) ,
+                subject_subject_registrations_url(@subject) ,
                  :id => "destination_url" %>
 
         <button class="btn btn-large btn-primary"

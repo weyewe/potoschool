@@ -26,6 +26,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def set_breadcrumb_for object, destination_path, opening_words
+    puts "THIS IS WILLLLLY\n"*10
+    puts destination_path
+    add_breadcrumb "#{opening_words}", destination_path
+  end
+  
   protected
   def add_breadcrumb name, url = ''
     @breadcrumbs ||= []

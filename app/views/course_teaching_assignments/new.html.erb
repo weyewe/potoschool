@@ -6,8 +6,8 @@
   
   
   
-  <%= create_guide("Assign Subject Teacher", 
-        "Select the teachers to teach subject: <b>#{@subject.name}</b>.").html_safe %>
+  <%= create_guide("Assign Course Teacher", 
+        "Select the teachers to teach subject: <b>#{@subject.name}</b>, course <b>#{@course.name}</b>").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
@@ -25,7 +25,6 @@
             <th>Teacher</th>
             <th>Total Subjects taught</th>
             <th>Total Courses taught</th>
-            <th>Total Courses for this subject</th>
             <th>Assign Teacher</th>
           </tr>
         </thead>
@@ -36,11 +35,10 @@
                 xxx </td>
               <td><%= teacher.total_subjects_count %></td>
               <td><%= teacher.total_courses_count %></td>
-              <td><%= teacher.total_courses_count_for(@subject) %></td>
               
               <td class="well">
                 <label class="checkbox">
-                  <% checkbox_value = teacher.is_teaching_subject?(@subject) %>
+                  <% checkbox_value = teacher.is_teaching_course?(@course) %>
                   <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
                       checkbox_value, :class => 'is_checked_class', 
                       :id => "teacherId_#{teacher.id}" %> Teaching
@@ -63,7 +61,7 @@
       
       <div class="form-actions">
         <%= hidden_field_tag 'destination_url', 
-                subject_subject_teaching_assignments_url(@subject) ,
+                course_course_teaching_assignments_url(@course) ,
                  :id => "destination_url" %>
 
         <button class="btn btn-large btn-primary"

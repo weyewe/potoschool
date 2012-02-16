@@ -7,14 +7,40 @@ Debita46::Application.routes.draw do
   root :to => 'home#dashboard'
   
   
-  # to create teacher, create students 
+  # to create teacher, create students , to create admin
   resources :enrollments
   resources :subjects do
     resources :courses 
     resources :subject_teaching_assignments
+    # for student 
+    resources :subject_registrations 
   end
   
+  resources :courses do 
+    resources :course_teaching_assignments
+    #for student 
+    resources :course_registrations
+  end
+  
+  # assign teacher to the subject and course 
+  # use the course_teaching assignment 
+  # use the subject_teaching_assignments
+  # and these named routes 
   match 'new_subject_teaching_assignment' => "subjects#new_subject_teaching_assignment", :as => :new_subject_teaching_assignment
+  match 'pick_subject_for_course_teaching_assignment' => "courses#pick_subject_for_course_teaching_assignment", :as => :pick_subject_for_course_teaching_assignment
+  match 'new_course_teaching_assignment/:subject_id' => "courses#new_course_teaching_assignment", :as => :new_course_teaching_assignment
+  
+  
+  # assign student to the subject and course 
+  # use the subject_registrations  
+  # use the course_registrations 
+  # and these named routes
+  
+  match 'pick_subject_for_student_registrations' => "subject_registrations#pick_subject_for_student_registrations", :as => :pick_subject_for_student_registrations
+  
+  match 'select_subject_for_course_registration' => "course_registrations#select_subject_for_course_registration", :as => :select_subject_for_course_registration
+  match 'select_course_for_course_registration/subject/:subject_id' => "course_registrations#select_course_for_course_registration", :as => :select_course_for_course_registration
+  
   match 'new_teacher'           => 'enrollments#new_teacher'  , :as => :new_teacher
   match 'new_student'           => 'enrollments#new_student'  , :as => :new_student
 

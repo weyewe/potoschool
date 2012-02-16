@@ -4,16 +4,13 @@ class SubjectTeachingAssignmentsController < ApplicationController
     @teachers = @subject.school.teachers
     
     add_breadcrumb "Pick the subject", 'new_subject_teaching_assignment_path'
-    set_breadcrumb_for @subject
-    
+    set_breadcrumb_for @subject, 'new_subject_subject_teaching_assignment_path' + "(#{@subject.id})", 
+              'Create new course for ' + "#{@subject.name}"
+             
   end
   
   def create
   end
   
-  private
-  def set_breadcrumb_for subject
-    add_breadcrumb "Create new course for #{subject.name}", "new_subject_subject_teaching_assignment_path(#{subject.id})"
-  end
-  
+
 end

@@ -154,12 +154,30 @@ class User < ActiveRecord::Base
       :user_id => self.id, :subject_id => subject.id
     }).nil? 
   end
+  
+  def is_teaching_course?(course)
+    not CourseTeachingAssignment.find(:first, :conditions => {
+      :user_id => self.id, :course_id => course.id
+    }).nil? 
+  end
+  
 
 =begin
   Code for student
 =end
   
+   def is_subject_registered?(subject)
+     not SubjectRegistration.find(:first, :conditions => {
+       :user_id => self.id , :subject_id => subject.id
+     }).nil?
+   end
    
+   
+   def is_course_registered?(course)
+      not CourseRegistration.find(:first, :conditions => {
+        :user_id => self.id , :course_id => course.id
+      }).nil?
+    end
    
   
   

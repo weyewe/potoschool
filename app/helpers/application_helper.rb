@@ -234,7 +234,57 @@ module ApplicationHelper
                :action => "new"
              }
             ]
-          }
+        },
+        {
+          :title => "Assign Teacher to Course",
+          :destination_link => "pick_subject_for_course_teaching_assignment_url",
+          :conditions => [
+            {
+              :controller => "courses", 
+              :action => "pick_subject_for_course_teaching_assignment"
+             },
+             {
+               :controller => "courses",
+               :action => "new_course_teaching_assignment"
+             },
+            {
+              :controller => "course_teaching_assignments",
+              :action => "new"
+            }
+          ]
+        },
+        {
+          :title => "Assign Student to Subject",
+          :destination_link => "pick_subject_for_student_registrations_url",
+          :conditions => [
+            {
+              :controller => "subject_registrations", 
+              :action => "pick_subject_for_student_registrations"
+             },
+             {
+               :controller => "subject_registrations",
+               :action => "new"
+             }
+          ]
+        },
+        {
+          :title => "Assign Student to Course",
+          :destination_link => "select_subject_for_course_registration_url",
+          :conditions => [
+            {
+              :controller => "course_registrations", 
+              :action => "select_subject_for_course_registration"
+             },
+             {
+               :controller => "course_registrations",
+               :action => "select_course_for_course_registration"
+             },
+            {
+              :controller => "course_registrations",
+              :action => "new"
+            }
+          ]
+        }
       ]
     }
   
