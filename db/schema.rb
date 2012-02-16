@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
   create_table "groups", :force => true do |t|
     t.integer  "course_id"
     t.integer  "group_leader_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

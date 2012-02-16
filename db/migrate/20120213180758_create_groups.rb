@@ -4,7 +4,7 @@ class CreateGroups < ActiveRecord::Migration
       
       t.integer :course_id
       t.integer :group_leader_id
-
+      t.string :name 
       t.timestamps
     end
   end

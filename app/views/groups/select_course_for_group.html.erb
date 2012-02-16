@@ -18,15 +18,15 @@
           <tr>
             <th>Subject name</th>
             <th>Students</th>
-            <th>Projects</th>
+            <th>Groups</th>
           </tr>
         </thead>
         <tbody>
           <% @courses.each do |course| %>
             <tr>
-              <td><%= link_to "#{course.name}", new_course_project_url( course) %></td>
+              <td><%= link_to "#{course.name}", new_course_group_url( course) %></td>
               <td><%=  course.students.count  %></td>
-              <td><%=  course.projects.count  %></td>
+              <td><%= course.groups.count %></td>
             </tr>
           <% end %>
 

@@ -309,6 +309,24 @@ module ApplicationHelper
              :action => "new"
          }
        ]
+     },
+     {
+       :title => "Create Group",
+       :destination_link => "select_subject_for_group_url",
+       :conditions => [
+         {
+           :controller => "groups",
+           :action => "select_subject_for_group"
+         },
+         {
+           :controller => "groups",
+           :action => "select_course_for_group"
+         },
+         {
+           :controller => "groups",
+           :action => "new"
+         }
+       ]
      }
     ]
   }
