@@ -76,6 +76,8 @@ student_3.save
                               :username => UUIDTools::UUID.timestamp_create.to_s
   user.roles << student_role
   user.save
+  school.users << user 
+  school.save
 end
 
 puts "Done with user creation"
@@ -317,6 +319,15 @@ course_1_subject_1.students.each do |x|
   group_1.add_member( x ) 
 end
       
+# let's create project
+course_1_subject_1.projects.create :title => "This is the first project",
+          :description => "Take any picture that you want. Submit it.",
+          :deadline_date => DateTime.new( 2013, 3, 4).to_date
+          
+course_1_subject_1.projects.create :title => "This is the second project",
+          :description => "Take any sexy that you want. Submit it.",
+          :deadline_date => DateTime.new( 2013, 3, 4).to_date
+
     # model this shit tomorrow                          
 =begin
  A course has many projects ( can be the type group, or personal )

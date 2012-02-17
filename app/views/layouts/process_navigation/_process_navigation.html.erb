@@ -13,6 +13,11 @@
      <% end %>
      
      
+     <% if current_user.has_role?(:student) %>
+        <%= get_process_nav( :student , params ).html_safe %> 
+      <% end %>
+     
+     
      <!-- <ul class="nav nav-list">
 
        <li class="nav-header">School Admin</li>

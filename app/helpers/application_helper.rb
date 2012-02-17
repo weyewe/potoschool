@@ -366,4 +366,20 @@ module ApplicationHelper
      }
     ]
   }
+  
+  STUDENT_PROCESS_LIST = {
+    :header_title => "Student",
+    :processes => [
+      {
+        :title => "All Projects",
+        :destination_link => 'select_group_for_group_leader_path',
+        :conditions => [
+          {
+            :controller => "projects",
+            :action => "index"
+          }
+        ]
+      }
+    ]
+  }
 end
