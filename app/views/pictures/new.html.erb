@@ -1,23 +1,19 @@
 
 <div class="span9 content">
   <%= create_guide("Upload Submission", 
-        "Submit the result for project  <b>#{@project.title}</b>").html_safe %>
+        "Submit the result for project:  <b>#{@project.title}</b>").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
   <div class="row-fluid">
 
-<!-- 
-    <form class="well form-search">
-    <input type="text" class="input-medium search-query">
-    <button type="submit" class="btn">Upload</button>
-    <span class="help-inline">You can upload multiple images at once.</span>
-    </form> -->
     
     
     <%= form_for @new_picture, :url => project_submission_pictures_url(@project_submission) , 
               :html => {:class=> "well form-search",
                 :id => 'upload_picture' }  do |f| %>
+      <%= hidden_field_tag 'is_original', 
+              ORIGINAL_PICTURE  %>
       <%= transloadit :potoschool_store_image %>
       <%= f.file_field :original_image_url, :class => "input-medium search-query" , 
                 :multiple => "multiple", :style=>"width:200px;" %>
@@ -29,37 +25,50 @@
     <% end %>
     
     <% content_for :additional_js do %>
-      <%= transloadit_jquerify :upload_picture, :wait => true %>
+      <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
+      <script type="text/javascript">
+         // We call .transloadit() after the DOM is initialized:
+         $(document).ready(function() {
+           console.log("This is the document");
+           $('#upload_picture').transloadit({
+             wait : true, 
+             pollTimeout : 15000,
+             processZeroFiles : false,
+             onStart : function(assembly){
+               console.log("Biaaatch");
+             }
+           });
+           console.log("After configuring the shit");
+         });
+      </script>
+    
+    
+    
+      <%#= transloadit_jquerify :upload_picture, :wait => true,
+            :processZeroFiles => false, :pollTimeout => 15000 %>
     <% end %>
     
     
-    
-    <%#= form_for [ Picture.new], :url => create_revision_url , 
-      :html => { :id => 'upload_revision' } do |form| %>
-      <%#= transloadit :pilipoto_store_image %>
-      <%#= form.label      :original_url, 'File to upload' %>
-      <%#= form.file_field :original_url %>
-      <%#= hidden_field_tag 'is_original', REVISION_PICTURE %>
-      <%#= hidden_field_tag 'project_id', @project.id %>
-      <%#= hidden_field_tag 'original_picture_id', @original_picture.id %>
-      <%#= hidden_field_tag 'project_originator_id', @project_originator.id %>
-      <%#= hidden_field_tag 'user_id', current_user.id %>
-      <!-- <input name="my_file" multiple="multiple" /> -->
-      <%#= form.submit "Upload" %>
-    <%# end %>
-    
-    
-       <%#  content_for :additional_css  do %>
-          <%#= stylesheet_link_tag "jcrop.css", "image_map.css"%>
-        <%# end %>
-        
-        <%# content_for :additional_js do %>
-          <%#= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
-          <%#= transloadit_jquerify :upload_revision, :wait => true %>
-        <%# end %>
-        
-        
+
     
   </div><!--/row-->
 
+
+  <!-- display the uploaded image here!  -->
+  <div class="span12">
+    
+    <ul class="thumbnails" id="uploaded_image_container">
+      <% @pictures.each do |picture| %>
+        <li class="span3 item" >
+
+          <%= link_to  "http://google.com" , :class => "thumbnail" do %>
+            <%= image_tag picture.index_image_url %>
+          <% end %>
+
+        </li>
+
+      <% end %>
+    </ul>
+  </div>
+  
 </div><!--/span-->

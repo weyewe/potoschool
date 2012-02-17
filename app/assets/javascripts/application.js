@@ -10,6 +10,7 @@
 //= require bootstrap.min
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker-update
+//= require jquery.masonry.min
 //= require script
 
 
