@@ -24,6 +24,10 @@ Debita46::Application.routes.draw do
     resources :groups
   end
   
+  resources :groups do 
+    resources :group_memberships
+  end
+  
   
   # assign teacher to the subject and course 
   # use the course_teaching assignment 
@@ -56,8 +60,14 @@ Debita46::Application.routes.draw do
   # create group for course
   match 'select_subject_for_group' => "groups#select_subject_for_group", :as => :select_subject_for_group
   match 'select_course_for_group/subject/:subject_id' => "groups#select_course_for_group", :as => :select_course_for_group
+  match 'select_group_for_group_leader' => "groups#select_group_for_group_leader", :as => :select_group_for_group_leader
+  match 'select_group_leader' => "groups#select_group_leader", :as => :select_group_leader, :method => :post
   
-
+  # for group membership assignment
+  match 'select_subject_for_group_membership' => "group_memberships#select_subject_for_group_membership", :as => :select_subject_for_group_membership
+  match 'select_course_for_group_membership/subject/:subject_id' => "group_memberships#select_course_for_group_membership", :as => :select_course_for_group_membership
+  match 'select_group/course/:course_id' => "group_memberships#select_group", :as => :select_group
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

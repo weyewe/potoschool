@@ -1,13 +1,12 @@
 
 <div class="span9 content">
   
-  <%= create_guide("Select the Course", 
-        "Select the course where some projects will be created.").html_safe %>
+  <%= create_guide("Select the Subject", 
+        "Select the subject where a group will be created ").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
-  
-  
+
   
   <div class="row-fluid">
     <!-- <div class="span12"> -->
@@ -16,17 +15,17 @@
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th>Course name</th>
+            <th>Subject name</th>
+            <th>Description</th>
             <th>Students</th>
-            <th>Groups</th>
           </tr>
         </thead>
         <tbody>
-          <% @courses.each do |course| %>
+          <% @subjects.each do |subject| %>
             <tr>
-              <td><%= link_to "#{course.name}", new_course_group_url( course) %></td>
-              <td><%=  course.students.count  %></td>
-              <td><%= course.groups.count %></td>
+              <td><%= link_to "#{subject.name}", select_course_for_group_membership_url(subject) %></td>
+              <td><%=  subject.description %></td>
+              <td><%=  subject.students_count  %></td>
             </tr>
           <% end %>
 

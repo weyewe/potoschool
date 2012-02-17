@@ -24,7 +24,7 @@
         <tbody>
           <% @courses.each do |course| %>
             <tr>
-              <td><%= link_to "#{course.name}", new_course_group_url( course) %></td>
+              <td><%= link_to "#{course.name}", select_group_url( course) %></td>
               <td><%=  course.students.count  %></td>
               <td><%= course.groups.count %></td>
             </tr>

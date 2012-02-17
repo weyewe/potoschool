@@ -125,6 +125,9 @@ class User < ActiveRecord::Base
   end
   
   
+
+  
+  
 =begin
   Code for teacher
 =end
@@ -143,7 +146,7 @@ class User < ActiveRecord::Base
   
   def all_courses_taught
 
-    Subject.joins(:course_teaching_assignments => :user ).
+    Course.joins(:course_teaching_assignments => :user ).
           where(:course_teaching_assignments => {:user => {:id => self.id } } )
     
   end
@@ -155,10 +158,8 @@ class User < ActiveRecord::Base
   end
   
   def all_subjects_taught 
-
     Subject.joins(:subject_teaching_assignments => :user ).
           where(:subject_teaching_assignments => {:user => {:id => self.id } } )
-    
   end
   
   def total_courses_count_for(subject)
@@ -187,24 +188,46 @@ class User < ActiveRecord::Base
   Code for student
 =end
   
-   def is_subject_registered?(subject)
-     not SubjectRegistration.find(:first, :conditions => {
-       :user_id => self.id , :subject_id => subject.id
-     }).nil?
-   end
-   
-   
-   def is_course_registered?(course)
-      not CourseRegistration.find(:first, :conditions => {
-        :user_id => self.id , :course_id => course.id
+  def is_subject_registered?(subject)
+    not SubjectRegistration.find(:first, :conditions => {
+      :user_id => self.id , :subject_id => subject.id
       }).nil?
+  end
+
+
+  def is_course_registered?(course)
+    not CourseRegistration.find(:first, :conditions => {
+      :user_id => self.id , :course_id => course.id
+      }).nil?
+  end
+
+  def is_group_member?(group)
+    GroupMembership.find(:first, :conditions => {
+      :group_id => group.id, :user_id => self.id
+    })
+  end
+  
+  def is_group_leader?(group)
+    Group.group_leader_id == self.id 
+  end
+  
+  
+  # for a given course, student can only be registered in 1 group 
+  def group_for_course(course)
+    student = self
+    group_memberships = GroupMembership.where{  
+      (group_id.in(  course.groups.select{id}  )) & 
+      (user_id.eq student.id)
+    }
+
+    if group_memberships.length == 0 
+      return nil
+    else
+      group_memberships.first.group
     end
-   
-  
-  
+  end
+
  
-  
-  
     
   
   

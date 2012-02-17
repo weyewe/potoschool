@@ -69,6 +69,15 @@ student_3 = User.create :email => "student_3@potoschool.com", :password => "stud
 student_3.roles << student_role
 student_3.save
 
+# create test student
+(1..30).each do |x|
+  user = User.create :email => "test_student_#{x}@potoschool.com", :password => "test_student_#{x}", 
+                              :password_confirmation => "test_student_#{x}", 
+                              :username => UUIDTools::UUID.timestamp_create.to_s
+  user.roles << student_role
+  user.save
+end
+
 puts "Done with user creation"
 =begin
   Now, we assign the students, teacher, and admin to the school.
@@ -278,6 +287,13 @@ course_1_subject_1.add_student( student_1 )
 course_1_subject_1.add_student( student_2 )
 
 
+(1..30).each do |x|                              
+  student = User.find_by_email "test_student_#{x}@potoschool.com"
+  course_1_subject_1.add_student( student )
+end
+
+
+
 
 
 =begin
@@ -292,7 +308,14 @@ course_1_subject_1.add_student( student_2 )
 #                                 :student_id => student_1.id
 #       
       
-      
+  
+group_1  = course_1_subject_1.create_group( "Group A" )
+group_2  = course_1_subject_1.create_group( "Group B" )
+group_3  = course_1_subject_1.create_group( "Group C" )
+
+course_1_subject_1.students.each do |x|
+  group_1.add_member( x ) 
+end
       
     # model this shit tomorrow                          
 =begin

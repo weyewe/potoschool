@@ -26,6 +26,10 @@ class Course < ActiveRecord::Base
   end
   
   
+  def create_group( group_name )
+    self.groups.create :name => group_name 
+  end
+  
 =begin
 Teacher code
 =end
@@ -41,5 +45,14 @@ Student code
   def add_student( student )
     CourseRegistration.create :user_id => student.id, :course_id => self.id
   end
+  
+  def students
+    course  = self 
+    User.joins(:course_registrations =>:course).
+      where(:course_registrations => {:course => {:id => course.id }})
+  end
+  
+  # Subject.joins(:subject_teaching_assignments => :user ).
+  #        where(:subject_teaching_assignments => {:user => {:id => self.id } } )
   
 end

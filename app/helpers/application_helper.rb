@@ -327,6 +327,42 @@ module ApplicationHelper
            :action => "new"
          }
        ]
+     },
+     {
+       :title => "Assign Student to Group",
+       :destination_link => "select_subject_for_group_membership_path",
+       :conditions => [
+         {
+           :controller => "group_memberships",
+           :action => "select_subject_for_group_membership"
+         },
+         {
+           :controller => "group_memberships",
+           :action => "select_course_for_group_membership"
+         },
+         {
+           :controller => "group_memberships",
+           :action => "select_group"
+         },
+         {
+           :controller => "group_memberships",
+           :action => "new"
+         }
+       ]
+     },
+     {
+       :title => "Select Group Leader",
+       :destination_link => "select_group_for_group_leader_path",
+       :conditions => [
+         {
+           :controller => "groups",
+           :action => "select_group_for_group_leader"
+         },
+         {
+           :controller => "groups",
+           :action => "select_group_leader"
+         }
+       ]
      }
     ]
   }

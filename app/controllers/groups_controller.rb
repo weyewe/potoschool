@@ -40,4 +40,17 @@ class GroupsController < ApplicationController
     
     redirect_to new_course_group_url(@course)
   end
+  
+ 
+
+  def select_group_for_group_leader
+    #current user is teacher
+    @courses = current_user.all_courses_taught
+    
+  end
+  
+  
+  
+  def select_group_leader
+  end
 end
