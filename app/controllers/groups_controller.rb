@@ -45,12 +45,21 @@ class GroupsController < ApplicationController
 
   def select_group_for_group_leader
     #current user is teacher
-    @courses = current_user.all_courses_taught
+    add_breadcrumb "Select Group", "select_group_for_group_leader_url"
+    
+    # @courses = current_user.all_courses_taught
+    @courses = current_user.all_courses_and_groups_taught
     
   end
   
   
   
   def select_group_leader
+    @group = Group.find_by_id( params[:group_id])
+    @students = @group.students
+    
+    add_breadcrumb "Select Group", "select_group_for_group_leader_url"
+    set_breadcrumb_for @group, 'select_group_leader_path' + "(#{@group.id})", 
+                "Select Group Leader"
   end
 end

@@ -151,6 +151,13 @@ class User < ActiveRecord::Base
     
   end
   
+  def all_courses_and_groups_taught
+
+    Course.includes(:groups).joins(:course_teaching_assignments => :user ).
+          where(:course_teaching_assignments => {:user => {:id => self.id } } )
+    
+  end
+  
   def total_subjects_count
     SubjectTeachingAssignment.find(:all, :conditions => {
       :user_id => self.id

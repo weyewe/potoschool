@@ -20,6 +20,14 @@ class Group < ActiveRecord::Base
       :group_id => group.id 
     }).nil?
   end
+  
+  def group_leader
+    if self.group_leader_id == nil 
+      return nil
+    end
+      
+    User.find_by_id( self.group_leader_id)
+  end
         
         
 end
