@@ -24,6 +24,15 @@ Debita46::Application.routes.draw do
     resources :groups
   end
   
+  resources :projects
+  resources :project_submissions
+  resources :project_submissions do 
+    resources :pictures
+  end
+  resources :user do 
+    resources :project_submissions
+  end
+  
   resources :groups do 
     resources :group_memberships
   end
@@ -68,6 +77,12 @@ Debita46::Application.routes.draw do
   match 'select_course_for_group_membership/subject/:subject_id' => "group_memberships#select_course_for_group_membership", :as => :select_course_for_group_membership
   match 'select_group/course/:course_id' => "group_memberships#select_group", :as => :select_group
   
+  
+  
+=begin
+  FOR STUDENTS 
+=end  
+  match 'student_projects' => "projects#student_projects", :as => :student_projects
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

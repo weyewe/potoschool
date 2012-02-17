@@ -38,6 +38,20 @@ Teacher code
     CourseTeachingAssignment.create :user_id => teacher.id, :course_id => self.id
   end
   
+  def create_project_with_submissions(project_hash)
+    project = self.projects.new(project_hash)
+    if project.save 
+      project.create_project_submissions
+    else
+      # capture the error
+      return project
+    end
+    
+    return project
+    
+  end
+  
+  
 =begin
 Student code
 =end
@@ -55,4 +69,7 @@ Student code
   # Subject.joins(:subject_teaching_assignments => :user ).
   #        where(:subject_teaching_assignments => {:user => {:id => self.id } } )
   
+  
+  # for project
+ 
 end

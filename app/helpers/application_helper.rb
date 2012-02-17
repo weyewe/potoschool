@@ -372,11 +372,15 @@ module ApplicationHelper
     :processes => [
       {
         :title => "All Projects",
-        :destination_link => 'select_group_for_group_leader_path',
+        :destination_link => 'project_submissions_url',
         :conditions => [
           {
-            :controller => "projects",
+            :controller => "project_submissions",
             :action => "index"
+          },
+          {
+            :controller =>"pictures",
+            :action => "new"
           }
         ]
       }

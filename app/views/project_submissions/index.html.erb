@@ -1,0 +1,96 @@
+
+<div class="span9 content">
+  
+  <%= create_guide("Select the Project", 
+        "By selecting the project, you can create submission or revision. ").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+
+  
+  <div class="row-fluid">
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Deadline</th>
+            <th>Approved</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <% @project_submissions.each do |project_submission| %>
+            <% project = project_submission.project %>
+            <% student = project_submission.user %>
+            <tr>
+              <td>
+                <% if project.group_project? %>
+                  <span class="label label-warning">Group</span> 
+                <% else %>
+                  <span class="label">Personal</span> 
+                <% end %>
+                <%= link_to "#{project.title}",  new_project_submission_picture_url(project_submission) %> 
+              </td>
+              <td><%= project.course.subject.name %></td>
+              <td><%= project.deadline_date.strftime('%b %d, %Y') %></td>
+              
+              <% if project_submission.is_approved.nil? %>
+                <td>Pending</td>
+              <% elsif project_submission.approved? %>
+                <td>
+                  	<span class="label label-success">Yes</span>
+                </td>
+              <% else %>
+                <td>
+                  <span class="label label-important">No</span>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+
+
+         
+        </tbody>
+      </table>
+      
+      <!-- <div class="alert alert-success allert-message">
+           <a class="close" href="#">&times;</a>
+           <strong>Well done!</strong> You successfully read this important alert message.
+         </div> -->
+
+      
+      <!-- <div class="form-actions">
+        <%#= hidden_field_tag 'destination_url', 
+                subject_subject_teaching_assignments_url(@subject) ,
+                 :id => "destination_url" %>
+
+        <button class="btn btn-large btn-primary"
+              type="submit" id="save_button">Save changes</button>
+      </div> -->
+
+
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->
+
+<%# content_for :additional_js  do %>
+ 
+  <%#= javascript_include_tag "DT.js" %> 
+  <%#= javascript_include_tag "DT_bootstrap.js" %> 
+<%# end %>
+
+
+
+
+
+
+
+
+
+

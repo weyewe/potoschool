@@ -51,4 +51,15 @@ class ProjectsController < ApplicationController
     
     redirect_to new_course_project_path(@course.id)
   end
+  
+  
+=begin
+  FOR STUDENTS
+=end   
+
+  # def student_projects
+  #   @projects = ProjectSubmission.find(:all, :conditions => {
+  #     :user_id => current_user.id
+  #   })
+  # end
 end

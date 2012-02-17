@@ -84,6 +84,17 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
   create_table "pictures", :force => true do |t|
     t.string   "name"
     t.integer  "original_picture_id"
+    t.integer  "project_submission_id"
+    t.string   "original_image_url"
+    t.string   "index_image_url"
+    t.string   "revision_image_url"
+    t.string   "display_image_url"
+    t.integer  "original_image_size"
+    t.integer  "index_image_size"
+    t.integer  "revision_image_size"
+    t.integer  "display_image_size"
+    t.boolean  "is_deleted",            :default => false
+    t.boolean  "is_selected",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -91,6 +102,9 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
   create_table "project_submissions", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
+    t.boolean  "is_approved"
+    t.integer  "approved_submission_id"
+    t.datetime "approval_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

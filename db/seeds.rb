@@ -320,20 +320,29 @@ course_1_subject_1.students.each do |x|
 end
       
 # let's create project
-course_1_subject_1.projects.create :title => "This is the first project",
+project_1 = course_1_subject_1.create_project_with_submissions :title => "This is the first project",
           :description => "Take any picture that you want. Submit it.",
           :deadline_date => DateTime.new( 2013, 3, 4).to_date
           
-course_1_subject_1.projects.create :title => "This is the second project",
+project_2 = course_1_subject_1.create_project_with_submissions :title => "This is the second project",
           :description => "Take any sexy that you want. Submit it.",
-          :deadline_date => DateTime.new( 2013, 3, 4).to_date
+          :deadline_date => DateTime.new( 2012, 5, 4).to_date
 
     # model this shit tomorrow                          
 =begin
  A course has many projects ( can be the type group, or personal )
  The teacher has to post them one by one, for each course
 =end
+# 
+# student_submitter = course_1_subject_1.students.last 
+# student_submitter.submit_project( project_1, picture_array )
+# student_submitter.submit_revision( original_picture, revision )
 
+
+=begin
+  Ok, we have 2 projects: project_1 and project_2 
+  Student has to make submission 
+=end
 
 =begin
   A project has many submissions 

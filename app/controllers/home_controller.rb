@@ -13,7 +13,7 @@ class HomeController < ApplicationController
     end
     
     if current_user.has_role?(:student)
-      redirect_to select_subject_for_project_url 
+      redirect_to project_submissions_url 
       return
     end
   end

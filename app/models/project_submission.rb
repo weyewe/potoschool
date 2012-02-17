@@ -8,7 +8,9 @@ class ProjectSubmission < ActiveRecord::Base
   # each submission can contain several pictures, with several revisions for per picture 
   
   
-
+  def approved?
+    self.is_approved == true 
+  end
     
     
   # can be commented 
