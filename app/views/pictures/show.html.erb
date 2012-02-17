@@ -1,0 +1,57 @@
+
+<div class="span9 content">
+  <%= create_guide("Analyze Picture", 
+        "You can comment <b>on the picture</b>. 
+        Just drag the mouse on the desired position, and create comment").html_safe %>
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+
+  
+  <div class="row-fluid">
+    <div class="span8">
+      <h3> <%= @picture.name %></h3>
+      <% if @picture.is_original == true  %>
+        <span class="label">Original Submission</span>
+      <% else %>
+      	<span class="label label-success">Revision Submission</span>
+      <% end %>
+      <hr />
+      
+      <ul class="pager">
+        <li class="previous">
+          <a href="#">&larr; Prev</a>
+        </li>
+        <li class="next">
+          <a href="#">Next &rarr;</a>
+        </li>
+      </ul>
+      
+      
+      <ul class="thumbnails">
+        <li class="span12">
+          <%= image_tag @picture.display_image_url, :class =>"thumbnail", 
+                    :style => "width:590px;"%>
+        </li >
+      </ul>
+    </div><!--/span-->
+
+    <div class="span4">
+      <%= render :partial => "pictures/upload_revision_form"%>
+      <% if @picture.is_original == false %>
+        <%= render :partial => "pictures/show_original", :locals =>{
+          :original_picture => @original_picture,
+          :project_submission => @project_submission
+        }%>
+      <% end %>
+      
+      <% if @all_revisions.count != 0 %>
+        <%= render :partial => "pictures/revision_list",
+                  :locals => {:all_revisions => @all_revisions, 
+                          :current_display => @picture,
+                          :project_submission => @project_submission}%>
+      <% end %>
+    </div><!--/span-->
+    
+  </div><!--/row-->
+
+</div><!--/span-->

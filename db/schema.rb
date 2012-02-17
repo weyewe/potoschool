@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214025847) do
+ActiveRecord::Schema.define(:version => 20120217170237) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -83,7 +83,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
 
   create_table "pictures", :force => true do |t|
     t.string   "name"
-    t.integer  "original_picture_id"
+    t.integer  "revision_id"
     t.integer  "project_submission_id"
     t.string   "original_image_url"
     t.string   "index_image_url"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
     t.integer  "display_image_size"
     t.boolean  "is_deleted",            :default => false
     t.boolean  "is_selected",           :default => false
+    t.boolean  "is_original",           :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -116,6 +117,13 @@ ActiveRecord::Schema.define(:version => 20120214025847) do
     t.date     "deadline_date"
     t.time     "deadline_time"
     t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "revisionships", :force => true do |t|
+    t.integer  "picture_id"
+    t.integer  "revision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

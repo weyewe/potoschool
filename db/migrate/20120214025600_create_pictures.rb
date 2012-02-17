@@ -3,7 +3,7 @@ class CreatePictures < ActiveRecord::Migration
     create_table :pictures do |t|
       t.string :name 
 
-      t.integer :original_picture_id  # self referential association
+      t.integer :revision_id   # self referential association
       t.integer :project_submission_id # project_submission has many pictures 
       # the image url 
       t.string :original_image_url
@@ -19,6 +19,8 @@ class CreatePictures < ActiveRecord::Migration
       # for logic
       t.boolean :is_deleted, :default => false 
       t.boolean :is_selected, :default => false 
+      
+      t.boolean :is_original, :default => false 
       
       # images ?
       # and how did we control the next button in the images?

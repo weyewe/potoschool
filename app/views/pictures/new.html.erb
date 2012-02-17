@@ -61,7 +61,8 @@
       <% @pictures.each do |picture| %>
         <li class="span3 item" >
 
-          <%= link_to  "http://google.com" , :class => "thumbnail" do %>
+          <%= link_to  project_submission_picture_url(@project_submission, picture),
+           :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
             <%= image_tag picture.index_image_url %>
           <% end %>
 

@@ -7,6 +7,22 @@ class Picture < ActiveRecord::Base
   belongs_to :original_picture, :class_name => "Revision",
     :foreign_key => "original_picture_id"
     
+  # for the picture has many revisions
+  has_many :revisionships
+  has_many :revisions, :through => :revisionships
+  has_many :inverse_revisionships, :class_name => "Revisionship", :foreign_key => "revision_id"
+  has_many :inverse_revisions, :through => :inverse_revisionships, :source => :picture  
+  
+    # # user.rb
+    # has_many :friendships
+    # has_many :friends, :through => :friendships
+    # has_many :inverse_friendships, :class_name => "Friendship", :foreign_key => "friend_id"
+    # has_many :inverse_friends, :through => :inverse_friendships, :source => :user
+    # 
+    # # friendship.rb
+    # belongs_to :user
+    # belongs_to :friend, :class_name => "User"
+    
     # class Employee < ActiveRecord::Base
     #   has_many :subordinates, :class_name => "Employee"
     #   belongs_to :manager, :class_name => "Employee",
@@ -16,6 +32,17 @@ class Picture < ActiveRecord::Base
     
   acts_as_commentable
   
+  def is_original?
+    self.original_picture.nil? 
+  end
+  
+  def original_picture
+    if self.is_original == true 
+      return self
+    else
+      return self.inverse_revisions.first
+    end
+  end
   
   def self.extract_uploads(resize_original, resize_index , resize_show, resize_revision, params, uploads )
     project_submission = ProjectSubmission.find_by_id(params[:project_submission_id] )
@@ -84,24 +111,38 @@ class Picture < ActiveRecord::Base
              :index_image_size       => index_image_size         ,
              :revision_image_size    => revision_image_size      ,
              :display_image_size     => display_image_size       ,
-             :name => image_name
+             :name => image_name,
+             :is_original => true 
         )
         
         counter =  counter + 1 
       end
     elsif params[:is_original].to_i == REVISION_PICTURE
       original_picture = Picture.find_by_id(params[:original_picture_id])
-      index_picture_url = resize_index.first[:url]
-      show_picture_url = resize_show.first[:url]
+      original_image_url  = resize_original.first[:url]
+      index_image_url     = resize_index.first[:url]
+      revision_image_url  = resize_revision.first[:url]
+      display_image_url   = resize_show.first[:url]
+      original_image_size    = resize_original.first[:size]
+      index_image_size       = resize_index.first[:size]   
+      revision_image_size    = resize_revision.first[:size]
+      display_image_size     = resize_show.first[:size]    
+      
+      # index_picture_url = resize_index.first[:url]
+      # show_picture_url = resize_show.first[:url]
       image_name = resize_show.first[:name]
-      new_picture = Picture.create(:index_resized_url => index_picture_url , 
-                    :show_resized_url => show_picture_url , 
-                    :project_id => project.id , 
-                    # :title =>  original_picture.title , 
-                    :title => image_name,
-                    :is_original => false ,
-                    :user_id => user.id , 
-                    :original_picture_id => original_picture.id )
+      new_picture = original_picture.revisions.create(
+           :original_image_url => original_image_url     ,
+           :index_image_url    =>   index_image_url      ,
+           :revision_image_url =>   revision_image_url   ,
+           :display_image_url  =>  display_image_url     ,
+           :project_submission_id => project_submission.id, 
+           :original_image_size    => original_image_size      ,
+           :index_image_size       => index_image_size         ,
+           :revision_image_size    => revision_image_size      ,
+           :display_image_size     => display_image_size       ,
+           :name => image_name
+      )
     end
     
     

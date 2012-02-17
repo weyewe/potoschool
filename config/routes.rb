@@ -83,6 +83,12 @@ Debita46::Application.routes.draw do
   FOR STUDENTS 
 =end  
   match 'student_projects' => "projects#student_projects", :as => :student_projects
+  
+  # project submissions 
+  match 'project_submissions/:project_submission_id/create_revision/:original_pic_id' => "pictures#create_revision", :as => :create_revision
+  
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

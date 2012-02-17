@@ -1,6 +1,15 @@
 module ApplicationHelper
   ACTIVE = 'active'
+  REVISION_SELECTED = "selected"
   
+  
+  def class_for_current_displayed_revision(revision, current_display)
+    if revision.id == current_display.id 
+      return REVISION_SELECTED
+    else
+      return ""
+    end
+  end
   
   def get_checkbox_value(checkbox_value )
     if checkbox_value == true
@@ -371,7 +380,7 @@ module ApplicationHelper
     :header_title => "Student",
     :processes => [
       {
-        :title => "All Projects",
+        :title => "Ongoing Projects",
         :destination_link => 'project_submissions_url',
         :conditions => [
           {
@@ -381,6 +390,10 @@ module ApplicationHelper
           {
             :controller =>"pictures",
             :action => "new"
+          },
+          {
+            :controller => "pictures",
+            :action => "show"
           }
         ]
       }
