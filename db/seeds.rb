@@ -355,6 +355,15 @@ project_2 = course_1_subject_1.create_project_with_submissions :title => "This i
 =end
 
 
+# next task is to adjust the result preview navigation: use prev or next .
+=begin
+1. get all the original picture id in project_submission.pictures
+2. determine the index of the current image 
+3. show the next index and prev index
+=end
+
+
+
 
 
 

@@ -1,7 +1,89 @@
 module ApplicationHelper
   ACTIVE = 'active'
   REVISION_SELECTED = "selected"
+  NEXT_BUTTON_TEXT = "Next &rarr;"
+  PREV_BUTTON_TEXT = " &larr; Prev "
   
+=begin
+  Some next and prev button for so=mething that we haven't known
+=end
+  
+  
+  def get_select_next_project_picture( selection )
+    next_selection = selection.next_selection
+    
+    if not next_selection.nil?
+      return  link_to "Next" ,  
+        project_selection_url(next_selection.project, next_selection ), :class => "next_button"
+    else
+      ""
+    end
+  end
+  
+  def get_select_previous_project_picture( selection )
+    prev_selection = selection.prev_selection
+    
+    if not prev_selection.nil?
+      return  link_to "Prev" ,  
+        project_selection_url(prev_selection.project, prev_selection ), :class => "back_button"
+    else
+      ""
+    end
+    
+  end
+  
+=begin
+  Getting prev and next button for the pictures#show
+=end
+  def get_next_project_picture( pic )
+    next_pic = pic.next_pic
+    
+    if not next_pic.nil?
+      return  create_galery_navigation_button( NEXT_BUTTON_TEXT, "next",
+                   project_submission_picture_url( pic.project_submission, next_pic))
+      # link_to "Next" , project_picture_url( next_pic.project, next_pic), :class => "next_button"
+    else
+      ""
+    end
+  end
+  
+  def get_previous_project_picture( pic )
+    prev_pic = pic.prev_pic
+    
+    if not prev_pic.nil?
+      return  create_galery_navigation_button( PREV_BUTTON_TEXT, "previous", 
+                  project_submission_picture_url( pic.project_submission, prev_pic) )
+      
+      
+      # link_to "Prev" , project_picture_url( prev_pic.project, prev_pic), :class => "back_button"
+    else
+      ""
+    end
+    
+  end
+  
+  
+  
+  def create_galery_navigation_button( text, class_name, destination_url )
+    button = ""
+    button << "<li class=#{class_name}>"
+    button << link_to("#{text}".html_safe, destination_url )
+    button << "</li>"
+    
+  end
+  
+  # <li class="previous">
+  #   <a href="#">&larr; Prev</a>
+  # </li>
+  # <li class="next">
+  #   <a href="#">Next &rarr;</a>
+  # </li>
+  
+  
+  
+=begin
+  Showing the revisions in the pictures#show
+=end
   
   def class_for_current_displayed_revision(revision, current_display)
     if revision.id == current_display.id 
@@ -11,6 +93,12 @@ module ApplicationHelper
     end
   end
   
+=begin
+  Assigning activity:
+  1. Assigning student to the class
+  2. Assigning teacher to the course etc
+=end
+  
   def get_checkbox_value(checkbox_value )
     if checkbox_value == true
       return TRUE_CHECK
@@ -19,6 +107,10 @@ module ApplicationHelper
     end
   end
   
+  
+=begin
+  General command to create Guide in all pages
+=end 
   def create_guide(title, description)
     result = ""
     result << "<div class='explanation-unit'>"
@@ -77,26 +169,19 @@ module ApplicationHelper
   
   
   
+
+  
+  
+  
+  
+  
+  
+  
+  
 =begin
-  <% if @breadcrumbs %>
-    You are here: 
-    <% @breadcrumbs[0..-2].each do |txt, path| %>
-      <%= link_to(h(txt), path) %> >
-    <% end %>
-    <%= h(@breadcrumbs.last.first) %>
-  <% end %>
-=end
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  Process Navigation related activity
+=end  
+
   
   def get_process_nav( symbol, params)
     

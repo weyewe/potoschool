@@ -3,7 +3,7 @@ class PicturesController < ApplicationController
     
     @project_submission = ProjectSubmission.find_by_id( params[:project_submission_id] )
     @project = @project_submission.project
-    @pictures = @project_submission.pictures.where(:is_original => true )
+    @pictures = @project_submission.original_pictures
     @new_picture = Picture.new  
     
     add_breadcrumb "Select Project", "project_submissions_url"

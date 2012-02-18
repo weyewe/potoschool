@@ -18,15 +18,19 @@
       <hr />
       
       <ul class="pager">
-        <li class="previous">
-          <a href="#">&larr; Prev</a>
-        </li>
-        <li class="next">
+        <!-- <li class="previous">
+              <a href="#">&larr; Prev</a>
+            </li> -->
+            <%= get_previous_project_picture(@picture).html_safe %>
+            <%= get_next_project_picture(@picture).html_safe %>
+        <!-- <li class="next">
+          
           <a href="#">Next &rarr;</a>
-        </li>
+        </li> -->
       </ul>
       
       
+      <!-- the main image -->
       <ul class="thumbnails">
         <li class="span12">
           <%= image_tag @picture.display_image_url, :class =>"thumbnail", 

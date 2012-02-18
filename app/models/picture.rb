@@ -44,6 +44,58 @@ class Picture < ActiveRecord::Base
     end
   end
   
+=begin
+  For storage calculation 
+=end
+
+  def images_size
+    self.original_image_size + 
+      self.byproduct_image_size
+  end
+  
+  def byproduct_to_original_ratio
+    self.byproduct_image_size / self.original_image_size.to_f
+  end
+  
+  def byproduct_image_size
+    self.display_image_size + 
+      self.index_image_size + 
+        self.revision_image_size
+  end
+  
+   
+=begin
+  For picture navigation with NEXT and PREV button
+=end
+
+  def next_pic
+    original_pic = self.original_picture
+    id_list = original_pic.project_submission.original_pictures_id
+    
+    current_pic_index = id_list.index( original_pic.id )
+    
+    if current_pic_index <  ( id_list.length - 1 )
+      return  Picture.find_by_id( id_list.at ( current_pic_index + 1  ) ) 
+    else
+      return nil 
+    end
+  end
+  
+  def prev_pic
+    original_pic = self.original_picture
+    id_list = original_pic.project_submission.original_pictures_id
+    current_pic_index = id_list.index( original_pic.id )
+    
+    if current_pic_index > 0 
+      return Picture.find_by_id(  id_list.at( current_pic_index - 1 )   ) 
+    else
+      return nil 
+    end
+  end
+  
+  
+  
+  
   def self.extract_uploads(resize_original, resize_index , resize_show, resize_revision, params, uploads )
     project_submission = ProjectSubmission.find_by_id(params[:project_submission_id] )
     
