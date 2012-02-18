@@ -16,4 +16,7 @@
 
 
 
+var PilipotoJcropApi ;   /* global variable  */
+
+
 

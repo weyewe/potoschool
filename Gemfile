@@ -16,6 +16,7 @@ gem "kaminari"
 gem 'valid_email'
 gem 'acts_as_commentable_with_threading', 
   :git => 'https://github.com/elight/acts_as_commentable_with_threading.git'
+gem 'awesome_print'
 
 gem "squeel" 
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120217170237) do
+ActiveRecord::Schema.define(:version => 20120218075114) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(:version => 20120217170237) do
     t.boolean  "is_deleted",            :default => false
     t.boolean  "is_selected",           :default => false
     t.boolean  "is_original",           :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "positional_comments", :force => true do |t|
+    t.integer  "comment_id"
+    t.integer  "x_start"
+    t.integer  "y_start"
+    t.integer  "x_end"
+    t.integer  "y_end"
+    t.integer  "picture_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,7 +2,7 @@
 <div class="span9 content">
   <%= create_guide("Analyze Picture", 
         "You can comment <b>on the picture</b>. 
-        Just drag the mouse on the desired position, and create comment").html_safe %>
+        Just drag the mouse on the desired position, and create comment.").html_safe %>
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
 
@@ -17,28 +17,45 @@
       <% end %>
       <hr />
       
+      
+      <!-- The navigation element (<= Prev)  and (Next =>)-->
       <ul class="pager">
-        <!-- <li class="previous">
-              <a href="#">&larr; Prev</a>
-            </li> -->
             <%= get_previous_project_picture(@picture).html_safe %>
             <%= get_next_project_picture(@picture).html_safe %>
-        <!-- <li class="next">
+      </ul>
+      
+      
+      <!-- The image in display -->
+        <div class="thumbnail image">
           
-          <a href="#">Next &rarr;</a>
-        </li> -->
-      </ul>
-      
-      
-      <!-- the main image -->
-      <ul class="thumbnails">
-        <li class="span12">
-          <%= image_tag @picture.display_image_url, :class =>"thumbnail", 
-                    :style => "width:590px;"%>
-        </li >
-      </ul>
-    </div><!--/span-->
+          <%= render :partial => "pictures/positional_comment_form", 
+                          :locals => {:picture => @picture}%>
+       
+          
+          
+          <%= image_tag @picture.display_image_url,  
+                :style => "width:590px;", :id => "target" %>
+        </div>
+       
+                
+                
+    <!-- Supporting JS and CSS for create comment -->
+      <% if @picture.allow_comment?(current_user) %>
+        <%  content_for :additional_css  do %>
+          <%= stylesheet_link_tag "jcrop.css", "image_map.css"%>
+        <% end %>
 
+        <% content_for :additional_js do %>
+          <%= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
+          <%= transloadit_jquerify :upload_revision, :wait => true %>
+        <% end %>
+      <% end %>
+                
+    </div><!--/span-->
+    
+    
+    
+    <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
       <%= render :partial => "pictures/upload_revision_form"%>
       <% if @picture.is_original == false %>
@@ -53,6 +70,7 @@
                   :locals => {:all_revisions => @all_revisions, 
                           :current_display => @picture,
                           :project_submission => @project_submission}%>
+                      
       <% end %>
     </div><!--/span-->
     

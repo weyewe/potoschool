@@ -87,6 +87,11 @@ Debita46::Application.routes.draw do
   # project submissions 
   match 'project_submissions/:project_submission_id/create_revision/:original_pic_id' => "pictures#create_revision", :as => :create_revision
   
+  # picture has many comments
+  resources :pictures do 
+    resources :positional_comments
+    resources :comments
+  end
   
   
   # The priority is based upon order of creation:

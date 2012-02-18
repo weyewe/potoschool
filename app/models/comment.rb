@@ -4,6 +4,10 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
   
+  has_one :positional_comment
+  
+  
+  
   # NOTE: install the acts_as_votable plugin if you 
   # want user to vote on the quality of comments.
   #acts_as_voteable
@@ -45,4 +49,45 @@ class Comment < ActiveRecord::Base
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
   end
+  
+  
+=begin
+  Additional for positional_comment
+=end
+
+  
+  
+  def create_comment_position( x_start, y_start, x_end, y_end , picture)
+    comment_position = CommentPosition.create(:comment_id => self.id, 
+      :x_start => x_start, 
+      :y_start => y_start,
+      :x_end => x_end,
+      :y_end => y_end,
+      :picture_id => picture.id
+    )
+    
+    # self.delay.send_feedback_notification_email
+    
+    return comment_position
+  end
+  
+  def commented_object 
+    eval("#{self.commentable_type}.find(#{self.commentable_id})")
+  end
+  
+  protected
+  
+  def send_feedback_notification_email
+    @root_comment = self
+    @picture = @root_comment.commented_object 
+    @filtered_collaborators_id_list = @picture.project.get_all_collaborators_except( @root_comment.user )   
+    
+    @filtered_collaborators_id_list.each do |user_id| 
+      ProjectMailer.feedback_create_notification( @root_comment, user_id ).deliver
+    end
+          
+    
+  end
+  
+  
 end

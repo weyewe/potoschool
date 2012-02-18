@@ -30,7 +30,15 @@ class Picture < ActiveRecord::Base
     # end
     # We can do this shit: @employee.subordinates and @employee.manager.
     
+    
+    
+
+=begin
+  The commenting logic. 
+  Only teacher that can add positional comments 
+=end
   acts_as_commentable
+  has_many :positional_comments
   
   def is_original?
     self.original_picture.nil? 
@@ -43,6 +51,13 @@ class Picture < ActiveRecord::Base
       return self.inverse_revisions.first
     end
   end
+  
+  # restrict commenting capability to several people 
+  def allow_comment?(user) 
+    # for now, we allow everyone
+    return true 
+  end
+  
   
 =begin
   For storage calculation 

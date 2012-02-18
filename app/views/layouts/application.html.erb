@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
     <meta charset="utf-8">
-    <title>potoSchool | Mobile Debt Collection</title>
+    <title>potoSchool | Photography Course Management</title>
     <meta name="description" content="">
     <meta name="author" content="">
      <%= csrf_meta_tags %>
@@ -21,13 +21,13 @@
     
 
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="<%=asset_path "favicon.ico"%>">
     <link rel="apple-touch-icon" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon-114x114.png">
   
     <%= stylesheet_link_tag    "application" %>
-    <%#= yield :additional_css %>
+    <%= yield :additional_css %>
 </head>
 <body>
   <%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
