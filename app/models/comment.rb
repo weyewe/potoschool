@@ -58,7 +58,7 @@ class Comment < ActiveRecord::Base
   
   
   def create_comment_position( x_start, y_start, x_end, y_end , picture)
-    comment_position = CommentPosition.create(:comment_id => self.id, 
+    comment_position = PositionalComment.create(:comment_id => self.id, 
       :x_start => x_start, 
       :y_start => y_start,
       :x_end => x_end,

@@ -1,0 +1,9 @@
+<% if ( not positional_comment.nil? )  and ( not positional_comment.comment.nil?  ) %>
+<li>
+  <a title="" class="tag" 
+    style="height:62px; width:62px; left: <%= positional_comment.x_start.to_s + "px" %>;
+    top: <%= positional_comment.y_start.to_s + "px" %>;">
+    <span><b><%= positional_comment.comment.body %></b></span>
+  </a>
+</li>
+<% end %>

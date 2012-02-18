@@ -1,0 +1,14 @@
+<% new_positional_comment =  escape_javascript(render :partial => "pictures/positional_comment", 
+              :locals=> {:positional_comment => @positional_comment }) %> ;
+              
+<%# new_feedback =  escape_javascript(render :partial => "pictures/root_comment_entry", 
+      :locals=> {:root_comment => @root_comment}) %> ;
+              
+              
+$(document).ready(function(){
+  $('#title_container').addClass("hide");
+  $("ul.map").append('<%= new_positional_comment %>');
+  // $("ol.commentlist").append('<%#= new_feedback %>');
+});
+
+

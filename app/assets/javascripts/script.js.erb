@@ -52,9 +52,7 @@ $(document).ready(function() {
       
       // console.log( "teacher id is " + teacher_id);
       var teacher_id = $input_checkbox.attr("id").split("_")[1];
-      
       //  check the checked value.. if it is , send 1 to server, if it is not, send 0 to server
-      
       var object = {};
       object["user"] =  teacher_id; // the id
       object["value"]  = $input_checkbox.attr("value"); 
@@ -63,7 +61,6 @@ $(document).ready(function() {
     
     
     selection_array =  JSON.stringify(selection_array);
-    console.log( selection_array );
     $.ajax({
       url : destination_url, 
       type : "POST",
@@ -74,13 +71,45 @@ $(document).ready(function() {
       }
     });
     
-    
- 
-    
-    
   });
   
-
   
   
+  /* AjaxForm, auto submit */
+  $("form.ajaxform").live('submit',function(){
+     var $this = $(this);
+     var destination = $(this).attr('action');
+     var $form_container = $this.parent();
+     $this.showLoading();
+   	$.ajax({
+   		url: destination,
+   		type: "POST",
+   		data: $(this).serialize(),
+   		dataType: 'script',
+   		success: function(response){
+   		  console.log("Yeah baby, we are cleared");
+   		  $this.clearForm();
+        $this.hideLoading();
+        PilipotoJcropApi.release();
+   		}
+   	});
+   	return false;
+   });
+   
 });
+
+
+$.fn.clearForm = function() {
+  return this.each(function() {
+    var type = this.type, tag = this.tagName.toLowerCase();
+    if (tag == 'form')
+      return $(':input',this).clearForm();
+    if (type == 'text' || type == 'password' || tag == 'textarea')
+      this.value = '';
+    else if (type == 'checkbox' || type == 'radio')
+      this.checked = false;
+    else if (tag == 'select')
+      this.selectedIndex = -1;
+  });
+};
+

@@ -7,8 +7,15 @@ jQuery(function($){
     onSelect:   showCoordsFinal,
     onRelease:  clearCoords,
     maxSize: [62,62]
-  }  ,function(){
+  },  function(){
     PilipotoJcropApi = this;
+  });
+  
+  
+  $("#cancel-positional-comment").live('click', function(){
+    $('#title_container').addClass("hide"); 
+    PilipotoJcropApi.release();
+    return false;
   });
 
 });
@@ -24,6 +31,8 @@ function showCoords(c)
   // $('#y2').val(c.y2);
   // $('#w').val(c.w);
   // $('#h').val(c.h);
+  
+/*  console.log("show Coords");*/
   $('#title_container').addClass("hide"); //if reselecting, hide the form
 };
 
@@ -36,7 +45,9 @@ function showCoordsFinal(c)
   $('#y2').val(c.y2);
   $('#w').val(c.w);
   $('#h').val(c.h);
-  // alert("boom, here we are, x1=" + c.x + ", x2=" + c.x2 + ", y1=" + c.y + ", y2=" + c.y2);
+  
+/*  console.log("show Coords final")*/
+/*  alert("boom, here we are, x1=" + c.x + ", x2=" + c.x2 + ", y1=" + c.y + ", y2=" + c.y2);*/
   
   // prefill the form with these values
   // hidden tag. user only need to fill it
