@@ -26,7 +26,7 @@
           <% @courses.each do |course| %>
             <% course.groups.each do |group| %>
             <tr>
-              <td> haha <%= link_to "#{group.name}", select_group_leader_url(group) %></td>
+              <td> <%= link_to "#{group.name}", select_group_leader_url(group) %></td>
               <% if group.group_leader == nil %>
                 <td>no</td>
               <% else %>

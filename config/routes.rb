@@ -93,6 +93,9 @@ Debita46::Application.routes.draw do
     resources :comments
   end
   
+  # create child comment
+  match 'first_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_first_child_comment", :as => :create_first_child_comment
+  match 'create_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_child_comment", :as => :create_child_comment
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

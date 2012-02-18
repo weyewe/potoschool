@@ -38,11 +38,15 @@ class Picture < ActiveRecord::Base
   Only teacher that can add positional comments 
 =end
   acts_as_commentable
+  # has_many :comments
   has_many :positional_comments
   
   def is_original?
     self.original_picture.nil? 
   end
+  
+  
+  
   
   def original_picture
     if self.is_original == true 
@@ -58,6 +62,13 @@ class Picture < ActiveRecord::Base
     return true 
   end
   
+  
+  # def get_root_comments
+  #   comment_type = self.class.to_s
+  #   Comment.find(:all, :conditions => {:commentable_type => comment_type,
+  #       :commentable_id => self.id, 
+  #       :parent_id => nil } , :order => "created_at ASC"  )
+  # end
   
 =begin
   For storage calculation 

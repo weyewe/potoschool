@@ -41,6 +41,7 @@ class PicturesController < ApplicationController
     @picture = Picture.find_by_id( params[:id] )
     @original_picture = @picture.original_picture
     @all_revisions = @original_picture.revisions
+    @root_comments = @picture.root_comments.order("created_at ASC")
     
     add_breadcrumb "Select Project", "project_submissions_url"
     set_breadcrumb_for @subject, 'new_project_submission_picture_path' + "(#{@project_submission.id})", 
