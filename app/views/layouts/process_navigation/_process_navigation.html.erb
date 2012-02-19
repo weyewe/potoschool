@@ -10,6 +10,7 @@
      
      <% if current_user.has_role?(:teacher) %>
        <%= get_process_nav( :teacher , params ).html_safe %> 
+       <%= get_process_nav( :submission_grading , params ).html_safe %> 
      <% end %>
      
      

@@ -78,6 +78,10 @@ Debita46::Application.routes.draw do
   match 'select_group/course/:course_id' => "group_memberships#select_group", :as => :select_group
   
   
+  # grading the projcet submission
+  match 'project_submissions_display' => "project_submissions#project_submissions_display", :as => :project_submissions_display
+  
+  
   
 =begin
   FOR STUDENTS 

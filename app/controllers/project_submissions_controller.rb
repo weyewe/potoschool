@@ -9,4 +9,8 @@ class ProjectSubmissionsController < ApplicationController
     add_breadcrumb "Select Project", "project_submissions_url"
     
   end
+  
+  def teacher_display
+  end
+  
 end

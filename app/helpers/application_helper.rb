@@ -193,6 +193,10 @@ module ApplicationHelper
       return create_process_nav(TEACHER_PROCESS_LIST, params )
     end
     
+    if symbol == :submission_grading 
+      return create_process_nav(SUBMISSION_GRADING_PROCESS_LIST, params )
+    end
+    
     if symbol == :student 
       return create_process_nav(STUDENT_PROCESS_LIST, params )
     end
@@ -484,4 +488,41 @@ module ApplicationHelper
       }
     ]
   }
+  
+  SUBMISSION_GRADING_PROCESS_LIST = {
+    :header_title => "Project Submission",
+    :processes => [
+      {
+        :title => "Project Grading",
+        :destination_link => "project_submissions_display_url",
+        :conditions => [
+          {
+            :controller => '',
+            :action => ''
+          }
+        ]
+      },
+      {
+        :title => "Recent Submission",
+        :destination_link => "project_submissions_display_url",
+        :conditions => [
+          {
+            :controller => '',
+            :action => ''
+          }
+        ]
+      },
+      {
+        :title => "Recent Comments",
+        :destination_link => "project_submissions_display_url",
+        :conditions => [
+          {
+            :controller => '',
+            :action => ''
+          }
+        ]
+      }
+    ]
+  }
+  
 end
