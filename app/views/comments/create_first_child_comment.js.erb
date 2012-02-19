@@ -1,17 +1,14 @@
-/*
-What should we do? 
 
-This is the first child!!! 
-
-OK OK OK , calm down.. First, we should remove the form for the first child
-
-Then, we should add the <ol> for the children
-*/
+<% child_comment_wrapper = escape_javascript(
+        render :partial => "pictures/child_comment_wrapper",
+        :locals => {
+          :root_comment => @root_comment,
+          :picture => @picture
+        }
+)  %>
 
 $(document).ready(function(){
-  $("#root_comment-<%= @root_comment.id %>").remove(); 
   
-  
-  
-  
+  // remove the form
+  $("#root_comment-<%= @root_comment.id %>").replaceWith('<%= child_comment_wrapper %>'); 
 });

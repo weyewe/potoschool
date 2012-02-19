@@ -107,7 +107,7 @@ $(document).ready(function() {
 
      $this.hide();
      $form.fadeIn();
-
+     $(".comment_body_text_area", $form).focus();
      return false;
    });
 
@@ -117,6 +117,7 @@ $(document).ready(function() {
      var $form = $(".first_child_form", $container);
      var $reply_button = $(".first_root_comment_clicker", $container);
 
+     $(".comment_body_text_area", $form).blur();
      $form.hide();
      $reply_button.show();
      return false;
@@ -132,10 +133,12 @@ $(document).ready(function() {
      var $this = $(this);
      var $container = $(this).parents(".child_comment_wrapper");
      var $form = $(".child_form", $container);
-
+     
+     
      $this.hide();
      $form.fadeIn();
-
+     $(".comment_body_text_area", $form).focus();
+     
      return false;
    });
 
@@ -145,6 +148,8 @@ $(document).ready(function() {
      var $form = $(".child_form", $container);
      var $reply_button = $(".child_comment_clicker", $container);
 
+
+     $(".comment_body_text_area", $form).blur();
      $form.hide();
      $reply_button.show();
      return false;
