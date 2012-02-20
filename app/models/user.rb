@@ -169,6 +169,26 @@ class User < ActiveRecord::Base
           where(:subject_teaching_assignments => {:user => {:id => self.id } } )
   end
   
+  def all_active_projects
+    # we have to use eager loading
+    # project.course
+    # project.course.subject  
+    ## all these shit in one single query. Or else, time consuming 
+    all_courses_id = self.all_courses_taught.select(:id).collect do | course |
+      course.id
+    end
+    
+    # find all courses taught by the teacher
+    # for each of the courses, find all the active projects 
+    
+    Project.find(:all, :conditions => {
+      :is_active => true, 
+      :course_id  => all_courses_id
+    })
+    
+  end
+  
+  
   def total_courses_count_for(subject)
     SubjectTeachingAssignment.find(:all, :conditions => {
       :user_id => self.id, :subject_id => subject.id

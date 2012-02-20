@@ -80,8 +80,9 @@ Debita46::Application.routes.draw do
   
   # grading the projcet submission
   match 'project_submissions_display' => "project_submissions#project_submissions_display", :as => :project_submissions_display
-  
-  
+  match 'select_project_for_grading' => "projects#select_project_for_grading", :as => :select_project_for_grading
+  match 'select_project_submission_for_grading/project/:project_id' => "project_submissions#select_project_submission_for_grading", :as => :select_project_submission_for_grading
+  match 'show_submission_pictures_for_grading/project_submission/:project_submission_id' => "project_submissions#show_submission_pictures_for_grading", :as => :show_submission_pictures_for_grading
   
 =begin
   FOR STUDENTS 

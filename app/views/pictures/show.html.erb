@@ -81,7 +81,9 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
-      <%= render :partial => "pictures/upload_revision_form"%>
+      <% if current_user.is_submission_owner?(@project_submission) %>
+        <%= render :partial => "pictures/upload_revision_form"%>
+      <% end %>
       <% if @picture.is_original == false %>
         <%= render :partial => "pictures/show_original", :locals =>{
           :original_picture => @original_picture,

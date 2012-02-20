@@ -54,12 +54,22 @@ class ProjectsController < ApplicationController
   
   
 =begin
-  FOR STUDENTS
-=end   
+  Teacher's perspective
+  1. Select project
+  2. Select submission 
+=end
+  def select_project_for_grading
+    @projects = current_user.all_active_projects
+    
+    add_breadcrumb "Select Project", "select_project_for_grading_url"
+  end
+  
+  
+    # 
+    # def project_submissions_display
+    #   @projects = current_user.all_active_projects
+    # end
+  
+  
 
-  # def student_projects
-  #   @projects = ProjectSubmission.find(:all, :conditions => {
-  #     :user_id => current_user.id
-  #   })
-  # end
 end

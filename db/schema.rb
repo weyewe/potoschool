@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218075114) do
+ActiveRecord::Schema.define(:version => 20120220095954) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -119,6 +119,9 @@ ActiveRecord::Schema.define(:version => 20120218075114) do
     t.datetime "approval_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "first_submission_time"
+    t.integer  "total_original_submission", :default => 0
+    t.integer  "total_picture_submission",  :default => 0
   end
 
   create_table "projects", :force => true do |t|
@@ -130,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20120218075114) do
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",        :default => true
   end
 
   create_table "revisionships", :force => true do |t|

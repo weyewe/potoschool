@@ -494,17 +494,25 @@ module ApplicationHelper
     :processes => [
       {
         :title => "Project Grading",
-        :destination_link => "project_submissions_display_url",
+        :destination_link => "select_project_for_grading_url",
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'projects',
+            :action => 'select_project_for_grading'
+          },
+          {
+            :controller => 'project_submissions',
+            :action => 'select_project_submission_for_grading'
+          },
+          {
+            :controller => 'project_submissions',
+            :action => 'show_submission_pictures_for_grading'
           }
         ]
       },
       {
         :title => "Recent Submission",
-        :destination_link => "project_submissions_display_url",
+        :destination_link => "select_project_for_grading_url",
         :conditions => [
           {
             :controller => '',
@@ -514,7 +522,7 @@ module ApplicationHelper
       },
       {
         :title => "Recent Comments",
-        :destination_link => "project_submissions_display_url",
+        :destination_link => "select_project_for_grading_url",
         :conditions => [
           {
             :controller => '',

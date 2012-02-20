@@ -194,6 +194,8 @@ class Picture < ActiveRecord::Base
         )
         
         counter =  counter + 1 
+        
+     
       end
     elsif params[:is_original].to_i == REVISION_PICTURE
       original_picture = Picture.find_by_id(params[:original_picture_id])
@@ -227,6 +229,7 @@ class Picture < ActiveRecord::Base
     # new_picture.get_original.project.neutralize
     # check_wizard_completion( project )
     
+    project_submission.update_submission_data( new_picture )
     return new_picture
   end
   

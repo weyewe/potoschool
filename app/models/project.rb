@@ -17,4 +17,7 @@ class Project < ActiveRecord::Base
   def group_project?
     self.is_group_project
   end
+  
+  
+ 
 end
