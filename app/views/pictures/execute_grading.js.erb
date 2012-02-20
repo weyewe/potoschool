@@ -8,7 +8,7 @@
   ) %>
 <% elsif @picture.is_approved == false %>
   <% grading_replacement = escape_javascript(
-    render :partial => "pictures/rejected", :locals => {
+    render :partial => "pictures/rejected_submission", :locals => {
       :picture => @picture 
     }
   ) %>
@@ -17,6 +17,6 @@
 
 <% if grading_replacement.length != 0 %>
   $(document).ready(function(){
-    $("picture_grading_form-<%= @picture.id %>").replaceWith('<%= grading_replacement %>');
+    $("#picture_grading_form-<%= @picture.id %>").replaceWith('<%= grading_replacement %>');
   });
 <% end %> 

@@ -45,7 +45,9 @@ class Picture < ActiveRecord::Base
     self.original_picture.nil? 
   end
   
-  
+  def any_picture_submission_approved?
+    self.original_picture.approved_revision_id != nil
+  end
   
   
   def original_picture
@@ -53,6 +55,19 @@ class Picture < ActiveRecord::Base
       return self
     else
       return self.inverse_revisions.first
+    end
+  end
+  
+  def approved_picture
+    Picture.find_by_id( self.original_picture.approved_revision_id )
+  end
+  
+  def last_revision
+    all_revisions = self.original_picture.revisions 
+    if all_revisions.count == 0
+      return self.original_picture
+    else
+      return all_revisions.last
     end
   end
   
@@ -233,5 +248,7 @@ class Picture < ActiveRecord::Base
     return new_picture
   end
   
+  
+
   
 end

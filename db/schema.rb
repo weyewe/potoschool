@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120220140846) do
+ActiveRecord::Schema.define(:version => 20120220173543) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20120220140846) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_approved"
+    t.integer  "approved_revision_id"
   end
 
   create_table "positional_comments", :force => true do |t|

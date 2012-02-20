@@ -82,7 +82,11 @@
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
       <% if current_user.is_submission_owner?(@project_submission) %>
-        <%= render :partial => "pictures/upload_revision_form"%>
+      <!-- if it is not approved, revision still can be uploaded  -->
+        <% if not @project_submission.approved? %>
+          <%= render :partial => "pictures/upload_revision_form"%>
+        <% end %>
+        
       <% end %>
       
       

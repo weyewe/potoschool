@@ -62,7 +62,7 @@ class PicturesController < ApplicationController
     @root_comments = @picture.root_comments.order("created_at ASC")
     
     @original_picture = @picture.original_picture
-    @all_revisions = @original_picture.revisions
+    @all_revisions = @original_picture.revisions.order("created_at DESC")
     
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
@@ -80,17 +80,21 @@ class PicturesController < ApplicationController
 
   def execute_grading
     @picture = Picture.find_by_id(params[:picture_id])
-    puts "hahahaha\n"*10
-    puts params[:picture][:is_approved]
-    # is_approved
+    @original_picture = @picture.original_picture
+    @project_submission = @picture.project_submission
+ 
     
     if params[:picture][:is_approved].to_i == ACCEPT_SUBMISSION
       @picture.is_approved = true 
+      @picture.save
+      @original_picture.approved_revision_id = @picture.id 
+      @original_picture.save 
+    
     elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
       @picture.is_approved = false
+      @picture.save
     else
     end
-    @picture.save 
     
     
     respond_to do |format|

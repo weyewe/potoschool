@@ -2,9 +2,28 @@
 <li class="span3">
   <div class="thumbnail">
     
-    <%= link_to  grade_project_submission_picture_path( picture),
-     :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
-      <%= image_tag picture.index_image_url %>
+    <%# if not project_submission.approved? %>
+      <%#= link_to  grade_project_submission_picture_path( original_picture),
+       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+        <%#= image_tag original_picture.index_image_url %>
+      <%# end %>
+    <%# else %>
+      <%#= link_to  grade_project_submission_picture_path( project_submission.approved_picture),
+       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+        <%#= image_tag project_submission.approved_picture.index_image_url %>
+      <%# end %>
+    <%# end %>
+    
+    <% if not original_picture.any_picture_submission_approved? %>
+      <%= link_to  grade_project_submission_picture_path( original_picture.last_revision),
+       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+        <%= image_tag original_picture.last_revision.index_image_url %>
+      <% end %>
+    <% else %>
+      <%= link_to  grade_project_submission_picture_path( original_picture.approved_picture),
+       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+        <%= image_tag original_picture.approved_picture.index_image_url %>
+      <% end %>
     <% end %>
     
     
@@ -15,16 +34,17 @@
         
         <tbody>
           <tr>
-            <td>Feedbacks</td>
-            <td>6</td>
-          </tr>
-          <tr>
             <td>Revisions</td>
-            <td>5</td>
+            <td><%= original_picture.revisions.count %></td>
           </tr>
           <tr>
             <td>Approved</td>
-            <td>Pending</td>
+            <% if original_picture.any_picture_submission_approved? %>
+              <td>YES</td>
+            <% else %>
+              <td>Pending</td>
+            <% end %>
+            
           </tr>
 
 

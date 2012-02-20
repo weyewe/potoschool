@@ -1,7 +1,7 @@
 
 <div class="span9 content">
-  <%= create_guide("Upload Submission", 
-        "Submit the result for project:  <b>#{@project.title}</b>").html_safe %>
+  <%= create_guide("Submission List ", 
+        "All submissions for project:  <b>#{@project.title}</b>").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
@@ -10,10 +10,10 @@
   <div class="span12">
     
       <ul class="thumbnails" id="uploaded_image_container">
-        <% @original_pictures.each do |picture| %>
+        <% @original_pictures.each do |original_picture| %>
         
           <%= render :partial => "pictures/picture_display_for_grading" , :locals => {
-            :picture => picture,
+            :original_picture => original_picture,
             :project_submission => @project_submission
           }%>
           

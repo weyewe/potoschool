@@ -12,8 +12,12 @@ class ProjectSubmission < ActiveRecord::Base
     self.is_approved == true 
   end
   
+  def approved_picture
+    Picture.find_by_id(self.approved_submission_id)
+  end
+  
   def original_pictures
-    self.pictures.where(:is_original => true )
+    self.pictures.where(:is_original => true ).order("created_at ASC")
   end
   
   def original_pictures_id
