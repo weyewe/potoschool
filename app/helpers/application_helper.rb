@@ -3,59 +3,43 @@ module ApplicationHelper
   REVISION_SELECTED = "selected"
   NEXT_BUTTON_TEXT = "Next &rarr;"
   PREV_BUTTON_TEXT = " &larr; Prev "
-  
-=begin
-  Some next and prev button for so=mething that we haven't known
-=end
-  
-  
-  def get_select_next_project_picture( selection )
-    next_selection = selection.next_selection
-    
-    if not next_selection.nil?
-      return  link_to "Next" ,  
-        project_selection_url(next_selection.project, next_selection ), :class => "next_button"
-    else
-      ""
-    end
-  end
-  
-  def get_select_previous_project_picture( selection )
-    prev_selection = selection.prev_selection
-    
-    if not prev_selection.nil?
-      return  link_to "Prev" ,  
-        project_selection_url(prev_selection.project, prev_selection ), :class => "back_button"
-    else
-      ""
-    end
-    
-  end
-  
+
 =begin
   Getting prev and next button for the pictures#show
 =end
-  def get_next_project_picture( pic )
+  def get_next_project_picture( pic , is_grading_mode)
     next_pic = pic.next_pic
     
     if not next_pic.nil?
-      return  create_galery_navigation_button( NEXT_BUTTON_TEXT, "next",
-                   project_submission_picture_url( pic.project_submission, next_pic))
-      # link_to "Next" , project_picture_url( next_pic.project, next_pic), :class => "next_button"
+      destination_url = ""
+      if not is_grading_mode
+        destination_url = project_submission_picture_url( pic.project_submission, next_pic)
+      else
+        destination_url = grade_project_submission_picture_url( next_pic ) 
+      end
+      
+      
+      return  create_galery_navigation_button( NEXT_BUTTON_TEXT, "next",destination_url )
     else
       ""
     end
   end
   
-  def get_previous_project_picture( pic )
+  def get_previous_project_picture( pic , is_grading_mode )
     prev_pic = pic.prev_pic
     
     if not prev_pic.nil?
-      return  create_galery_navigation_button( PREV_BUTTON_TEXT, "previous", 
-                  project_submission_picture_url( pic.project_submission, prev_pic) )
+      
+      destination_url = ""
+      if not is_grading_mode
+        destination_url = project_submission_picture_url( pic.project_submission, prev_pic)
+      else
+        destination_url = grade_project_submission_picture_url( prev_pic ) 
+      end
       
       
-      # link_to "Prev" , project_picture_url( prev_pic.project, prev_pic), :class => "back_button"
+      return  create_galery_navigation_button( PREV_BUTTON_TEXT, "previous", destination_url)
+      
     else
       ""
     end
