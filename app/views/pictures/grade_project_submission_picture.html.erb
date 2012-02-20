@@ -81,6 +81,16 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
+      
+      <!-- Grading Form -->
+      <% if current_user.is_allowed_to_grade?(@project_submission) %>
+        <%= render :partial => "pictures/submission_grading_form", :locals => {
+          :picture => @picture 
+        }%>
+      <% end %>
+      
+      
+      <!-- Revision upload Form -->
       <% if current_user.is_submission_owner?(@project_submission) %>
         <%= render :partial => "pictures/upload_revision_form"%>
       <% end %>
@@ -88,17 +98,17 @@
       
       
       <% if @picture.is_original == false %>
-        <%= render :partial => "pictures/show_original", :locals =>{
+        <%= render :partial => "pictures/grading_show_original", :locals =>{
           :original_picture => @original_picture,
           :project_submission => @project_submission
         }%>
       <% end %>
       
       <% if @all_revisions.count != 0 %>
-        <%= render :partial => "pictures/revision_list",
+        <%= render :partial => "pictures/grading_revision_list",
                   :locals => {:all_revisions => @all_revisions, 
                           :current_display => @picture,
-                          :project_submission => @project_submission }%>
+                          :project_submission => @project_submission}%>
                       
       <% end %>
     </div><!--/span-->

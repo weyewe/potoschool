@@ -507,6 +507,10 @@ module ApplicationHelper
           {
             :controller => 'project_submissions',
             :action => 'show_submission_pictures_for_grading'
+          },
+          {
+            :controller => 'pictures',
+            :action => 'grade_project_submission_picture'
           }
         ]
       },

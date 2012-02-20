@@ -2,7 +2,7 @@
 <li class="span3">
   <div class="thumbnail">
     
-    <%= link_to  project_submission_picture_url(project_submission, picture),
+    <%= link_to  grade_project_submission_picture_path( picture),
      :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
       <%= image_tag picture.index_image_url %>
     <% end %>

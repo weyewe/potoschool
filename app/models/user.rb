@@ -208,6 +208,18 @@ class User < ActiveRecord::Base
   end
   
   
+  # grading the submission
+  
+  def is_allowed_to_grade?(project_submission)
+    # if the teacher has the course teaching assignment 
+    project = project_submission.project
+    CourseTeachingAssignment.find(:first, :conditions => {
+      :course_id => project.course.id,
+      :user_id => self.id
+    })
+  end
+  
+  
   
   
 
@@ -238,6 +250,10 @@ class User < ActiveRecord::Base
     Group.group_leader_id == self.id 
   end
   
+  
+  def is_submission_owner?(project_submission)
+    project_submission.user_id == self.id
+  end
   
   # for a given course, student can only be registered in 1 group 
   def group_for_course(course)

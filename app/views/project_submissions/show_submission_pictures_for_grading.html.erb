@@ -12,13 +12,10 @@
       <ul class="thumbnails" id="uploaded_image_container">
         <% @original_pictures.each do |picture| %>
         
-        <%= render :partial => "pictures/picture_display_for_grading" , :locals => {
-          :picture => picture,
-          :project_submission => @project_submission
-        }%>
-                
-                
-                
+          <%= render :partial => "pictures/picture_display_for_grading" , :locals => {
+            :picture => picture,
+            :project_submission => @project_submission
+          }%>
           
         <% end %>
       </ul>

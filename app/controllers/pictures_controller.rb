@@ -52,6 +52,31 @@ class PicturesController < ApplicationController
   
   
   
+=begin
+  TEACHER's VIEW
+=end
+  def grade_project_submission_picture
+    @picture = Picture.find_by_id( params[:picture_id] )
+    @project_submission = @picture.project_submission
+    @project = @project_submission.project
+    @root_comments = @picture.root_comments.order("created_at ASC")
+    
+    @original_picture = @picture.original_picture
+    @all_revisions = @original_picture.revisions
+    
+    
+    add_breadcrumb "Select Project", "select_project_for_grading_url"
+    set_breadcrumb_for @subject, 'select_project_submission_for_grading_path' + "(#{@project.id})", 
+                "Select Student Submission"
+                
+    set_breadcrumb_for @subject, 'show_submission_pictures_for_grading_path' + "(#{@project_submission.id})", 
+              "Results"
+    set_breadcrumb_for @subject, 'grade_project_submission_picture_path' + "(#{@picture.id})", 
+              "Details"
+              
+              
+  end
+
   
   
 end
