@@ -77,6 +77,27 @@ class PicturesController < ApplicationController
               
   end
 
+
+  def execute_grading
+    @picture = Picture.find_by_id(params[:picture_id])
+    puts "hahahaha\n"*10
+    puts params[:picture][:is_approved]
+    # is_approved
+    
+    if params[:picture][:is_approved].to_i == ACCEPT_SUBMISSION
+      @picture.is_approved = true 
+    elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
+      @picture.is_approved = false
+    else
+    end
+    @picture.save 
+    
+    
+    respond_to do |format|
+      format.html {  redirect_to project_submission_picture_path(@picture ,@picture) }
+      format.js
+    end
+  end
   
   
 end

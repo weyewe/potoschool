@@ -84,16 +84,24 @@
       
       <!-- Grading Form -->
       <% if current_user.is_allowed_to_grade?(@project_submission) %>
-        <%= render :partial => "pictures/submission_grading_form", :locals => {
-          :picture => @picture 
-        }%>
+        <% if @picture.is_approved.nil? %>
+          <%= render :partial => "pictures/submission_grading_form", :locals => {
+            :picture => @picture }%>
+        <% elsif @picture.is_approved == true %>
+          <%= render :partial => "pictures/accepted_submission", :locals => {
+            :picture => @picture }%>
+        <% elsif @picture.is_approved == false %>
+          <%= render :partial => "pictures/rejected_submission", :locals => {
+            :picture => @picture }%>
+        <% end %>
+        
       <% end %>
       
       
-      <!-- Revision upload Form -->
-      <% if current_user.is_submission_owner?(@project_submission) %>
-        <%= render :partial => "pictures/upload_revision_form"%>
-      <% end %>
+      <!-- Revision upload Form: only student who can upload revision -->
+      <%# if current_user.is_submission_owner?(@project_submission) %>
+        <%#= render :partial => "pictures/upload_revision_form"%>
+      <%# end %>
       
       
       

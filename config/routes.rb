@@ -84,6 +84,7 @@ Debita46::Application.routes.draw do
   match 'select_project_submission_for_grading/project/:project_id' => "project_submissions#select_project_submission_for_grading", :as => :select_project_submission_for_grading
   match 'show_submission_pictures_for_grading/project_submission/:project_submission_id' => "project_submissions#show_submission_pictures_for_grading", :as => :show_submission_pictures_for_grading
   match 'grade_project_submission_picture/picture/:picture_id' => "pictures#grade_project_submission_picture", :as => :grade_project_submission_picture
+  match 'execute_grading/picture/:picture_id' => "pictures#execute_grading", :as => :execute_grading, :method => :post
   
   
 =begin

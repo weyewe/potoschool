@@ -97,6 +97,62 @@ $(document).ready(function() {
    });
    
    
+   /* AjaxForm, special for grading approval */
+   
+   $(".grading-button").live('click', function(){
+     console.log("eh, clicked");
+     var $this = $(this);
+     var $form = $this.parents("form.grading-ajaxform"); 
+     var destination = $form.attr('action');
+     console.log(destination);
+     var $table = $("table", $form);
+     
+     if( $this.attr("id") == "approve_submission" ){
+       $("#approval_code").attr('value',  '<%= ACCEPT_SUBMISSION %>' );
+       console.log("The value is " + <%= ACCEPT_SUBMISSION %> )
+     }else {
+       $("#approval_code").attr('value',  '<%= REJECT_SUBMISSION %>' );
+       console.log("The value is " + <%= REJECT_SUBMISSION %> )
+     }
+     
+     
+     $form.showLoading();
+     $.ajax({
+       url  : destination,
+       type : "POST",
+       data : $form.serialize(),
+       dataType :'script',
+       success: function(response){
+         $form.clearForm();
+         $form.hideLoading();
+         //  the response is a script, removing the form 
+       }
+     });
+         return false; 
+     
+   });
+   
+   
+   $("form.grading-ajaxform").live('submit',function(){
+          var $this = $(this);
+          var destination = $(this).attr('action');
+          var $form_container = $this.parent();
+          $this.showLoading();
+         $.ajax({
+           url: destination,
+           type: "POST",
+           data: $(this).serialize(),
+           dataType: 'script',
+           success: function(response){
+             $this.clearForm();
+             $this.hideLoading();
+             PilipotoJcropApi.release();
+           }
+         });
+         return false;
+        });
+   
+   
    
    /* Respond to clicking Reply -> first child comment creation .. we have to use event delegation for 
    these 2 shites. or else, too dangerous. crash, if there are too many comments*/
