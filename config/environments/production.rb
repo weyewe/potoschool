@@ -45,7 +45,9 @@ Debita46::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
   
-  config.assets.precompile += %w( datatables_mod.min.js datatables.min.js )
+  config.assets.precompile += %w( datatables_mod.min.js 
+                          datatables.min.js jcrop.css image_map.css ,
+                          jquery.Jcrop.min.js phototagging_exe.js)
                             
                             
 
