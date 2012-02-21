@@ -19,6 +19,7 @@ gem 'acts_as_commentable_with_threading',
 gem 'awesome_print'
 
 gem "squeel" 
+gem "timeline_fu"
 
 # http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
 #  breadcrumb
