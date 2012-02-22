@@ -100,6 +100,10 @@
         <% end %>
         
         
+        <%= render :partial => "pictures/download_original" , :locals => {
+          :picture => @picture
+        }%>
+        
         <% if @picture.is_approved == true %>
           <%= render :partial => "pictures/accepted_submission", :locals => {
             :picture => @picture }%>

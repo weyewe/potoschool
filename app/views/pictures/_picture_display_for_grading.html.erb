@@ -38,21 +38,25 @@
             <td><%= original_picture.revisions.count %></td>
           </tr>
           <tr>
-            <td>Approved</td>
+            <td>Approval</td>
             <% if original_picture.any_picture_submission_approved? %>
               <td>YES</td>
             <% else %>
-              <td>Pending</td>
+              <% if original_picture.last_revision.is_approved == false %>
+                <td>REJECTED</td>
+              <% else %>
+                <td>PENDING</td>
+              <% end %>
             <% end %>
-            
           </tr>
-
-
-
         </tbody>
       </table>
-      <p><a class="btn btn-primary" href="#">See Details</a></p>
+     
     </div>
+     
+     
+        
+      
   </div>
 </li>
 
