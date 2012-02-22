@@ -16,7 +16,7 @@ class GroupMembershipsController < ApplicationController
   
   def select_group
     
-    @course = Course.includes(:group_memberships, :groups).find_by_id(params[:course_id])
+    @course = Course.find_by_id(params[:course_id])
     @groups = @course.groups
     @subject = @course.subject
     

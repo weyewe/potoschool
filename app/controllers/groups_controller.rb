@@ -62,4 +62,28 @@ class GroupsController < ApplicationController
     set_breadcrumb_for @group, 'select_group_leader_path' + "(#{@group.id})", 
                 "Select Group Leader"
   end
+  
+  
+  def execute_select_group_leader
+    @group = Group.find_by_id( params[:group_id])
+    @new_group_leader  = ' '
+    @old_group_leader  = ' '
+    
+    if params[:action_to_the_student].to_i  == ADD_GROUP_LEADER
+      @new_group_leader = User.find_by_id(  params[:user_id] )
+      @old_group_leader = @group.group_leader 
+      @group.add_group_leader( @new_group_leader ) 
+    elsif params[:action_to_the_student].to_i  == REMOVE_GROUP_LEADER
+      @old_group_leader = User.find_by_id( params[:user_id] )
+      @group.remove_group_leader( @old_group_leader )
+    end
+    
+    
+    
+    respond_to do |format|
+      format.html {  redirect_to select_group_leader_path(@group) }
+      format.js
+    end
+    
+  end
 end
