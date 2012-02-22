@@ -10,6 +10,7 @@
   <div class="row-fluid">
     <div class="span8">
       <h3> <%= @picture.name %></h3>
+      <h4> Uploaded on: <%= @picture.created_at.in_time_zone("Jakarta")%> </h4> 
       <% if @picture.is_original == true  %>
         <span class="label">Original Submission</span>
       <% else %>
