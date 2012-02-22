@@ -42,38 +42,32 @@ class ProjectSubmission < ActiveRecord::Base
   
   # for display in project_submissions#select_project_submission_for_grading
    def self.eager_load_project_submissions_for(project)
-     # Category.includes(:posts => [{:comments => :guest}, :tags]).find(1)
-     # <td><%= project_submission.first_submission.created_at %></td>
-     #   <td><%= project_submission.original_pictures.count %></td>  
-     #   <td><%= project_submission.is_approved %></td>
      self.includes(:pictures, :user).find(:all, :conditions=>{
        :project_id => project.id 
      })
    end
    
-   # def assign_first_submission(picture)
-   #     # add_column :project_submissions, :first_submission_time, :datetime
-   #     #      add_column :project_submissions, :total_original_submission, :integer, :default => 0
-   #     #      add_column :project_submissions, :total_picture_submission, :integer, :default => 0
-   #     self.first_submission_time = picture.created_at
-   #     if picture.is_original?
-   #       self.total_original_submission +=  1
-   #     end
-   #     self.total_picture_submission += 1 
-   #     
-   #     self.save
-   #   end
-   
+
    def update_submission_data(picture)
      if self.first_submission_time.nil?
        self.first_submission_time = picture.created_at
      end
      
+     puts "********************Gonna update submission data\n"*100
+     if picture.is_original?
+       self.total_original_submission += 1
+     end 
+
      self.total_picture_submission += 1 
-     self.total_original_submission += 1
      self.save
    end
    
+   
+   # def clean_data
+   #   self.total_original_submission = self.original_pictures.count
+   #   self.total_picture_submission = self.pictures.count
+   #   self.save
+   # end
    
    # Update the server
    # Utility method

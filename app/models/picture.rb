@@ -42,7 +42,7 @@ class Picture < ActiveRecord::Base
   has_many :positional_comments
   
   def is_original?
-    self.original_picture.nil? 
+    self.is_original 
   end
   
   def any_picture_submission_approved?
@@ -54,7 +54,8 @@ class Picture < ActiveRecord::Base
     if self.is_original == true 
       return self
     else
-      return self.inverse_revisions.first
+      Picture.find_by_id( self.original_id )
+      # return self.inverse_revisions.first
     end
   end
   
@@ -236,7 +237,8 @@ class Picture < ActiveRecord::Base
            :index_image_size       => index_image_size         ,
            :revision_image_size    => revision_image_size      ,
            :display_image_size     => display_image_size       ,
-           :name => image_name
+           :name => image_name,
+           :original_id => original_picture.id
       )
     end
     
