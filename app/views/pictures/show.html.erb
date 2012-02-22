@@ -1,5 +1,5 @@
 
-<div class="span9 content">
+<div class="span9 content" style="min-width:700px;">
   <%= create_guide("Analyze Picture", 
         "You can comment <b>on the picture</b>. 
         Just drag the mouse on the desired position, and create comment.").html_safe %>
@@ -27,7 +27,7 @@
       
       
       <!-- The image in display -->
-        <div class="thumbnail image" style="min-width:590px;">
+        <div class="thumbnail image" >
           
           <%= render :partial => "pictures/positional_comment_form", 
                           :locals => {:picture => @picture}%>
