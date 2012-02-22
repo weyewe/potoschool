@@ -17,20 +17,21 @@
   
 <% end %>
 
-<% content_for :additional_js do %>
+<%# content_for :additional_js do %>
+<!-- 
   <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
   <script type="text/javascript">
      // We call .transloadit() after the DOM is initialized:
-     $(document).ready(function() {
-       $('#upload_revision').transloadit({
-         wait : true, 
-         pollTimeout : 15000,
-         processZeroFiles : false,
-         onStart : function(assembly){
-         }
-       });
-     });
-  </script>
-<% end %>
+     // $(document).ready(function() {
+     //     $('#upload_revision').transloadit({
+     //       wait : true, 
+     //       pollTimeout : 15000,
+     //       processZeroFiles : false,
+     //       onStart : function(assembly){
+     //       }
+     //     });
+     //   });
+  </script>  -->
+<%# end %>
 
 <hr />
