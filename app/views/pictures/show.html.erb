@@ -91,7 +91,7 @@
       
        <button data-toggle="button" id="pilipoto-switcher" 
             class="btn btn-primary waitMode">Turn On Feedback Mode</button>
-        
+        <hr />
       <% if current_user.is_submission_owner?(@project_submission) %>
       <!-- if it is not approved, revision still can be uploaded  -->
         <% if not @original_picture.any_picture_submission_approved? %>

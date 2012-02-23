@@ -7,7 +7,7 @@
   
 
   
-  <div class="row-fluid">
+  <div class="row-fluid" id="actionWrapper">
     <div class="span8">
       <h3> <%= @picture.name %></h3>
       <h4> Uploaded on: <%= @picture.created_at.in_time_zone("Jakarta")%> </h4> 
@@ -82,6 +82,11 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
+      
+       <button data-toggle="button" id="pilipoto-switcher" 
+            class="btn btn-primary waitMode">Turn On Feedback Mode</button>
+            
+        <hr />
       
       <!-- Grading Form -->
       <% if current_user.is_allowed_to_grade?(@project_submission) %>
