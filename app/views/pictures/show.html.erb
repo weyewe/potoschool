@@ -7,7 +7,7 @@
   
 
   
-  <div class="row-fluid">
+  <div class="row-fluid" id="actionWrapper">
     <div class="span8">
       <h3> <%= @picture.name %></h3>
       <h4> Uploaded on: <%= @picture.created_at.in_time_zone("Jakarta") %></h4>
@@ -50,7 +50,7 @@
         <% end %>
 
         <% content_for :additional_js do %>
-          <%#= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
+          <%= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
           <%= transloadit_jquerify :upload_revision, :wait => true %>
           
           <script type='text/javascript'>
@@ -88,6 +88,10 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
+      
+       <button data-toggle="button" id="pilipoto-switcher" 
+            class="btn btn-primary waitMode">Turn On Feedback Mode</button>
+        
       <% if current_user.is_submission_owner?(@project_submission) %>
       <!-- if it is not approved, revision still can be uploaded  -->
         <% if not @original_picture.any_picture_submission_approved? %>

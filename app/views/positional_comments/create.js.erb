@@ -10,6 +10,7 @@ $(document).ready(function(){
   $('#title_container').addClass("hide");
   $("ul.map").append('<%= new_positional_comment %>');
   $("ol.root_comment_wrapper").append('<%= new_root_comment %>');
+  refreshMap();
 });
 
 

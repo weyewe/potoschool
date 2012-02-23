@@ -2,14 +2,36 @@
 
 jQuery(function($){
 
-  $('#target').Jcrop({
-    onChange:   showCoords,
-    onSelect:   showCoordsFinal,
-    onRelease:  clearCoords,
-    maxSize: [62,62]
-  },  function(){
-    PilipotoJcropApi = this;
+  $("#pilipoto-switcher").click(function(){
+    
+    var $switcher = $(this);
+    
+    
+    
+    if( $switcher.hasClass("waitMode")){
+      $switcher.addClass("croppingMode");
+      $switcher.removeClass("waitMode");
+      $switcher.text("Turn Off Feedback Mode");
+      $("#actionWrapper").addClass("turnOn");
+        $('#target').Jcrop({
+           onChange:   showCoords,
+           onSelect:   showCoordsFinal,
+           onRelease:  clearCoords,
+           maxSize: [62,62]
+         },  function(){
+           PilipotoJcropApi = this;
+         });
+    }else if( $switcher.hasClass("croppingMode")){
+      $switcher.removeClass("croppingMode");
+      $switcher.addClass("waitMode");
+      $switcher.text("Turn On Feedback Mode");
+      
+      $("#actionWrapper").removeClass("turnOn");
+      PilipotoJcropApi.destroy(); 
+    }
+    
   });
+ 
   
   
   $("#cancel-positional-comment").live('click', function(){
@@ -53,12 +75,18 @@ function showCoordsFinal(c)
   // hidden tag. user only need to fill it
   // show the feedback form , 
   
+  var displayed_image_wrapper_width = parseInt( $(".display_image_wrapper").width()  );
+  var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
+  var scaling_ratio = displayed_image_wrapper_width / normal_image_wrapper_width;
+  
+  
+  
   $('#title_container').css('left', c.x);
   $('#title_container').css('top', c.y2);
-  $("#x1").val(c.x);
-  $("#x2").val(c.x2);
-  $("#y1").val(c.y);
-  $("#y2").val(c.y2);
+  $("#x1").val(parseInt(  c.x )   / scaling_ratio);
+  $("#x2").val(parseInt(  c.x2) / scaling_ratio );
+  $("#y1").val( parseInt(c.y)  / scaling_ratio );
+  $("#y2").val( parseInt( c.y2 )   / scaling_ratio  );
   $('#title_container').removeClass("hide");
   
   $("#comment_value").focus();
