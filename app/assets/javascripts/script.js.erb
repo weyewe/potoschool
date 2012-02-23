@@ -301,3 +301,14 @@ function refreshMap(){
         $this.removeClass("hide");
    });
 }
+
+
+function is_mobile() {
+    var agents = ['android', 'webos', 'iphone', 'ipad', 'blackberry'];
+    for(i in agents) {
+        if(navigator.userAgent.match('/'+agents[i]+'/i')) {
+            return true;
+        }
+    }
+    return false;
+}

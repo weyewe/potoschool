@@ -22,7 +22,7 @@ jQuery(function($){
            PilipotoJcropApi = this;
          });
     }else if( $switcher.hasClass("croppingMode")){
-        if(window.Touch) {
+        if( is_Mobile() ) {
           location.reload();
         } else {
           $switcher.removeClass("croppingMode");
