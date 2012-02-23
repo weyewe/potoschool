@@ -52,6 +52,11 @@
         <% content_for :additional_js do %>
           <%= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
           <%= transloadit_jquerify :upload_revision, :wait => true %>
+          <script type='text/javascript'>
+            $(document).ready(function(){
+              refreshMap();
+            });
+          </script>
         <% end %>
       <% end %>
       
