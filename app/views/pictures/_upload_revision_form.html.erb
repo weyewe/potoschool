@@ -7,13 +7,13 @@
   <%= hidden_field_tag 'is_original', 
           REVISION_PICTURE  %>
   <%= transloadit :potoschool_store_image %>
-  <%= f.file_field :original_image_url, :class => "input-medium search-query" , 
+  <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
             :multiple => "multiple", :style=>"width:200px;" %>
             <br />
   <%= hidden_field_tag 'original_picture_id', 
           @picture.original_picture.id  %>
            
-  <button type="submit" class="btn">Upload Revision</button>
+  <button type="submit" class=" hide btn submit-button">Upload Revision</button>
   
 <% end %>
 

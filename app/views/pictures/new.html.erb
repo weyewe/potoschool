@@ -15,11 +15,11 @@
       <%= hidden_field_tag 'is_original', 
               ORIGINAL_PICTURE  %>
       <%= transloadit :potoschool_store_image %>
-      <%= f.file_field :original_image_url, :class => "input-medium search-query" , 
+      <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
                 :multiple => "multiple", :style=>"width:200px;" %>
                 <br />
                 <br />
-      <button type="submit" class="btn">Upload</button>
+      <button type="submit" class=" hide btn submit-button">Upload</button>
       <p class="help-inline">You can upload multiple images at once.</p>
       
     <% end %>

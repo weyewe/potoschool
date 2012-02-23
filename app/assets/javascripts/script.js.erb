@@ -239,6 +239,23 @@ $(document).ready(function() {
    //  });
    //  
    
+
+   $('.transloadit-input').change(function(){
+     var $this = $(this);
+     var $form = $this.parents("form");
+     var $submit_button = $(".submit-button", $form);
+     
+     if ($(this).val()) {
+       $submit_button.show();
+       // $('input:submit').attr('disabled',false);
+     }else{
+       $submit_button.hide();
+     }
+   });
+
+
+       
+   
  
 });
 
