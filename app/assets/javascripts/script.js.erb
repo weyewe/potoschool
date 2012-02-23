@@ -10,15 +10,11 @@ $(document).ajaxSend(function(event, request, settings) {
 $(document).ready(function() {
   
   
-  if (window.Touch)
-  {
-    alert("touchy touchy");
+  if( is_mobile() ){
+    alert("This si mobile");
+  }else{
+    alert("This is not mobile");
   }
-  else
-  {
-    alert("no touchy touchy");
-  }
-  
   
   
   /*  For the Subject-teacher assignment 
@@ -316,11 +312,13 @@ function refreshMap(){
 
 
 function is_mobile() {
-    var agents = ['android', 'webos', 'iphone', 'ipad', 'blackberry'];
-    for(i in agents) {
-        if(navigator.userAgent.match('/'+agents[i]+'/i')) {
-            return true;
-        }
-    }
-    return false;
+
+  var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));  
+  if (mobile) {  
+    return true;
+  }
+
+  return false; 
+
+
 }
