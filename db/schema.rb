@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120222160544) do
+ActiveRecord::Schema.define(:version => 20120223024505) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(:version => 20120222160544) do
     t.boolean  "is_approved"
     t.integer  "approved_revision_id"
     t.integer  "original_id"
+    t.integer  "score",                 :default => 0
   end
 
   create_table "positional_comments", :force => true do |t|

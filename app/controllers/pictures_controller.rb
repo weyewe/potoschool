@@ -86,12 +86,14 @@ class PicturesController < ApplicationController
     
     if params[:picture][:is_approved].to_i == ACCEPT_SUBMISSION
       @picture.is_approved = true 
+      @picture.score = params[:picture][:score]
       @picture.save
       @original_picture.approved_revision_id = @picture.id 
       @original_picture.save 
     
     elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
       @picture.is_approved = false
+      @picture.score = params[:picture][:score]
       @picture.save
     else
     end

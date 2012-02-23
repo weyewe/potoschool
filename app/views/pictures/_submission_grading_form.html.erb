@@ -10,6 +10,14 @@
         <%= f.hidden_field :is_approved , :id => "approval_code" %>
         <tr>
           <td style="text-align:center;">
+            Score
+          </td>
+          <td style="text-align:center;">
+            <%= f.text_field :score  ,:class => "input-medium search-query span3"%>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align:center;">
             <button id="approve_submission" href="#" class="grading-button btn btn-success">APPROVE</button>
           </td>
           <td style="text-align:center;">

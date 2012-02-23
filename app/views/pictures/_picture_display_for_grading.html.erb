@@ -37,19 +37,38 @@
             <td>Revisions</td>
             <td><%= original_picture.revisions.count %></td>
           </tr>
-          <tr>
-            <td>Approval</td>
+          
             <% if original_picture.any_picture_submission_approved? %>
+            <tr>
+              <td>Approval</td>
               <td>YES</td>
+            </tr>
+            <tr>
+              <td>Score</td>
+              <td><%= original_picture.approved_picture.score %></td>
+            </tr>
             <% else %>
               <% if original_picture.last_revision.is_approved == false %>
-                <td>REJECTED</td>
+                <tr>
+                  <td>Approval</td>
+                  <td>REJECT</td>
+                </tr>
+                <tr>
+                  <td>Score</td>
+                  <td>0</td>
+                </tr>
               <% else %>
-                <td>PENDING</td>
+                <tr>
+                  <td>Approval</td>
+                  <td>PENDING</td>
+                </tr>
+                <tr>
+                  <td>Score</td>
+                  <td>Pending</td>
+                </tr>
               <% end %>
             <% end %>
-          </tr>
-        </tbody>
+         </tbody>
       </table>
      
     </div>
