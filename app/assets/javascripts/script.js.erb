@@ -255,7 +255,11 @@ $(document).ready(function() {
 
 
        
+   /* For positional comment */
    
+  $(window).resize(function(){
+    refreshMap();
+  });
  
 });
 
@@ -274,20 +278,25 @@ $.fn.clearForm = function() {
   });
 };
 
-// prevent double submit 
-// jQuery.fn.preventDoubleSubmission = function() {
-//   $(this).bind('submit',function(e){
-// 
-//     if ($(this).data('submitted') === true) {
-//       // Previously submitted - don't submit again
-//       e.preventDefault();
-//     } else {
-//       // Mark this so that the next submit can be ignored
-//       $(this).data('submitted', true);
-//     }
-//   });
-// 
-//   // Keep chainability
-//   return $(this);
-// };
-
+function refreshMap(){
+  var displayed_image_wrapper_width = parseInt( $(".display_image_wrapper").width()  );
+  var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
+  var scaling_ratio = displayed_image_wrapper_width / normal_image_wrapper_width; 
+  
+  
+  
+   $(".positional_comment_wrapper").each(function(){
+        var $this = $(this);
+        var x_start = parseInt(  $(".x_start", $this ).attr("value")) ;
+        var y_start = parseInt(  $(".y_start", $this ).attr("value")  )  ; 
+  
+        var final_x_start = x_start * scaling_ratio;
+        var final_y_start = y_start * scaling_ratio;
+     
+        var $tag = $(".tag", $this);
+        $tag.css("left", final_x_start.toString() + "px" );
+        $tag.css("top", final_y_start.toString() + "px" );
+        
+        $this.removeClass("hide");
+   });
+}

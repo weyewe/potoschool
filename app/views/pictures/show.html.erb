@@ -27,7 +27,7 @@
       
       
       <!-- The image in display -->
-        <div class="thumbnail image" >
+        <div class="thumbnail image display_image_wrapper" >
           
           <%= render :partial => "pictures/positional_comment_form", 
                           :locals => {:picture => @picture}%>
@@ -52,6 +52,12 @@
         <% content_for :additional_js do %>
           <%#= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
           <%= transloadit_jquerify :upload_revision, :wait => true %>
+          
+          <script type='text/javascript'>
+            $(document).ready(function(){
+              refreshMap();
+            });
+          </script>
         <% end %>
       <% end %>
       
