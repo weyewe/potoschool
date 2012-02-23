@@ -22,12 +22,16 @@ jQuery(function($){
            PilipotoJcropApi = this;
          });
     }else if( $switcher.hasClass("croppingMode")){
-      $switcher.removeClass("croppingMode");
-      $switcher.addClass("waitMode");
-      $switcher.text("Turn On Feedback Mode");
-      
-      $("#actionWrapper").removeClass("turnOn");
-      PilipotoJcropApi.destroy(); 
+        if(window.Touch) {
+          location.reload();
+        } else {
+          $switcher.removeClass("croppingMode");
+          $switcher.addClass("waitMode");
+          $switcher.text("Turn On Feedback Mode");
+
+          $("#actionWrapper").removeClass("turnOn");
+          PilipotoJcropApi.destroy(); 
+        }
     }
     
   });
