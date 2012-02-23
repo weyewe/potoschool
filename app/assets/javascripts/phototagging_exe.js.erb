@@ -23,7 +23,7 @@ jQuery(function($){
          });
     }else if( $switcher.hasClass("croppingMode")){
         if( is_mobile() ) {
-          location.reload();
+          window.location.reload();
         } else {
           $switcher.removeClass("croppingMode");
           $switcher.addClass("waitMode");
