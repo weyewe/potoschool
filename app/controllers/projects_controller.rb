@@ -48,6 +48,7 @@ class ProjectsController < ApplicationController
     end
     
     @project.save
+    @project.create_project_submissions
     
     redirect_to new_course_project_path(@course.id)
   end
