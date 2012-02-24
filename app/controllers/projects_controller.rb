@@ -46,8 +46,25 @@ class ProjectsController < ApplicationController
     else
       @project.is_group_project = false 
     end
+  
+    # the deadline date entered by the user is supposed to be GMT + 7 
+    # but the server will think that it is GMT + 0 
+    # we have to adjust it -> The info of the offset is in the 
+    # school#timezone 
+    @deadline_date = params[:project][:deadline_datetime]
+    # 02/29/2012
+    time_array = @deadline_date.split("/")
+    deadline_time = DateTime.civil(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i, 
+              DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
+              # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
+              Rational(+7,24) )
+              
+    @project.deadline_datetime = deadline_time.getutc # server time is UTC 
+    # @project.deadline_date = deadline_time.getutc.to_date  # server time is UTC, again.. 
     
-    @project.save
+    
+    @project =  Project.create_project_by_project_creator( current_user , @project) 
+ 
     @project.create_project_submissions
     
     redirect_to new_course_project_path(@course.id)

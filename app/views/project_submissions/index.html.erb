@@ -34,7 +34,7 @@
                 <%= link_to "#{project.title}",  new_project_submission_picture_url(project_submission) %> 
               </td>
               <td><%= project.course.subject.name %></td>
-              <td><%= project.deadline_date.strftime('%b %d, %Y') %></td>
+              <td><%= project.deadline_datetime.strftime('%b %d, %Y') %></td>
               
               <% if project_submission.is_approved.nil? %>
                 <td>Pending</td>

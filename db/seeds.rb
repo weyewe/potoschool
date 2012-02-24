@@ -81,51 +81,7 @@ student_3.save
 end
 
 puts "Done with user creation"
-=begin
-  Now, we assign the students, teacher, and admin to the school.
-  The school will have:
-  1 admin
-  2 teachers 
-  3 students 
-=end
 
-
-
-
-
-=begin
-  New methodology: create  the user, add to school (enrollment).
-  For each enrollment, create their own role 
-=end
-
-# 
-# school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
-#                             :password_confirmation => "school_admin", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#           
-# teacher_1 = User.create :email => "teacher_1@potoschool.com", :password => "teacher_1", 
-#                             :password_confirmation => "teacher_1", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-# 
-# teacher_2 = User.create :email => "teacher_2@potoschool.com", :password => "teacher_2", 
-#                             :password_confirmation => "teacher_2", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-#                 
-# student_1 = User.create :email => "student_1@potoschool.com", :password => "student_1", 
-#                             :password_confirmation => "student_1", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#                             
-#                     
-# student_2 = User.create :email => "student_2@potoschool.com", :password => "student_2", 
-#                             :password_confirmation => "student_2", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-#      
-#      
-# student_3 = User.create :email => "student_3@potoschool.com", :password => "student_3", 
-#                             :password_confirmation => "student_3", 
-#                             :username => UUIDTools::UUID.timestamp_create.to_s
-# 
 school.users << student_1
 school.users << student_2
 school.users << student_3
@@ -134,50 +90,6 @@ school.users << teacher_1
 school.users << teacher_2
 school.users << school_admin
 school.save
-
-=begin
-Assign the role to each enrollment 
-
-# Question: can a user have more than one enrollment in a given school?
-  A student in one class, and a teacher in another class?
-    Possible, not common. In the first iteration, assume that it is impossible.
-    If he really wnats it, make a new user 
-=end
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => school_admin.id})
-# enrollment.roles << school_admin_role
-# enrollment.save
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_1.id} )
-# enrollment.roles << student_role
-# enrollment.save
-# 
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_2.id})
-# enrollment.roles << student_role
-# enrollment.save
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => student_3.id} )
-# enrollment.roles << student_role
-# enrollment.save
-# 
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_1.id})
-# enrollment.roles << teacher_role
-# enrollment.save
-# 
-# 
-# 
-# 
-# enrollment = Enrollment.find( :first, :conditions => {:school_id => school.id, :user_id => teacher_2.id})
-# enrollment.roles << teacher_role
-# enrollment.save
-# 
 
 
 
@@ -206,9 +118,7 @@ subject_3 = Subject.create :code => "POTO7777", :name => "Advanced Photography",
   Subject has_many :subject_teaching_assignments
 =end
 
-# subject_1.users << teacher_1 
-# subject_1.users << teacher_2
-# subject_1.save
+
 
 puts teacher_1 
 puts "before add teacher \n"*10
@@ -325,7 +235,7 @@ project_1 = course_1_subject_1.create_project_with_submissions :title => "This i
           :deadline_date => DateTime.new( 2013, 3, 4).to_date
           
 project_2 = course_1_subject_1.create_project_with_submissions :title => "This is the second project",
-          :description => "Take any sexy that you want. Submit it.",
+          :description => "Take any sexy images. Submit it.",
           :deadline_date => DateTime.new( 2012, 5, 4).to_date
 
     # model this shit tomorrow                          

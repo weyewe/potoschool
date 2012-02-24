@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120223024505) do
+ActiveRecord::Schema.define(:version => 20120224082131) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -131,13 +131,12 @@ ActiveRecord::Schema.define(:version => 20120223024505) do
   create_table "projects", :force => true do |t|
     t.string   "title"
     t.text     "description"
-    t.boolean  "is_group_project", :default => false
-    t.date     "deadline_date"
-    t.time     "deadline_time"
+    t.boolean  "is_group_project",  :default => false
     t.integer  "course_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_active",        :default => true
+    t.boolean  "is_active",         :default => true
+    t.datetime "deadline_datetime"
   end
 
   create_table "revisionships", :force => true do |t|
@@ -182,6 +181,18 @@ ActiveRecord::Schema.define(:version => 20120223024505) do
     t.boolean  "is_closed",     :default => false
     t.date     "starting_date"
     t.date     "ending_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_activities", :force => true do |t|
+    t.string   "event_type"
+    t.string   "subject_type"
+    t.string   "actor_type"
+    t.string   "secondary_subject_type"
+    t.integer  "subject_id"
+    t.integer  "actor_id"
+    t.integer  "secondary_subject_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

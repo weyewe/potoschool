@@ -27,6 +27,19 @@ REJECT_SUBMISSION = 0
 ADD_GROUP_LEADER = 1 
 REMOVE_GROUP_LEADER = 0
 
+DEFAULT_DEADLINE_HOUR = 23
+DEFAULT_DEADLINE_MINUTE = 59 
 
 
 DISPLAY_IMAGE_WIDTH = 590
+
+EVENT_TYPE  = {
+  :create_comment => 1,
+  :reply_comment => 2, 
+  :submit_picture => 3 , 
+  :submit_picture_revision => 4, 
+  :grade_picture => 5, 
+  :create_project => 6 
+}
+# 
+# SECONDARY_SUBJECT_EVENT = [ 2, 4 , 5 ] # reply, revision, grade picture  

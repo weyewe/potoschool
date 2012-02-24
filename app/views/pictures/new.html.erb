@@ -8,41 +8,40 @@
   <div class="row-fluid">
 
     
-    
-    <%= form_for @new_picture, :url => project_submission_pictures_url(@project_submission) , 
-              :html => {:class=> "well form-search",
-                :id => 'upload_picture' }  do |f| %>
-      <%= hidden_field_tag 'is_original', 
-              ORIGINAL_PICTURE  %>
-      <%= transloadit :potoschool_store_image %>
-      <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
-                :multiple => "multiple", :style=>"width:200px;" %>
-                <br />
-                <br />
-      <button type="submit" class=" hide btn submit-button">Upload</button>
-      <p class="help-inline">You can upload multiple images at once.</p>
+    <% if Time.now < @project.deadline_datetime %>
+      <%= form_for @new_picture, :url => project_submission_pictures_url(@project_submission) , 
+                :html => {:class=> "well form-search",
+                  :id => 'upload_picture' }  do |f| %>
+        <%= hidden_field_tag 'is_original', 
+                ORIGINAL_PICTURE  %>
+        <%= transloadit :potoschool_store_image %>
+        <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
+                  :multiple => "multiple", :style=>"width:200px;" %>
+                  <br />
+                  <br />
+        <button type="submit" class=" hide btn submit-button">Upload</button>
+        <p class="help-inline">You can upload multiple images at once.</p>
       
-    <% end %>
+      <% end %>
     
-    <% content_for :additional_js do %>
-      <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
-      <script type="text/javascript">
-         // We call .transloadit() after the DOM is initialized:
-         $(document).ready(function() {
-           $('#upload_picture').transloadit({
-             wait : true, 
-             pollTimeout : 15000,
-             processZeroFiles : false,
-             onStart : function(assembly){
-             }
+      <% content_for :additional_js do %>
+        <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
+        <script type="text/javascript">
+           // We call .transloadit() after the DOM is initialized:
+           $(document).ready(function() {
+             $('#upload_picture').transloadit({
+               wait : true, 
+               pollTimeout : 15000,
+               processZeroFiles : false,
+               onStart : function(assembly){
+               }
+             });
            });
-         });
-      </script>
-    
-    
-    
-      <%#= transloadit_jquerify :upload_picture, :wait => true,
-            :processZeroFiles => false, :pollTimeout => 15000 %>
+        </script>
+      <% end %>
+    <% else %>
+      <h2>You can't submit more project. Deadline has just passed</h2>
+      <hr />
     <% end %>
     
     

@@ -43,12 +43,9 @@ Teacher code
     if project.save 
       project.create_project_submissions
     else
-      # capture the error
       return project
     end
-    
     return project
-    
   end
   
   
