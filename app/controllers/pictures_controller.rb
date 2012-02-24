@@ -90,13 +90,20 @@ class PicturesController < ApplicationController
       @picture.save
       @original_picture.approved_revision_id = @picture.id 
       @original_picture.save 
-    
+      
     elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
       @picture.is_approved = false
       @picture.score = params[:picture][:score]
       @picture.save
     else
     end
+    
+    Picture.new_user_activity_for_grading(
+      EVENT_TYPE[:grade_project],
+      current_user ,  #this is the teacher
+      @picture,  #picture being graded
+      @picture.project_submission.project   #the project where that picture belongs to 
+    )
     
     
     respond_to do |format|

@@ -6,7 +6,7 @@
         "Select the submission to be graded in project: <b> #{@project.title}</b>" + "<br />" + 
         "Course: #{@project.course.name}"  + "<br />" + 
         "Subject: #{@project.course.subject.code}" + "<br />" + 
-        "Deadline: #{@project.deadline_date}").html_safe %>
+        "Deadline: #{@project.deadline_datetime.in_time_zone("Jakarta")}").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   

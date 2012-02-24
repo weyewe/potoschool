@@ -75,6 +75,16 @@ class Comment < ActiveRecord::Base
     eval("#{self.commentable_type}.find(#{self.commentable_id})")
   end
   
+  
+  def self.new_user_activity_for_comment_reply( event_type, author, subject, secondary_subject )
+    UserActivity.create_new_entry(event_type , 
+                        author , 
+                        subject , 
+                        secondary_subject  )
+  end
+  
+  
+  
   protected
   
   def send_feedback_notification_email
@@ -88,6 +98,8 @@ class Comment < ActiveRecord::Base
           
     
   end
+  
+ 
   
   
 end

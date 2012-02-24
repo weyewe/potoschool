@@ -211,6 +211,11 @@ class Picture < ActiveRecord::Base
         
         counter =  counter + 1 
         
+        #  for the UserActivity timeline event 
+        UserActivity.create_new_entry(EVENT_TYPE[:submit_picture], 
+                          project_submission.user , 
+                          new_picture , 
+                          project_submission.project  )
      
       end
     elsif params[:is_original].to_i == REVISION_PICTURE
@@ -240,6 +245,12 @@ class Picture < ActiveRecord::Base
            :name => image_name,
            :original_id => original_picture.id
       )
+    
+      #  for the UserActivity
+       UserActivity.create_new_entry(EVENT_TYPE[:submit_picture_revision], 
+                          project_submission.user , 
+                          new_picture , 
+                          original_picture  )
     end
     
     
@@ -248,6 +259,13 @@ class Picture < ActiveRecord::Base
     
     project_submission.update_submission_data( new_picture )
     return new_picture
+  end
+  
+  def self.new_user_activity_for_grading( event_type, grader, subject, secondary_subject )
+    UserActivity.create_new_entry(event_type , 
+                        grader , 
+                        subject , 
+                        secondary_subject  )
   end
   
   
