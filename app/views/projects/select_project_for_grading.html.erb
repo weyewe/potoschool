@@ -21,7 +21,6 @@
             <th>Title</th>
             <th>Course</th>
             <th>Subject</th>
-            <th>Total Submissions</th>
             <th>Deadline</th>
           </tr>
         </thead>
@@ -32,7 +31,6 @@
               <td><%= link_to "#{project.title}", select_project_submission_for_grading_path(project) %></td>
               <td><%= project.course.name %>
               <td><%= project.course.subject.code %>
-              <td><%= project.project_submissions.count %></td>
               <td><%= project.deadline_datetime.in_time_zone("Jakarta") %>
             </tr>
           <% end %>

@@ -31,7 +31,7 @@
               <td><%= link_to "#{subject.name}", new_course_teaching_assignment_url(subject) %></td>
               <td><%= subject.code %></td>
               <td><%= subject.courses.count %></td>
-              <td>5</td>
+              <td><%=  subject.teachers.count %></td>
             </tr>
           <% end %>
 

@@ -2,16 +2,10 @@ $(document).ready(function(){
   
   var $checkbox = $("#provider_<%=  @group_id %>-consumer_<%=  @user_id %>");
   var $row = $checkbox.parents("tr");
-  if( $row ){
-    console.log("Row does exists ");
-    console.log("length is " + $row.length );
-  }
+
   var $td_membership = $(".membership-info", $row );
   
-  if( $td_membership ){
-     console.log("td_membership does exists, class is  " + $td_membership.attr('class') );
-     console.log("the text is " + $td_membership.text()) ;
-   }
+
   
   
   

@@ -11,7 +11,7 @@
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
-  <h3>Total Teachers: 3</h3>
+  <h3>Total Teachers for this subject: <%= @subject.teachers.count %></h3>
   <hr />
   
   
@@ -34,14 +34,14 @@
               <td><%#= "#{teacher.enrollment_code_for(@subject)}" %>
                 xxx </td>
               <td><%= teacher.total_subjects_count %></td>
-              <td><%= teacher.total_courses_count %></td>
+              <td class="total-course-teaching-assignment"><%= teacher.total_courses_count %></td>
               
               <td class="well">
                 <label class="checkbox">
                   <% checkbox_value = teacher.is_teaching_course?(@course) %>
                   <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
-                      checkbox_value, :class => 'is_checked_class', 
-                      :id => "teacherId_#{teacher.id}" %> Teaching
+                      checkbox_value, :class => 'checkbox_tracker', 
+                      :id => "provider_#{@course.id}-consumer_#{teacher.id}" %> Teaching
                 </label>
 
               </td>
@@ -49,26 +49,23 @@
           <% end %>
 
 
+
          
         </tbody>
       </table>
       
-      <div class="alert alert-success allert-message">
-        <a class="close" href="#">&times;</a>
-        <strong>Well done!</strong> You successfully read this important alert message.
-      </div>
-
       
-      <div class="form-actions">
-        <%= hidden_field_tag 'destination_url', 
-                course_course_teaching_assignments_url(@course) ,
-                 :id => "destination_url" %>
-
-        <button class="btn btn-large btn-primary"
-              type="submit" id="save_button">Save changes</button>
+      <div class=" hidden" id="checkbox_form_wrapper">
+        <%= form_for CourseTeachingAssignment.new, 
+              :url =>course_course_teaching_assignments_url(@course)   do |f| %>
+          <%= hidden_field_tag 'membership_provider' , ''  %>
+          <%= hidden_field_tag 'membership_consumer', '' %>
+          <%= hidden_field_tag 'membership_decision', '' %>
+        <% end %>
       </div>
-
-
+      
+      
+      
       
       
       

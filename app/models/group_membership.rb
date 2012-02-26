@@ -45,23 +45,7 @@ class GroupMembership < ActiveRecord::Base
       
       return group_membership
     end
-        # 
-        # if not group_membership.nil?
-        #   # it was doing action toward itself 
-        #   if decision == TRUE_CHECK # checking the checkbox
-        #     # for some reason, there is a glitch.
-        #     return group_membership
-        #   elsif decision == FALSE_CHECK
-        #     group_membership.destroy 
-        #   end
-        # else
-        #   # there is no such group_membership 
-        #   if decision == FALSE_CHECK
-        #     return 
-        #   elsif decision == TRUE_CHECK 
-        #     GroupMembership.create :group_id => group_id, :user_id => user_id
-        #   end
-        # end
+  
   end
   
 end

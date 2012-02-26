@@ -24,26 +24,25 @@
           <tr>
             <th>Teacher</th>
             <th>Total Subjects taught</th>
-            <th>Total Courses taught</th>
-            <th>Total Courses for this subject</th>
             <th>Assign Teacher</th>
           </tr>
         </thead>
         <tbody>
           <% @teachers.each do |teacher| %>
             <tr>
-              <td><%#= "#{teacher.enrollment_code_for(@subject)}" %>
-                xxx </td>
-              <td><%= teacher.total_subjects_count %></td>
-              <td><%= teacher.total_courses_count %></td>
-              <td><%= teacher.total_courses_count_for(@subject) %></td>
+              <td> xxx </td>
+              <td class="total-subject-teaching-assignment"><%= teacher.total_subjects_count %></td>
               
               <td class="well">
                 <label class="checkbox">
                   <% checkbox_value = teacher.is_teaching_subject?(@subject) %>
-                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+                  <%#= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
                       checkbox_value, :class => 'is_checked_class', 
-                      :id => "teacherId_#{teacher.id}" %> Teaching
+                      :id => "teacherId_#{teacher.id}" %> <!-- Teaching -->
+                  
+                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+                      checkbox_value, :class => 'checkbox_tracker', 
+                      :id => "provider_#{@subject.id}-consumer_#{teacher.id}" %> Teaching
                 </label>
 
               </td>
@@ -55,20 +54,32 @@
         </tbody>
       </table>
       
-      <div class="alert alert-success allert-message">
-        <a class="close" href="#">&times;</a>
-        <strong>Well done!</strong> You successfully read this important alert message.
-      </div>
-
       
-      <div class="form-actions">
-        <%= hidden_field_tag 'destination_url', 
-                subject_subject_teaching_assignments_url(@subject) ,
-                 :id => "destination_url" %>
-
-        <button class="btn btn-large btn-primary"
-              type="submit" id="save_button">Save changes</button>
+      <div class=" hidden" id="checkbox_form_wrapper">
+        <%= form_for SubjectTeachingAssignment.new, 
+              :url =>subject_subject_teaching_assignments_url(@subject)   do |f| %>
+          <%= hidden_field_tag 'membership_provider' , ''  %>
+          <%= hidden_field_tag 'membership_consumer', '' %>
+          <%= hidden_field_tag 'membership_decision', '' %>
+        <% end %>
       </div>
+      
+      
+      
+      <!--       <div class="alert alert-success allert-message">
+              <a class="close" href="#">&times;</a>
+              <strong>Well done!</strong> You successfully read this important alert message.
+            </div>
+
+            
+            <div class="form-actions">
+              <%#= hidden_field_tag 'destination_url', 
+                      subject_subject_teaching_assignments_url(@subject) ,
+                       :id => "destination_url" %>
+
+              <button class="btn btn-large btn-primary"
+                    type="submit" id="save_button">Save changes</button>
+            </div> -->
 
 
       

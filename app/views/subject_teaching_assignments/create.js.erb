@@ -1,0 +1,9 @@
+$(document).ready(function(){
+
+  var $checkbox = $("#provider_<%=  @subject_id %>-consumer_<%=  @user_id %>");
+  var $row = $checkbox.parents("tr");
+  var $td_membership = $(".total-subject-teaching-assignment", $row );
+  $td_membership.text('<%= @teacher.total_subjects_count %>');
+
+
+});

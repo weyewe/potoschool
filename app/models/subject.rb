@@ -12,6 +12,19 @@ class Subject < ActiveRecord::Base
   has_many :subject_registrations
   
   def teachers
+    # SubjectTeachingAssignment.find(:all, :conditions => {:subject_id => self.id})
+    # 
+    # self.users.joins(:assignments).where{
+    #    (assignments.role_id == student_role.id )
+    #  }
+    #  
+     subject = self 
+     User.joins(:subject_teaching_assignments).where{
+       (subject_teaching_assignments.subject_id == subject.id )
+     }
+     
+     
+     
   end
   
   def students_count

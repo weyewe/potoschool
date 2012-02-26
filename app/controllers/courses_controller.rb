@@ -9,6 +9,16 @@ class CoursesController < ApplicationController
               'Create new course for ' + "#{@subject.name}"
   end
   
+  def create
+    @subject = Subject.find_by_id(params[:subject_id])
+    @course = Course.new( params[:course] )
+    @course.subject_id = @subject.id
+    
+    @course.save 
+    
+    redirect_to new_subject_course_url(@subject)
+  end
+  
   
   def pick_subject_for_course_teaching_assignment
     add_breadcrumb "Pick the subject", 'pick_subject_for_course_teaching_assignment_path'
