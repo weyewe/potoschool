@@ -28,6 +28,10 @@ class Group < ActiveRecord::Base
       
     User.find_by_id( self.group_leader_id)
   end
+  
+  def is_leader?(user)
+    self.group_leader_id == user.id 
+  end
         
         
   def add_group_leader(user)
@@ -40,6 +44,20 @@ class Group < ActiveRecord::Base
       self.group_leader_id = nil
       self.save
     end
+  end
+  
+  def update_leader(user_id, decision) 
+    if decision == TRUE_CHECK
+      # ticking the checkbox 
+      self.group_leader_id = user_id 
+      self.save 
+    elsif decision == FALSE_CHECK
+      self.group_leader_id = nil 
+      self.save
+    end
+    
+    return self.group_leader 
+  
   end
   
   

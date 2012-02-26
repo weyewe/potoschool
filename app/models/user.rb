@@ -269,6 +269,19 @@ class User < ActiveRecord::Base
       group_memberships.first.group
     end
   end
+  
+  def group_membership_for( group )
+    group_membership = GroupMembership.find(:first, :conditions => {
+      :group_id => group.id,
+      :user_id => self.id 
+    })
+    
+    if group_membership.nil?
+      return GroupMembership.new
+    end
+    
+    return group_membership
+  end
 
  
     

@@ -36,6 +36,7 @@ Debita46::Application.routes.draw do
   resources :groups do 
     resources :group_memberships
   end
+  resources :group_memberships
   
   
   # assign teacher to the subject and course 
@@ -71,6 +72,8 @@ Debita46::Application.routes.draw do
   match 'select_course_for_group/subject/:subject_id' => "groups#select_course_for_group", :as => :select_course_for_group
   match 'select_group_for_group_leader' => "groups#select_group_for_group_leader", :as => :select_group_for_group_leader
   match 'select_group_leader/group/:group_id' => "groups#select_group_leader", :as => :select_group_leader, :method => :post
+  match 'execute_select_group_leader' => "groups#execute_select_group_leader", :as => :execute_select_group_leader, :method => :post
+  
   
   # for group membership assignment
   match 'select_subject_for_group_membership' => "group_memberships#select_subject_for_group_membership", :as => :select_subject_for_group_membership

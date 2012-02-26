@@ -9,7 +9,65 @@ $(document).ajaxSend(function(event, request, settings) {
 
 $(document).ready(function() {
   
+  
+  // assignment related methods 
+  $(".checkbox_tracker").change( function(){
+    var $checkbox = $(this);
+    var after_clicked_value;
+    
+    /*
+      Extracting the value of the checkbox, based on the user action
+    */
+    if(   $checkbox.is(":checked")  ) {
+      $checkbox.attr('value', <%= TRUE_CHECK %>);
+      after_clicked_value = <%= TRUE_CHECK %>;
+    }else{
+      $checkbox.attr( 'value', <%= FALSE_CHECK %> );
+       after_clicked_value = <%= FALSE_CHECK %>;
+    }
+    
+    
+    var checkbox_id = $checkbox.attr("id");
+    var provider_id = checkbox_id.split("-")[0].split("_")[1];
+    var consumer_id = checkbox_id.split("-")[1].split("_")[1];
 
+    var $form = $("#checkbox_form_wrapper form");
+
+    var provider_field = $("#membership_provider");
+    provider_field.attr('value', provider_id);
+    var consumer_field = $("#membership_consumer");
+    consumer_field.attr('value', consumer_id);
+    
+    var decision_field = $("#membership_decision");
+    decision_field.attr("value", after_clicked_value )
+
+    if($checkbox.hasClass("single-submit")){
+      $form.trigger('submit');
+    }else {
+
+
+      $checkbox.showLoading();
+
+      $.ajax({
+        url: $form.attr("action"),
+        type: "POST",
+        data: $form.serialize(),
+        dataType: 'script',
+        success: function(response){
+          console.log("Yeah baby, we are cleared");
+          $form.clearForm();
+          $checkbox.hideLoading();
+        }
+      });
+      
+      
+    }
+    
+        
+        
+        
+    
+  });
   
   
   /*  For the Subject-teacher assignment 
@@ -261,7 +319,6 @@ $(document).ready(function() {
    /* For positional comment */
    
   $(window).resize(function(){
-    console.log("UNder resize");
     refreshMap();
   });
  

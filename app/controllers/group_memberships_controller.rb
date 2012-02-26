@@ -44,4 +44,14 @@ class GroupMembershipsController < ApplicationController
     
     
   end
+  
+  
+  def create
+    @group_id = params[:membership_provider]
+    @group = Group.find_by_id(@group_id)
+    @user_id = params[:membership_consumer]
+    @decision = params[:membership_decision].to_i
+    
+    @group_membership = GroupMembership.membership_update( @group_id, @user_id, @decision )
+  end
 end
