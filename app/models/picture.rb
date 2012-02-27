@@ -258,9 +258,7 @@ class Picture < ActiveRecord::Base
                           
     end
     
-    
-    # new_picture.get_original.project.neutralize
-    # check_wizard_completion( project )
+
     
     
     return new_picture

@@ -43,7 +43,8 @@ class CourseRegistrationsController < ApplicationController
     @decision = params[:membership_decision].to_i
 
     @student = User.find_by_id @user_id
-
+    @course = Course.find_by_id @course_id
+    
     @course_registration = CourseRegistration.assignment_update( @course_id, @user_id, @decision )
 
 

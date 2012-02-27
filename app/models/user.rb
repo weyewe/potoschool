@@ -272,6 +272,20 @@ class User < ActiveRecord::Base
     end
   end
   
+  def registered_course_for_subject( subject )
+    student = self 
+    course_registrations = CourseRegistration.where{
+      (course_id.in( subject.courses.select{id})) &
+      (user_id.eq student.id)
+    }
+    
+    if course_registrations.length == 0 
+      return nil
+    else
+      course_registrations.first.course
+    end
+  end
+  
   def group_membership_for( group )
     group_membership = GroupMembership.find(:first, :conditions => {
       :group_id => group.id,

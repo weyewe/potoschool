@@ -21,7 +21,7 @@
         <thead>
           <tr>
             <th>Student</th>
-            <th>Total Course taken</th>
+            <th>Course Taken</th>
             <th>Assign Student</th>
           </tr>
         </thead>
@@ -29,8 +29,21 @@
           <% @students.each do |student| %>
             <tr>
               <td>xxx </td>
-              <td class="total-courses-taken"><%= student.course_registrations.count %></td>
               
+              
+              
+              
+              <% registered_course = student.registered_course_for_subject(@subject) %>
+              <td class="total-courses-taken">
+              <% if registered_course.nil? %>
+                Unregistered
+              <% else %>
+                <%= registered_course.name  %>
+              <% end %> 
+              </td>
+              
+              
+        
               <td class="well">
                 <label class="checkbox">
                   <% checkbox_value = student.is_course_registered?(@course) %>

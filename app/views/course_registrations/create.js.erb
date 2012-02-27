@@ -3,7 +3,16 @@ $(document).ready(function(){
   var $checkbox = $("#provider_<%=  @course_id %>-consumer_<%=  @user_id %>");
   var $row = $checkbox.parents("tr");
   var $td_membership = $(".total-courses-taken", $row );
-  $td_membership.text('<%= @student.course_registrations.count %>');
+  
+  <% if @decision == TRUE_CHECK %>
+    <% course_name = escape_javascript(@course.name) %> 
+    $td_membership.text('<%= course_name %>');
+  <% elsif @decision == FALSE_CHECK %>
+    $td_membership.text("Unregistered");
+  <% end %>
+  
+  
+  
 
 
 });
