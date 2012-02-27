@@ -27,7 +27,11 @@ class CourseTeachingAssignment < ActiveRecord::Base
       # 1. destroy the group membership based on the information provided 
       teaching_assignment = CourseTeachingAssignment.find(:first, :conditions => {
         :course_id => course_id, :user_id => user_id 
-      }).destroy 
+      })
+      
+      if not teaching_assignment.nil?
+        teaching_assignment.destroy 
+      end
       
       return teaching_assignment
     end

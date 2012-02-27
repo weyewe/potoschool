@@ -12,4 +12,22 @@ class SubjectRegistrationsController < ApplicationController
     set_breadcrumb_for @subject, 'new_subject_subject_registration_path' + "(#{@subject.id})", 
               'Assign Student for ' + "#{@subject.name}"
   end
+  
+  
+  def create
+    
+      @subject_id = params[:membership_provider]
+      @user_id = params[:membership_consumer]
+      @decision = params[:membership_decision].to_i
+
+      @student = User.find_by_id @user_id
+
+      @subject_registration = SubjectRegistration.assignment_update( @subject_id, @user_id, @decision )
+
+
+      respond_to do |format|
+        format.html {  redirect_to new_subject_subject_teaching_assignment_path(@subject)}
+        format.js
+      end
+  end
 end

@@ -21,7 +21,7 @@ class ProjectSubmission < ActiveRecord::Base
   end
   
   def original_pictures_id
-    self.pictures.where(:is_original => true ).select(:id).map do |x|
+    self.pictures.where(:is_original => true ).order("created_at ASC").select(:id).map do |x|
       x.id
     end
   end
@@ -53,7 +53,7 @@ class ProjectSubmission < ActiveRecord::Base
        self.first_submission_time = picture.created_at
      end
      
-     puts "********************Gonna update submission data\n"*100
+     # puts "********************Gonna update submission data\n"*100
      if picture.is_original?
        self.total_original_submission += 1
      end 
@@ -61,6 +61,12 @@ class ProjectSubmission < ActiveRecord::Base
      self.total_picture_submission += 1 
      self.save
    end
+   
+   # def refresh_submission
+   #    self.total_original_submission = self.original_pictures.count
+   #    self.total_picture_submission = self.pictures.count 
+   #    self.save
+   #  end
    
    
    # def clean_data
@@ -81,6 +87,11 @@ class ProjectSubmission < ActiveRecord::Base
        end 
        project_submission.save 
      end
+   end
+   
+   
+   def update_total_project_score
+     
    end
   
   

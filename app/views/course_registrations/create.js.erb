@@ -1,0 +1,9 @@
+$(document).ready(function(){
+
+  var $checkbox = $("#provider_<%=  @course_id %>-consumer_<%=  @user_id %>");
+  var $row = $checkbox.parents("tr");
+  var $td_membership = $(".total-courses-taken", $row );
+  $td_membership.text('<%= @student.course_registrations.count %>');
+
+
+});

@@ -234,6 +234,8 @@ class User < ActiveRecord::Base
   end
 
 
+  
+
   def is_course_registered?(course)
     not CourseRegistration.find(:first, :conditions => {
       :user_id => self.id , :course_id => course.id

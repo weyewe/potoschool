@@ -25,6 +25,10 @@ class Course < ActiveRecord::Base
     self.course_registrations
   end
   
+  def teachers
+    self.course_teaching_assignments
+  end
+  
   
   def create_group( group_name )
     self.groups.create :name => group_name 

@@ -37,6 +37,20 @@ class CourseRegistrationsController < ApplicationController
   end
   
   def create
+
+    @course_id = params[:membership_provider]
+    @user_id = params[:membership_consumer]
+    @decision = params[:membership_decision].to_i
+
+    @student = User.find_by_id @user_id
+
+    @course_registration = CourseRegistration.assignment_update( @course_id, @user_id, @decision )
+
+
+    respond_to do |format|
+      format.html {  redirect_to new_subject_subject_teaching_assignment_path(@subject)}
+      format.js
+    end
   end
   
 end

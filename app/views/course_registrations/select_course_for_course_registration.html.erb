@@ -4,6 +4,9 @@
         "First, select the subject which student you are about to assign.").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+  <h3>Total Students registered for the subject: <%= @subject.students_count  %></h3>
+  <hr />
 
   
   <div class="row-fluid">
@@ -14,14 +17,14 @@
         <thead>
           <tr>
             <th>Course Name</th>
-            <th>Total Teachers</th>
+            <th>Total Students</th>
           </tr>
         </thead>
         <tbody>
           <% @courses.each do |course| %>
             <tr>
               <td><%= link_to "#{course.name}", new_course_course_registration_url(course) %></td>
-              <td>4</td>
+              <td><%=  course.students.count %></td>
             </tr>
           <% end %>
 

@@ -90,6 +90,9 @@ class PicturesController < ApplicationController
       @picture.save
       @original_picture.approved_revision_id = @picture.id 
       @original_picture.save 
+      # @project_submission.update_total_project_score  
+      # total project score only be generated when the project is closed by the teacher. 
+      # the engine will calculate the final value -> sum n submissions score / n
       
     elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
       @picture.is_approved = false

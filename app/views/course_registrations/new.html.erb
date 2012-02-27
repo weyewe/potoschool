@@ -11,9 +11,7 @@
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
-  <h3>Total Teachers: edit</h3>
-  <hr />
-  
+
   
   <div class="row-fluid">
     <!-- <div class="span12"> -->
@@ -31,14 +29,18 @@
           <% @students.each do |student| %>
             <tr>
               <td>xxx </td>
-              <td><%= student.course_registrations.count %></td>
+              <td class="total-courses-taken"><%= student.course_registrations.count %></td>
               
               <td class="well">
                 <label class="checkbox">
                   <% checkbox_value = student.is_course_registered?(@course) %>
-                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+                  <%#= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
                       checkbox_value, :class => 'is_checked_class', 
-                      :id => "studentId_#{student.id}" %> Taken
+                      :id => "studentId_#{student.id}" %> <!-- Taken -->
+                      
+                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
+                      checkbox_value, :class => 'checkbox_tracker', 
+                      :id => "provider_#{@course.id}-consumer_#{student.id}" %> Taking
                 </label>
 
               </td>
@@ -50,21 +52,34 @@
         </tbody>
       </table>
       
-      <div class="alert alert-success allert-message">
-        <a class="close" href="#">&times;</a>
-        <strong>Well done!</strong> You successfully read this important alert message.
-      </div>
-
       
-      <div class="form-actions">
-        <%= hidden_field_tag 'destination_url', 
-                subject_subject_teaching_assignments_url(@subject) ,
-                 :id => "destination_url" %>
-
-        <button class="btn btn-large btn-primary"
-              type="submit" id="save_button">Save changes</button>
+  
+      <div class=" hidden" id="checkbox_form_wrapper">
+        <%= form_for CourseRegistration.new, 
+              :url =>course_course_registrations_url(@course)   do |f| %>
+          <%= hidden_field_tag 'membership_provider' , ''  %>
+          <%= hidden_field_tag 'membership_consumer', '' %>
+          <%= hidden_field_tag 'membership_decision', '' %>
+        <% end %>
       </div>
+      
+          
+      
+     <!--       <div class="alert alert-success allert-message">
+             <a class="close" href="#">&times;</a>
+             <strong>Well done!</strong> You successfully read this important alert message.
+           </div>
 
+           
+           <div class="form-actions">
+             <%#= hidden_field_tag 'destination_url', 
+                     subject_subject_teaching_assignments_url(@subject) ,
+                      :id => "destination_url" %>
+
+             <button class="btn btn-large btn-primary"
+                   type="submit" id="save_button">Save changes</button>
+           </div> -->
+           
 
       
       

@@ -64,11 +64,11 @@ class Picture < ActiveRecord::Base
   end
   
   def last_revision
-    all_revisions = self.original_picture.revisions 
-    if all_revisions.count == 0
+    last_revision  = self.original_picture.revisions.last 
+    if last_revision.nil?
       return self.original_picture
     else
-      return all_revisions.last
+      return last_revision 
     end
   end
   
@@ -117,7 +117,7 @@ class Picture < ActiveRecord::Base
     current_pic_index = id_list.index( original_pic.id )
     
     if current_pic_index <  ( id_list.length - 1 )
-      return  Picture.find_by_id( id_list.at ( current_pic_index + 1  ) ) 
+      return  Picture.find_by_id( id_list.at ( current_pic_index + 1  ) ).last_revision 
     else
       return nil 
     end
@@ -129,7 +129,7 @@ class Picture < ActiveRecord::Base
     current_pic_index = id_list.index( original_pic.id )
     
     if current_pic_index > 0 
-      return Picture.find_by_id(  id_list.at( current_pic_index - 1 )   ) 
+      return Picture.find_by_id(  id_list.at( current_pic_index - 1 )   ).last_revision
     else
       return nil 
     end
@@ -217,6 +217,7 @@ class Picture < ActiveRecord::Base
                           new_picture , 
                           project_submission.project  )
      
+        project_submission.update_submission_data( new_picture )
       end
     elsif params[:is_original].to_i == REVISION_PICTURE
       original_picture = Picture.find_by_id(params[:original_picture_id])
@@ -251,13 +252,17 @@ class Picture < ActiveRecord::Base
                           project_submission.user , 
                           new_picture , 
                           original_picture  )
+                          
+      project_submission.update_submission_data( new_picture )
+                          
+                          
     end
     
     
     # new_picture.get_original.project.neutralize
     # check_wizard_completion( project )
     
-    project_submission.update_submission_data( new_picture )
+    
     return new_picture
   end
   
