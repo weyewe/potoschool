@@ -34,5 +34,41 @@ class CoursesController < ApplicationController
               'Pick the course' 
     
   end
+  
+  def select_course_for_grade_summary
+    #current_user is a teacher 
+    @courses = current_user.all_courses_taught.includes(:subject)
+    
+    add_breadcrumb "Select the subject", 'select_course_for_grade_summary_path'
+  end
+  
+  def show_student_grades_for_course
+    @course  = Course.find_by_id( params[:course_id])
+    @students = @course.students 
+    @closed_projects = @course.get_closed_projects
+    @projects = @course.projects.order("created_at ASC")
+    
+    add_breadcrumb "Pick the subject", 'select_course_for_grade_summary_path'
+    set_breadcrumb_for @course, 'show_student_grades_for_course_path' + "(#{@course.id})", 
+              'Student Grades'
+  end
+  
+  def show_project_grading_details
+    @project = Project.find_by_id(params[:project_id])
+    @course = @project.course 
+    @student = User.find_by_id(params[:student_id])
+    
+    
+    
+    add_breadcrumb "Pick the subject", 'select_course_for_grade_summary_path'
+    set_breadcrumb_for @course, 'show_student_grades_for_course_path' + "(#{@course.id})", 
+              'Student Grades'
+    set_breadcrumb_for @course, 'show_project_grading_details_path' + "(#{@project.id}, #{@student.id})", 
+              'Grading Details'
+    
+  end
+  
+  
+  
 
 end

@@ -3,7 +3,13 @@
   <%= create_guide("Upload Submission", 
         "Submit the result for project:  <b>#{@project.title}</b>").html_safe %>
   
+  
+  
+  <h3>You have to upload: <b><%= @project.total_submission %> images</b>
+    
+    
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
   
   <div class="row-fluid">
 

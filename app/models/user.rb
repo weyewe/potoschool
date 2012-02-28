@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
     Project.find(:all, :conditions => {
       :is_active => true, 
       :course_id  => all_courses_id
-    })
+    }, :order => "created_at ASC")
     
   end
   

@@ -1,0 +1,62 @@
+
+<div class="span9 content">
+  
+  <%= create_guide("Select Subject", 
+        "Select the subject for grade summary").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+
+  
+  
+  <div class="row-fluid">
+    <!-- <div class="span12"> -->
+      
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Code</th>
+            <th>Course</th>
+            <th>Total Student</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @courses.each do |course| %>
+            <tr>
+              <td><%= course.subject.name %></td>
+              <td><%= course.subject.code %></td>
+              <td><%= link_to course.name , show_student_grades_for_course_url(course) %></td>
+              <td><%= course.course_registrations.count %></td>
+            </tr>
+          <% end %>
+
+
+         
+        </tbody>
+      </table>
+      
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->
+
+<%# content_for :additional_js  do %>
+ 
+  <%#= javascript_include_tag "DT.js" %> 
+  <%#= javascript_include_tag "DT_bootstrap.js" %> 
+<%# end %>
+
+
+
+
+
+
+
+
+
+

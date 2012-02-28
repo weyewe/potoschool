@@ -3,6 +3,27 @@ module ApplicationHelper
   REVISION_SELECTED = "selected"
   NEXT_BUTTON_TEXT = "Next &rarr;"
   PREV_BUTTON_TEXT = " &larr; Prev "
+  
+  
+=begin
+  For the grade display 
+=end
+  def get_colspan( closed_projects )
+    length = closed_projects.length
+    if length == 0 
+      return 1 
+    else
+      return length 
+    end
+  end
+  
+  def extract_project_submission_result( result , student, project ) 
+    if result.nil?
+      return '-'
+    else
+      return link_to result, show_project_grading_details_url(project, student )
+    end
+  end
 
 =begin
   Getting prev and next button for the pictures#show
@@ -546,11 +567,15 @@ module ApplicationHelper
       },
       {
         :title => "Grade Summary",
-        :destination_link => '',
+        :destination_link => 'select_course_for_grade_summary_url',
         :conditions => [
           {
-            :controller => '',
-            :action => ''
+            :controller => 'courses',
+            :action => 'select_course_for_grade_summary'
+          },
+          {
+            :controller => 'courses',
+            :action => 'show_student_grades_for_course'
           }
         ]
       },

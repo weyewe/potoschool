@@ -55,6 +55,9 @@ Debita46::Application.routes.draw do
   match 'pick_subject_for_course_teaching_assignment' => "courses#pick_subject_for_course_teaching_assignment", :as => :pick_subject_for_course_teaching_assignment
   match 'new_course_teaching_assignment/:subject_id' => "courses#new_course_teaching_assignment", :as => :new_course_teaching_assignment
   
+  match 'select_course_for_grade_summary' => "courses#select_course_for_grade_summary", :as => :select_course_for_grade_summary 
+  match 'show_student_grades_for_course/:course_id' => "courses#show_student_grades_for_course", :as => :show_student_grades_for_course 
+  match 'show_project_grading_details/project/:project_id/student/:student_id' => "courses#show_project_grading_details", :as => :show_project_grading_details 
   
   # assign student to the subject and course 
   # use the subject_registrations  
@@ -77,6 +80,7 @@ Debita46::Application.routes.draw do
   match 'close_project' => "projects#close_project", :as => :close_project, :method => :post 
   match 'recover_project' => "projects#recover_project", :as => :recover_project, :method => :post 
   match 'past_projects' => "projects#past_projects", :as => :past_projects
+  
 
   # create group for course
   match 'select_subject_for_group' => "groups#select_subject_for_group", :as => :select_subject_for_group

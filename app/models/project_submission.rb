@@ -34,7 +34,36 @@ class ProjectSubmission < ActiveRecord::Base
       return picture_submissions.first
     end
   end
-    
+
+  def update_score
+    total_score = 0
+    total_asked_submission = self.project.total_submission
+    if not( total_asked_submission == 0 or total_asked_submission.nil?   ) 
+      self.original_pictures.order("created_at ASC").limit(total_asked_submission).each do | picture |
+        total_score += picture.score 
+      end
+      self.score = (total_score.to_f)/total_asked_submission 
+      self.save 
+    end
+  end
+
+  def self.refresh_score
+    self.all.each do |project_submission|
+      total_score = 0 
+      total_upload = project_submission.project.total_submission 
+      
+      project_submission.original_pictures.each do |x| 
+        if not x.score.nil?
+          total_score += x.score
+        end
+        
+      end
+      
+      project_submission.score = total_score.to_f  / total_upload 
+      project_submission.save 
+    end
+  end
+
   # can be commented 
   # acts_as_commentable
   

@@ -116,11 +116,7 @@ class SubjectsController < ApplicationController
   end
   
   
-  def select_subject_for_grade_summary
-    # as teacher
-    # @subject = 
-  end
-  
+
   protected
   def parse_date(date)
     date_data  = date.split("/")

@@ -52,6 +52,22 @@ Teacher code
     return project
   end
   
+  def get_closed_projects
+    self.projects.where(:is_active => false )
+  end
+  
+  def get_score_for(student, project)
+    project_submission = ProjectSubmission.find(:first, :conditions => {
+      :user_id => student.id, 
+      :project_id => project.id 
+    })
+    
+    if not project_submission.nil?
+      return project_submission.score
+    else
+      return nil
+    end
+  end
   
 =begin
 Student code

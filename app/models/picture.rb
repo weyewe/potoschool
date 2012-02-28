@@ -254,8 +254,6 @@ class Picture < ActiveRecord::Base
                           original_picture  )
                           
       project_submission.update_submission_data( new_picture )
-                          
-                          
     end
     
 

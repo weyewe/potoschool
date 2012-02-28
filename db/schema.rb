@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227131726) do
+ActiveRecord::Schema.define(:version => 20120228091022) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -129,6 +129,7 @@ ActiveRecord::Schema.define(:version => 20120227131726) do
     t.datetime "first_submission_time"
     t.integer  "total_original_submission", :default => 0
     t.integer  "total_picture_submission",  :default => 0
+    t.integer  "score"
   end
 
   create_table "projects", :force => true do |t|
