@@ -36,4 +36,39 @@ class SubjectTeachingAssignment < ActiveRecord::Base
       return teaching_assignment
     end
   end
+  
+  
+  def deactivate 
+    courses_id = self.subject.courses.select(:id).map{|x| x.id }
+
+    course_teaching_assignments = CourseTeachingAssignment.find(:all, :conditions => {
+      :user_id => self.user_id , 
+      :course_id => courses_id 
+      })
+
+    course_teaching_assignments.each do |course_teaching_assignment|
+      course_teaching_assignment.deactivate 
+    end
+
+    self.is_active = false
+    self.save 
+  end
+  
+  def re_activate 
+    courses_id = self.subject.courses.select(:id).map{|x| x.id }
+
+    course_teaching_assignments = CourseTeachingAssignment.find(:all, :conditions => {
+      :user_id => self.user_id , 
+      :course_id => courses_id 
+      })
+
+    course_teaching_assignments.each do |course_teaching_assignment|
+      course_teaching_assignment.re_activate 
+    end
+
+    self.is_active = true
+    self.save 
+  end
+  
+  
 end

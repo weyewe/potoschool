@@ -1,0 +1,68 @@
+
+<div class="span9 content">
+  
+  
+  <%= create_guide("Active Subjects", 
+        "Manage the subjects: see the courses, duplicate the subject for new academic year, etc").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+ 
+  <div class="row-fluid">
+    <!-- <div class="span12"> -->
+      
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Starting<br />yyyy-mm-dd</th>
+            <th>Deadline<br />yyyy-mm-dd</th>
+            <th>Total Courses</th>
+            <th>Total Students</th>
+            <th colspan="2">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @subjects.each do |subject| %>
+            <tr id="<%= "entry_row_" + subject.id.to_s %>">
+              <td><%= subject.name %></td>
+              <td><%= subject.starting_date %></td>
+              <td><%= subject.ending_date %></td>
+              <td><%= subject.courses.count %></td>
+              <td><%= subject.students_count %></td>
+              <td> 
+                <%= link_to "Duplicate", duplicate_passive_subject_url(subject), :class=> "btn btn-primary"%>
+              </td>
+              <td>
+                <%= link_to "Recover", '#', 
+                          :class => "btn btn-danger entry-link entry-recover",
+                          :id => "entry_#{subject.id}" %>
+              </td>
+            </tr>
+          <% end %>
+         
+        </tbody>
+      </table>
+      
+      
+      
+      <div class=" hidden" id="close-entry">
+        <%= form_tag  recover_subject_url  , :method => :post  do  %>
+          <%= hidden_field_tag 'entry_id' , ''  %>
+        <% end %>
+      </div>
+      
+
+      
+      
+      
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->

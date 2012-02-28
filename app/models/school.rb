@@ -25,4 +25,16 @@ class School < ActiveRecord::Base
   end
   
   
+  def all_active_subjects
+    self.subjects.where(:is_active => true ).
+                includes(:courses, :subject_registrations ).
+                order("created_at DESC")
+  end
+  
+  def all_passive_subjects
+    self.subjects.where(:is_active => false ).
+                includes(:courses, :subject_registrations ).
+                order("created_at DESC")
+  end
+  
 end

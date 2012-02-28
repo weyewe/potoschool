@@ -1,0 +1,112 @@
+
+<div class="span9 content">
+  
+  
+  <%= create_guide("Duplicate Subjects", 
+        "Modify the selected subject: change the starting and ending date, at least.").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+ 
+  
+  <div class="row-fluid">
+    <div class="span8">
+
+
+      <%= form_for @clone_subject  , :url => execute_duplicate_subject_url,
+          :method => :post, :html => {:class => "form-horizontal"} do |f| %>
+
+
+
+        <div class="control-group">
+          <%= f.label :name, "Nama Pelajaran" %>
+          <div class="controls">
+            <%= f.text_field :name, :class=>"input-xlarge" %>
+            <p class="help-block">Masukkan nama pelajaran.</p>
+          </div>
+        </div>
+        
+        
+        
+        <div class="control-group">
+          <%= f.label :code, "Kode Pelajaran" %>
+          <div class="controls">
+            <%= f.text_field :code, :class=>"input-xlarge" %>
+            <p class="help-block">Masukkan kode pelajaran (jika ada).</p>
+          </div>
+        </div>
+        
+        
+        <div class="control-group">
+          <%= f.label :starting_date, "Tanggal Mulai" %>
+          <div class="controls">
+            <%= f.text_field :starting_date, :value => "", :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker'  %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :ending_date, "Tanggal Selesai" %>
+          <div class="controls">
+            <%= f.text_field :ending_date, :value => "", :class=>"input-xlarge" ,'data-datepicker'=>'datepicker' %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        
+        
+        <div class="control-group">
+          <%= f.label :description, "Deskripsi Pelajaran" %>
+          <div class="controls">
+            <%= f.text_area :description, :class=>"input-xlarge", :rows => 5 %>
+            <p class="help-block">Masukkan deskripsi pelajaran.</p>
+          </div>
+        </div>
+
+
+
+        <%= hidden_field_tag 'school_id', current_user.get_managed_school.id   %>
+
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Create Subject</button>
+        </div>
+
+
+      <% end %>
+      
+      
+      
+
+    </div><!--/span-->
+
+    <div class="span4">
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr><th>Total Active Subjects: <%= @active_subjects.count %></th></tr>
+        </thead>
+        <tbody>
+          <% @active_subjects.each do |subject| %>
+            <tr>
+              <td><%= subject.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+    </div><!--/span-->
+    
+  </div><!--/row-->
+      
+      
+      
+      
+      
+      
+      
+      
+    <!-- </div> -->   <!--/span12-->
+  </div><!--/row-->
+
+</div><!--/span-->

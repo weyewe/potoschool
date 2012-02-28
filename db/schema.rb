@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227080303) do
+ActiveRecord::Schema.define(:version => 20120227131726) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",  :default => true
   end
 
   create_table "course_teaching_assignments", :force => true do |t|
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",  :default => true
   end
 
   create_table "courses", :force => true do |t|
@@ -56,6 +58,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.integer  "subject_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",  :default => true
   end
 
   create_table "enrollments", :force => true do |t|
@@ -165,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.integer  "subject_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",  :default => true
   end
 
   create_table "subject_teaching_assignments", :force => true do |t|
@@ -172,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",  :default => true
   end
 
   create_table "subjects", :force => true do |t|
@@ -184,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20120227080303) do
     t.date     "ending_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_active",     :default => true
   end
 
   create_table "user_activities", :force => true do |t|

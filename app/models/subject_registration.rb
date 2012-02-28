@@ -39,4 +39,42 @@ class SubjectRegistration < ActiveRecord::Base
   
   
   
+  def deactivate
+    # will only called when the subject is closed ( due to the end of semester )
+    #deactivate course registration. Then, deactivate itself 
+    
+    courses_id = self.subject.courses.select(:id).map{|x| x.id }
+    
+    course_registrations = CourseRegistration.find(:all, :conditions => {
+      :user_id => self.user_id , 
+      :course_id => courses_id 
+    })
+    
+    course_registrations.each do |course_registration|
+      course_registration.deactivate 
+    end
+    
+    self.is_active = false
+    self.save 
+    
+  end
+  
+  def re_activate
+    courses_id = self.subject.courses.select(:id).map{|x| x.id }
+    
+    course_registrations = CourseRegistration.find(:all, :conditions => {
+      :user_id => self.user_id , 
+      :course_id => courses_id 
+    })
+    
+    course_registrations.each do |course_registration|
+      course_registration.re_activate 
+    end
+    
+    self.is_active = true 
+    self.save
+    
+  end
+  
+  
 end

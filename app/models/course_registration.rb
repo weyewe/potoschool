@@ -45,4 +45,17 @@ class CourseRegistration < ActiveRecord::Base
   
   
   
+  
+  def deactivate 
+    self.is_active = false
+    self.save 
+  end
+  
+  def re_activate 
+    self.is_active = true
+    self.save 
+  end
+  
+  
+  
 end

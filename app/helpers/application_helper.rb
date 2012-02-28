@@ -173,6 +173,10 @@ module ApplicationHelper
       return create_process_nav(SCHOOL_ADMIN_PROCESS_LIST, params )
     end
     
+    if symbol == :history 
+      return create_process_nav(HISTORY_PROCESS_LIST, params )
+    end
+    
     if symbol == :teacher
       return create_process_nav(TEACHER_PROCESS_LIST, params )
     end
@@ -369,6 +373,40 @@ module ApplicationHelper
         }
       ]
     }
+    
+  HISTORY_PROCESS_LIST = {
+    :header_title => "History",
+    :processes => [
+      {
+        :title => "Active Subjects",
+        :destination_link => "active_subjects_management_url", 
+        :conditions => [
+          {
+            :controller => 'subjects',
+            :action => 'active_subjects_management'
+          },
+          {
+            :controller => 'subjects',
+            :action => 'duplicate_active_subject'
+          }
+        ]
+      },
+      {
+        :title => "Past Subjects",
+        :destination_link => "passive_subjects_management_url",
+        :conditions => [
+          {
+            :controller => 'subjects',
+            :action => 'passive_subjects_management'
+          },
+          {
+            :controller => "subjects",
+            :action => 'duplicate_passive_subject'
+          }
+        ]
+      }
+    ]
+  }
     
     
   TEACHER_PROCESS_LIST = {

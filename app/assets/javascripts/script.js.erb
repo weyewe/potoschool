@@ -10,6 +10,44 @@ $(document).ajaxSend(function(event, request, settings) {
 $(document).ready(function() {
   
   
+  $(".entry-link").click(function(){
+    var $entry_link = $(this);
+    
+    
+    var text = "" ; 
+    if( $entry_link.hasClass("entry-closer")){
+      text = "Are you sure to close this entry?"
+    }else if ($entry_link.hasClass("entry-recover")){
+      text = "Are you sure to recover this entry?"
+    }
+    
+    if( confirm( text ) ){
+      var entry_id = $(this).attr('id').split("_")[1];
+
+      var $form = $("#close-entry form");
+      var $input_entry_id = $("#entry_id");
+
+      $input_entry_id.attr("value", entry_id );
+      
+      $entry_link.showLoading();
+
+      $.ajax({
+        url: $form.attr("action"),
+        type: "POST",
+        data: $form.serialize(),
+        dataType: 'script',
+        success: function(response){
+
+          $form.clearForm();
+          $checkbox.hideLoading();
+        }
+      });
+    }
+    
+    return false;
+  });
+
+  
   // assignment related methods 
   $(".checkbox_tracker").change( function(){
     var $checkbox = $(this);
@@ -59,14 +97,7 @@ $(document).ready(function() {
           $checkbox.hideLoading();
         }
       });
-      
-      
     }
-    
-        
-        
-        
-    
   });
   
   

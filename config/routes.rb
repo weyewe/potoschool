@@ -38,6 +38,14 @@ Debita46::Application.routes.draw do
   end
   resources :group_memberships
   
+  match 'active_subjects_management' => "subjects#active_subjects_management", :as => :active_subjects_management
+  match 'passive_subjects_management' => "subjects#passive_subjects_management", :as => :passive_subjects_management
+  match 'duplicate_active_subject/:subject_id' => "subjects#duplicate_active_subject" , :as => :duplicate_active_subject
+  match 'duplicate_passive_subject/:subject_id' => "subjects#duplicate_passive_subject" , :as => :duplicate_passive_subject
+  
+  match 'execute_duplicate_subject' => "subjects#execute_duplicate_subject" , :as => :execute_duplicate_subject, :method => :post 
+  match 'close_subject' => "subjects#close_subject", :as => :close_subject, :method => :post 
+  match 'recover_subject' => "subjects#recover_subject", :as => :recover_subject, :method => :post 
   
   # assign teacher to the subject and course 
   # use the course_teaching assignment 
