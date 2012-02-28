@@ -25,7 +25,7 @@
           </tr>
         </thead>
         <tbody>
-          <% Subject.all.each do |subject| %>
+          <% @active_subjects.each do |subject| %>
             <tr>
               <td><%= link_to "#{subject.name}", new_subject_course_url(subject) %></td>
               <td><%= subject.code %></td>

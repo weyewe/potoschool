@@ -74,6 +74,9 @@ Debita46::Application.routes.draw do
   #   create project for course (can be group project or personal project) 
   match 'select_subject_for_project' => "projects#select_subject_for_project", :as => :select_subject_for_project
   match 'select_course_for_project/subject/:subject_id' => "projects#select_course_for_project", :as => :select_course_for_project
+  match 'close_project' => "projects#close_project", :as => :close_project, :method => :post 
+  match 'recover_project' => "projects#recover_project", :as => :recover_project, :method => :post 
+  match 'past_projects' => "projects#past_projects", :as => :past_projects
 
   # create group for course
   match 'select_subject_for_group' => "groups#select_subject_for_group", :as => :select_subject_for_group

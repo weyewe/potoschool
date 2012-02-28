@@ -3,7 +3,7 @@ class CourseRegistrationsController < ApplicationController
   def select_subject_for_course_registration
     add_breadcrumb "Pick the subject", 'select_subject_for_course_registration_path'
     #current user is assumed to be admin
-    @subjects = current_user.get_managed_school.subjects 
+    @subjects = current_user.get_managed_school.all_active_subjects 
     
     # set_breadcrumb_for @subject, 'new_course_teaching_assignment_path' + "(#{@subject.id})", 
     #             'Pick the course'

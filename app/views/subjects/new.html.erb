@@ -79,10 +79,10 @@
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
         <thead>
-          <tr><th>Total Subjects: <%= Subject.all.count %></th></tr>
+          <tr><th>Total Subjects: <%= @active_subjects.count %></th></tr>
         </thead>
         <tbody>
-          <% Subject.all.each do |subject| %>
+          <% @active_subjects.each do |subject| %>
             <tr>
               <td><%= subject.name %></td>
             </tr>

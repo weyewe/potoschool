@@ -140,14 +140,19 @@ class User < ActiveRecord::Base
   
   def total_courses_count
     CourseTeachingAssignment.find(:all, :conditions => {
-      :user_id => self.id
+      :user_id => self.id,
+      :is_active => true 
     }).count
   end
   
   def all_courses_taught
 
     Course.joins(:course_teaching_assignments => :user ).
-          where(:course_teaching_assignments => {:user => {:id => self.id } } )
+          where(
+          { :course_teaching_assignments => {:user => {:id => self.id } } }    &
+          { :course_teaching_assignments => {:is_active => true}}
+          
+          )
     
   end
   
@@ -160,13 +165,15 @@ class User < ActiveRecord::Base
   
   def total_subjects_count
     SubjectTeachingAssignment.find(:all, :conditions => {
-      :user_id => self.id
+      :user_id => self.id,
+      :is_active => true 
     }).count
   end
   
   def all_subjects_taught 
     Subject.joins(:subject_teaching_assignments => :user ).
-          where(:subject_teaching_assignments => {:user => {:id => self.id } } )
+          where({   :subject_teaching_assignments => {:user => {:id => self.id } } }  & 
+                {   :subject_teaching_assignments => {:is_active => true }   })
   end
   
   def all_active_projects
@@ -188,22 +195,40 @@ class User < ActiveRecord::Base
     
   end
   
+  def all_passive_projects
+    # we have to use eager loading
+    # project.course
+    # project.course.subject  
+    ## all these shit in one single query. Or else, time consuming 
+    all_courses_id = self.all_courses_taught.select(:id).collect do | course |
+      course.id
+    end
+    
+    # find all courses taught by the teacher
+    # for each of the courses, find all the active projects 
+    
+    Project.find(:all, :conditions => {
+      :is_active => false, 
+      :course_id  => all_courses_id
+    }, :order => "deadline_datetime DESC")
+  end
+  
   
   def total_courses_count_for(subject)
     SubjectTeachingAssignment.find(:all, :conditions => {
-      :user_id => self.id, :subject_id => subject.id
+      :user_id => self.id, :subject_id => subject.id, :is_active => true 
     }).count
   end
   
   def is_teaching_subject?(subject)
     not SubjectTeachingAssignment.find(:first, :conditions => {
-      :user_id => self.id, :subject_id => subject.id
+      :user_id => self.id, :subject_id => subject.id, :is_active => true 
     }).nil? 
   end
   
   def is_teaching_course?(course)
     not CourseTeachingAssignment.find(:first, :conditions => {
-      :user_id => self.id, :course_id => course.id
+      :user_id => self.id, :course_id => course.id, :is_active => true 
     }).nil? 
   end
   
@@ -215,7 +240,8 @@ class User < ActiveRecord::Base
     project = project_submission.project
     CourseTeachingAssignment.find(:first, :conditions => {
       :course_id => project.course.id,
-      :user_id => self.id
+      :user_id => self.id,
+      :is_active  => true 
     })
   end
   
@@ -229,7 +255,8 @@ class User < ActiveRecord::Base
   
   def is_subject_registered?(subject)
     not SubjectRegistration.find(:first, :conditions => {
-      :user_id => self.id , :subject_id => subject.id
+      :user_id => self.id , :subject_id => subject.id,
+      :is_active => true 
       }).nil?
   end
 
@@ -238,7 +265,8 @@ class User < ActiveRecord::Base
 
   def is_course_registered?(course)
     not CourseRegistration.find(:first, :conditions => {
-      :user_id => self.id , :course_id => course.id
+      :user_id => self.id , :course_id => course.id,
+      :is_active => true 
       }).nil?
   end
 

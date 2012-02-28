@@ -77,16 +77,30 @@ class ProjectsController < ApplicationController
   2. Select submission 
 =end
   def select_project_for_grading
+    # current_user is teacher 
     @projects = current_user.all_active_projects
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
   end
+
+
+  def past_projects
+    @projects = current_user.all_passive_projects
+    add_breadcrumb "Select Project", "past_projects_url"
+  end
+  
+  def close_project
+    @project = Project.find_by_id( params[:entry_id])
+    @project.deactivate
+  end
+  
+  def recover_project
+    @project = Project.find_by_id( params[:entry_id])
+    @project.re_activate
+  end
   
   
-    # 
-    # def project_submissions_display
-    #   @projects = current_user.all_active_projects
-    # end
+  
   
   
 

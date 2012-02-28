@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
   
   def pick_subject_for_course_teaching_assignment
     add_breadcrumb "Pick the subject", 'pick_subject_for_course_teaching_assignment_path'
-    @subjects = current_user.get_managed_school.subjects 
+    @subjects = current_user.get_managed_school.all_active_subjects 
   end
   
   def new_course_teaching_assignment

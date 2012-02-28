@@ -515,7 +515,7 @@ module ApplicationHelper
     :header_title => "Project Submission",
     :processes => [
       {
-        :title => "Project Grading",
+        :title => "Active Projects: Grading",
         :destination_link => "select_project_for_grading_url",
         :conditions => [
           {
@@ -533,6 +533,24 @@ module ApplicationHelper
           {
             :controller => 'pictures',
             :action => 'grade_project_submission_picture'
+          }
+        ]
+      },
+      {
+        :title => "Past Projects",
+        :destination_link => 'past_projects_url' ,
+        :conditions => [
+          :controller => 'projects',
+          :action => 'past_projects'
+        ]
+      },
+      {
+        :title => "Grade Summary",
+        :destination_link => '',
+        :conditions => [
+          {
+            :controller => '',
+            :action => ''
           }
         ]
       },

@@ -32,6 +32,15 @@ class Project < ActiveRecord::Base
     self.is_group_project
   end
   
+  def deactivate
+    self.is_active = false
+    self.save
+  end
+  
+  def re_activate
+    self.is_active = true
+    self.save
+  end
 
   
  
