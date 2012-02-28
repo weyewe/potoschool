@@ -21,7 +21,7 @@ module ApplicationHelper
     if result.nil?
       return '-'
     else
-      return link_to result, show_project_grading_details_url(project, student )
+      return  result #link_to result, show_project_grading_details_url(project, student )
     end
   end
 
