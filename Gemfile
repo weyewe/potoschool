@@ -24,6 +24,8 @@ gem "timeline_fu"
 gem 'airbrake'
 gem 'heroku'
 
+gem 'roadie' # for sending email 
+
 # http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
 #  breadcrumb
 # Gems used only for assets and not required

@@ -56,6 +56,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.2.0)
+    css_parser (1.2.6)
+      addressable
+      rdoc
     daemons (1.1.6)
     devise (2.0.0)
       bcrypt-ruby (~> 3.0)
@@ -90,6 +93,7 @@ GEM
     mime-types (1.17.2)
     minitest (2.11.1)
     multi_json (1.0.4)
+    nokogiri (1.5.0)
     orm_adapter (0.0.6)
     pg (0.12.2)
     polyamorous (0.5.0)
@@ -124,6 +128,11 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    roadie (2.2.0)
+      actionmailer (~> 3.1.0)
+      css_parser
+      nokogiri (>= 1.4.4)
+      sprockets
     rubyzip (0.9.5)
     sass (3.1.12)
     sass-rails (3.1.5)
@@ -185,6 +194,7 @@ DEPENDENCIES
   kaminari
   pg
   rails (= 3.1.1)
+  roadie
   sass-rails (~> 3.1.4)
   squeel
   thin

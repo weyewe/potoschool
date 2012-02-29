@@ -4,6 +4,7 @@ class UserActivity < ActiveRecord::Base
   belongs_to :secondary_subject,  :polymorphic => true
   
   
+  
   def self.create_new_entry(event, actor, subject , secondary_subject)
     options = {}
     options[:event_type] = event 
