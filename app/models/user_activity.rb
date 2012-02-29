@@ -149,7 +149,7 @@ a  = UserActivity.find(:first, :conditions => {
   def send_user_activity_update
     # check if it is development Rails.env.development? 
     # Check if it is production: Rails.env.production? 
-    # recipient = self.extract_recipient 
-    NewsletterMailer.activity_update("rajakuraemas@gmail.com", Time.now, self).deliver
+    recipient = self.extract_recipient 
+    NewsletterMailer.activity_update( recipient , Time.now, self).deliver
   end
 end
