@@ -4,6 +4,9 @@ class UserActivity < ActiveRecord::Base
   belongs_to :secondary_subject,  :polymorphic => true
   
   
+  after_create :deliver_update
+  
+  
   
   def self.create_new_entry(event, actor, subject , secondary_subject)
     options = {}
@@ -24,5 +27,51 @@ class UserActivity < ActiveRecord::Base
     
     self.create( options ) 
           
+  end
+  
+  def deliver_update
+    self.delay.send_user_activity_update
+  end
+  
+  
+=begin
+  Extracting the value 
+    Actor (the one who did something to subject)
+    Subject ( the one who receive an action from actor)
+    Secondary subject ( the collateral impact )
+=end
+  def extract_object(symbol)
+    symbol = symbol.to_s
+    extraction_type = "#{symbol}_type"
+    extraction_id = "#{symbol}_id"
+    
+    extraction_class = eval( "self." + "#{extraction_type}")
+    extraction_id = eval( "self." + "#{extraction_id}" )
+    command = "#{extraction_class}" + "." + "find_by_id(#{extraction_id})"
+    puts command 
+    object =   eval( command )
+    
+    return object
+  end
+
+=begin
+a  = UserActivity.find(:first, :conditions => {
+  :event_type => EVENT_TYPE[:submit_picture]
+})
+=end
+
+  
+  
+  def mark_notification_sent
+    self.is_notification_sent = true
+    self.save 
+  end
+  
+  
+  
+  # protected
+
+  def send_user_activity_update
+    NewsletterMailer.activity_update("rajakuraemas@gmail.com", Time.now, self).deliver
   end
 end

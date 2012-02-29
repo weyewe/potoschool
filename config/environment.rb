@@ -34,8 +34,8 @@ DEFAULT_DEADLINE_MINUTE = 59
 DISPLAY_IMAGE_WIDTH = 590
 
 EVENT_TYPE  = {
-  :create_comment => 1,  # added
-  :reply_comment => 2,  #added 
+  :create_comment => 1,  # yes
+  :reply_comment => 2,  # yes 
   :submit_picture => 3 ,   #added
   :submit_picture_revision => 4,  #added 
   :grade_picture => 5,  # added   # rejected and approved 

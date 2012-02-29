@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228141141) do
+ActiveRecord::Schema.define(:version => 20120229070129) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -60,6 +60,22 @@ ActiveRecord::Schema.define(:version => 20120228141141) do
     t.datetime "updated_at"
     t.boolean  "is_active",  :default => true
   end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "enrollments", :force => true do |t|
     t.integer  "school_id"
@@ -194,7 +210,6 @@ ActiveRecord::Schema.define(:version => 20120228141141) do
   end
 
   create_table "user_activities", :force => true do |t|
-    t.string   "event_type"
     t.string   "subject_type"
     t.string   "actor_type"
     t.string   "secondary_subject_type"
@@ -204,6 +219,7 @@ ActiveRecord::Schema.define(:version => 20120228141141) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_notification_sent",   :default => false
+    t.integer  "event_type"
   end
 
   create_table "users", :force => true do |t|

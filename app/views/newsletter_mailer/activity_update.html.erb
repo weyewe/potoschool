@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> -->
+
+    <!-- <meta charset="utf-8"> -->
+    <title>potoSchool | Photography Course Management</title>
+    <!-- <meta name="description" content="">
+      <meta name="author" content="">
+    
+       
+       <meta name="google-site-verification" content="p7DB-AfmjgGOsgsKnCe2viT1xmQ9xrBwhy62C3kd91I" /> -->
+     
+     
+      
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+   
+    
+    
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="<%=asset_path "favicon.ico"%>">
+    <link rel="apple-touch-icon" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="http://twitter.github.com/bootstrap/examples/images/apple-touch-icon-114x114.png">
+  
+    <%#= stylesheet_link_tag    "application" %>
+    <%#= yield :additional_css %>
+</head>
+<body>
+  
+  
+  <div class="container">
+    <!-- Main hero unit for a primary marketing message or call to action -->
+    <div class="hero-unit">
+      <h1>potoSchool Updates</h1>
+    </div>
+
+    <!-- Example row of columns -->
+    <div class="row">
+      
+
+      <% if @user_activity.event_type == EVENT_TYPE[:create_comment] %>
+      <!-- # actor is the teacher 
+          # subject is the comment 
+          # secondary subject is the picture -->
+        <div class="row">
+          
+          <% title = "xxx telah meninggalkan feedback di file untuk" + 
+                " project #{@secondary_subject.project_submission.project.title }" %>
+          
+          <h3>This is the one for EVENT_TYPE[:create_comment]</h3>
+          <h3><%= title.html_safe %></h3>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <%= image_tag @secondary_subject.index_image_url %>
+                </td>
+                <td style="vertical-align:top;">
+                  <blockquote><%= @subject.body %></blockquote>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Recipient is the student. so, show_url  -->
+          <p><a href="#" class="btn">Lihat Gambar »</a></p>
+        </div>
+
+        <hr />
+      <% elsif @user_activity.event_type == EVENT_TYPE[:reply_comment] %>
+      
+      
+      
+     
+      
+      <div class="row">
+        <h3>This is the feed for EVENT_TYPE[:reply_comment]</h3>
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <%= image_tag Picture.last.index_image_url %>
+              </td>
+              <td style="vertical-align:top;">
+                <blockquote>Tetapi, jika tidak menghadap matahari, maka akan terkena hujan. 
+                  Baik, akan saya perbaiki.</blockquote>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <p><a href="#" class="btn">Lihat Gambar »</a></p>
+      </div>
+      <hr />
+      <% elsif @user_activity.event_type == EVENT_TYPE[:submit_picture] %>
+        <div class="row">
+          <h3>This is the feed for EVENT_TYPE[:submit_picture].</h3>
+          <h3>XXX telah mengumpulkan 1 file untuk project "Mengejar Matahari"</h3>
+          <%= image_tag Picture.last.index_image_url %>
+          <p><a href="#" class="btn">View details »</a></p>
+        </div><hr />
+      <% elsif @user_activity.event_type == EVENT_TYPE[:submit_picture_revision] %>
+      
+        <div class="row">
+          <h3>This is the feed for EVENT_TYPE[:submit_picture_revision].</h3>
+          <h3>XXX telah mengupload revisi gambar untuk project"Mengejar Matahari"</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Original Picture</th>
+                <th>Revision</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <%= image_tag Picture.last.original_picture.index_image_url %>
+                </td>
+                <td>
+                  <%= image_tag Picture.last.index_image_url %>
+                </td>
+              </tr>
+      
+            </tbody>
+          </table>
+          <p><a href="#" class="btn">View details »</a></p>
+        </div><hr />
+      <% elsif @user_activity.event_type == EVENT_TYPE[:grade_picture]  %>
+        <div class="row">
+          <h3>This is the feed for EVENT_TYPE[:grade_picture].</h3>
+          <h3>Guru XXX telah menilai  gambar untuk project"Mengejar Matahari"</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><%= image_tag Picture.first.index_image_url %></td>
+                <td style="vertical-align:top;"> <span style="background-color:rgb(230,230,230);">Score: 85</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+
+          <p><a href="#" class="btn">View details »</a></p>
+        </div><hr />
+        
+      <% elsif  @user_activity.event_type == EVENT_TYPE[:create_project] %>
+      
+        <div class="row">
+          <h3>This is the feed for EVENT_TYPE[:create_project].</h3>
+          <h3>Guru XXX telah membuat project baru: <%= Project.last.title %></h3>
+          <blockquote>
+            <b>Description:</b> <%= Project.last.description %>
+          </blockquote>
+
+          <p><a href="#" class="btn">View details »</a></p>
+        </div><hr />
+
+
+
+     
+      
+      <% end %>
+      
+    
+      
+    </div>
+    <hr />
+    
+ 
+
+    <footer>
+      <p>&copy; poto 2011 - <%= Time.now.year %></p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
+
+

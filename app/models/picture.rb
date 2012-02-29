@@ -273,3 +273,9 @@ class Picture < ActiveRecord::Base
 
   
 end
+
+=begin
+  root_comment = Comment.find(:first, :conditions => {
+  :comment_id => 
+  })
+=end

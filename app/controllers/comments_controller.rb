@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
     @comment.move_to_child_of(@root_comment)
     
     Comment.new_user_activity_for_comment_reply(
-          EVENT_TYPE[:comment_reply],
+          EVENT_TYPE[:reply_comment],
           current_user,
           @comment,
           @root_comment

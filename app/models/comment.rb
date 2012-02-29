@@ -98,7 +98,19 @@ class Comment < ActiveRecord::Base
           
     
   end
-  
+=begin
+a = Comment.last 
+a.commented_object.root_comments.first
+UserActivity.where(:event_type => EVENT_TYPE[:create_comment]).each do |user_activity| 
+  picture = user_activity.extract_object :subject 
+  first_root_comment = picture.root_comments.first
+  user_activity.secondary_subject_type = user_activity.subject_type 
+  user_activity.secondary_subject_id = user_activity.subject_id 
+  user_activity.subject_type = first_root_comment.class.to_s
+  user_activity.subject_id = first_root_comment.id 
+  user_activity.save 
+end
+=end
  
   
   

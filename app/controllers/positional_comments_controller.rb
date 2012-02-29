@@ -6,8 +6,8 @@ class PositionalCommentsController < ApplicationController
     
     PositionalComment.new_user_activity_for_new_comment( EVENT_TYPE[:create_comment],
                                              current_user, 
-                                             @picture, 
-                                             @project_submission.project )
+                                             @positional_comment.comment , 
+                                             @picture )
     
     respond_to do |format|
       format.html {  redirect_to project_submission_picture_path(@picture ,@picture) }
