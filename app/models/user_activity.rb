@@ -69,6 +69,77 @@ a  = UserActivity.find(:first, :conditions => {
   
   
   
+  def extract_recipient
+    case self.event_type
+    when EVENT_TYPE[:create_comment]
+      # actor is the teacher 
+      # subject is the comment 
+      # secondary subject is the picture
+      @user = @secondary_subject.project_submission.user 
+      return @user.email 
+    when EVENT_TYPE[:reply_comment]
+      # actor is the user, can be teacher or student   
+      # the subject is the comment itself 
+      # the  secondary_subject is the picture
+      if @actor.has_role?(:student)
+        #we have to get the teacher 
+        @course = @picture.project_submission.project.course 
+        return CourseTeachingAssignment.find(:first, :conditions => {
+          :course_id => @course.id
+        }).user.email
+        
+      elsif @actor.has_role?(:teacher)
+        @user = @secondary_subject.project_submission.user
+        return @user.email 
+      else
+        return "rajakuraemas@gmail.com"
+      end  
+      
+      
+    when EVENT_TYPE[:submit_picture] 
+      # actor is the uploader (student ) 
+      # subject  is the uploaded picture  itself 
+      # secondary_subject is the project
+      @course = @secondary_subject.course
+      @teacher = CourseTeachingAssignment.find(:first, :conditions => {
+        :course_id => @course.id
+      }).user
+      
+      return @teacher.email 
+      
+      
+    when EVENT_TYPE[:submit_picture_revision]
+      # actor is the student (uploader)
+      # subject is the new uploaded picture 
+      # secondary_subject is the original_picture
+      
+      @course = @secondary_subject.course
+      @teacher = CourseTeachingAssignment.find(:first, :conditions => {
+        :course_id => @course.id
+        }).user
+
+      return @teacher.email
+      
+    when EVENT_TYPE[:grade_picture]
+      # actor is the teacher
+      # subject is the picture being graded
+      # secondary_subject is the project
+      @student = @subject.project_submission.user 
+      return @student.email 
+                     
+    when EVENT_TYPE[:create_project]
+      # actor is teacher (project_creator)
+      # subject is the project being created
+      # seconadary_subject is the course
+      @students = course.students
+      collection_of_students_email = @students.map {|x| x.email }
+      return collection_of_students_email
+    else
+    end
+    
+    
+  end
+  
   # protected
   
   def self.send_summary
@@ -76,6 +147,9 @@ a  = UserActivity.find(:first, :conditions => {
   end
 
   def send_user_activity_update
+    # check if it is development Rails.env.development? 
+    # Check if it is production: Rails.env.production? 
+    # recipient = self.extract_recipient 
     NewsletterMailer.activity_update("rajakuraemas@gmail.com", Time.now, self).deliver
   end
 end

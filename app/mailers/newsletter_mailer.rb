@@ -10,6 +10,7 @@ class NewsletterMailer < ActionMailer::Base
   def activity_update(email, time, user_activity )
     extract_params(user_activity) 
     @user_activity = user_activity
+
     
     
     
@@ -34,7 +35,8 @@ class NewsletterMailer < ActionMailer::Base
   
   def extract_params(user_activity)
     @actor = user_activity.extract_object(:actor)
-    @subject = user_activity.extract_object(:subject)
+    @subject_object = user_activity.extract_object(:subject)
+
     @secondary_subject = user_activity.extract_object(:secondary_subject)
     @event_type = user_activity.event_type
   end
