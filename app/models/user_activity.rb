@@ -70,6 +70,10 @@ a  = UserActivity.find(:first, :conditions => {
   
   
   # protected
+  
+  def self.send_summary
+    NewsletterMailer.send_summary("rajakuraemas@gmail.com").deliver
+  end
 
   def send_user_activity_update
     NewsletterMailer.activity_update("rajakuraemas@gmail.com", Time.now, self).deliver

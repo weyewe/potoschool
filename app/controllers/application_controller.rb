@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  puts "entering"
   include Transloadit::Rails::ParamsDecoder
   protect_from_forgery
   before_filter :authenticate_user!

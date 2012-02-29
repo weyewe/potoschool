@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
           EVENT_TYPE[:reply_comment],
           current_user,
           @comment,
-          @root_comment
+          @comment.commented_object
     )
   end
 end

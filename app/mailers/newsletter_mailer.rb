@@ -26,6 +26,11 @@ class NewsletterMailer < ActionMailer::Base
 
   end
   
+  def send_summary(email)
+    mail(:to => email , 
+    :subject => "potoSchool | Summary Tarumangara @#{Time.now}")
+  end
+  
   
   def extract_params(user_activity)
     @actor = user_activity.extract_object(:actor)

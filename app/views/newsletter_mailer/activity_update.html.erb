@@ -36,6 +36,7 @@
 <body>
   
   
+  
   <div class="container">
     <!-- Main hero unit for a primary marketing message or call to action -->
     <div class="hero-unit">
@@ -70,47 +71,76 @@
             </tbody>
           </table>
           <!-- Recipient is the student. so, show_url  -->
-          <p><a href="#" class="btn">Lihat Gambar »</a></p>
-        </div>
-
-        <hr />
+          <p>
+            <%= link_to "See Details",
+             project_submission_picture_url(@secondary_subject.project_submission, @secondary_subject)%>
+          </p>
+        </div><hr />
+        
       <% elsif @user_activity.event_type == EVENT_TYPE[:reply_comment] %>
       
       
+      <!-- # actor is the user, can be teacher or student   
+      # the subject is the comment itself 
+      # the  secondary_subject is the picture -->
+          
+        <% title = "xxx meninggalkan comment di diskusi untuk "  + 
+                    " project #{@secondary_subject.project_submission.project.title}" %>
       
-     
-      
-      <div class="row">
-        <h3>This is the feed for EVENT_TYPE[:reply_comment]</h3>
-        <table>
-          <tbody>
-            <tr>
-              <td>
-                <%= image_tag Picture.last.index_image_url %>
-              </td>
-              <td style="vertical-align:top;">
-                <blockquote>Tetapi, jika tidak menghadap matahari, maka akan terkena hujan. 
-                  Baik, akan saya perbaiki.</blockquote>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="row">
+          <h3>This is the feed for EVENT_TYPE[:reply_comment]</h3>
+          <h3><%= title.html_safe %></h3>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <%= image_tag @secondary_subject.index_image_url %>
+                </td>
+                <td style="vertical-align:top;">
+                  <blockquote><%= @subject.body %></blockquote>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         
-        <p><a href="#" class="btn">Lihat Gambar »</a></p>
-      </div>
-      <hr />
+          <p>
+            <%= link_to "See Details",
+             project_submission_picture_url(@secondary_subject.project_submission, @secondary_subject)%>
+            <!-- <a href="#" class="btn">Lihat Gambar »</a> -->
+          </p>
+        </div><hr />
+      
+      
       <% elsif @user_activity.event_type == EVENT_TYPE[:submit_picture] %>
+      
+      
+ <!--       # actor is the uploader (student ) 
+        # subject  is the uploaded picture  itself 
+        # secondary_subject is the project -->
+       
+       
+        <% title = "xxx telah mengupload sebuah file untuk project #{@secondary_subject.title}."%>
         <div class="row">
           <h3>This is the feed for EVENT_TYPE[:submit_picture].</h3>
-          <h3>XXX telah mengumpulkan 1 file untuk project "Mengejar Matahari"</h3>
-          <%= image_tag Picture.last.index_image_url %>
-          <p><a href="#" class="btn">View details »</a></p>
+          <h3><%= title %></h3>
+          <%= image_tag  @subject.index_image_url %>
+          <p><%= link_to "See Details",
+           project_submission_picture_url(@subject.project_submission, @subject)%>
+           <!-- <a href="#" class="btn">View details »</a> -->
+          </p>
         </div><hr />
+        
+        
       <% elsif @user_activity.event_type == EVENT_TYPE[:submit_picture_revision] %>
       
+        <!-- # actor is the student (uploader)
+               # subject is the new uploaded picture 
+               # secondary_subject is the original_picture  -->
+        <% title = "xxx telah mengupload sebuah file revisi " + 
+                " untuk project #{@subject.project_submission.project.title}."%>
         <div class="row">
           <h3>This is the feed for EVENT_TYPE[:submit_picture_revision].</h3>
-          <h3>XXX telah mengupload revisi gambar untuk project"Mengejar Matahari"</h3>
+          <h3><%= title %></h3>
           <table>
             <thead>
               <tr>
@@ -121,21 +151,33 @@
             <tbody>
               <tr>
                 <td>
-                  <%= image_tag Picture.last.original_picture.index_image_url %>
+                  <%= image_tag @secondary_subject.index_image_url %>
                 </td>
                 <td>
-                  <%= image_tag Picture.last.index_image_url %>
+                  <%= image_tag @subject.index_image_url %>
                 </td>
               </tr>
       
             </tbody>
           </table>
-          <p><a href="#" class="btn">View details »</a></p>
+          <p>
+            <%= link_to "See Details",
+             project_submission_picture_url(@subject.project_submission, @subject)%>
+            <!-- <a href="#" class="btn">View details »</a> -->
+          </p>
         </div><hr />
+        
+        
       <% elsif @user_activity.event_type == EVENT_TYPE[:grade_picture]  %>
+        
+        <!-- # actor is the teacher
+              # subject is the picture being graded
+              # secondary_subject is the project -->
+      
+        <% title = "Guru XXX menilai gambar untuk project #{@secondary_subject.title} "%>
         <div class="row">
           <h3>This is the feed for EVENT_TYPE[:grade_picture].</h3>
-          <h3>Guru XXX telah menilai  gambar untuk project"Mengejar Matahari"</h3>
+          <h3><%= title  %></h3>
           <table>
             <thead>
               <tr>
@@ -145,14 +187,22 @@
             </thead>
             <tbody>
               <tr>
-                <td><%= image_tag Picture.first.index_image_url %></td>
-                <td style="vertical-align:top;"> <span style="background-color:rgb(230,230,230);">Score: 85</span></td>
+                <td><%= image_tag @subject.index_image_url %></td>
+                <td style="vertical-align:top;"> 
+                  <span style="background-color:rgb(230,230,230);">
+                    Score: <%= @subject.original_picture.score %>
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>
 
 
-          <p><a href="#" class="btn">View details »</a></p>
+          <p>
+            <%= link_to "See Details",
+             project_submission_picture_url(@subject.project_submission, @subject)%>
+            <!-- <a href="#" class="btn">View details »</a> -->
+          </p>
         </div><hr />
         
       <% elsif  @user_activity.event_type == EVENT_TYPE[:create_project] %>
@@ -164,7 +214,7 @@
             <b>Description:</b> <%= Project.last.description %>
           </blockquote>
 
-          <p><a href="#" class="btn">View details »</a></p>
+          <!-- <p><a href="#" class="btn">View details »</a></p> -->
         </div><hr />
 
 

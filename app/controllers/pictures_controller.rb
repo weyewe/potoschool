@@ -103,7 +103,7 @@ class PicturesController < ApplicationController
     end
     
     Picture.new_user_activity_for_grading(
-      EVENT_TYPE[:grade_project],
+      EVENT_TYPE[:grade_picture],
       current_user ,  #this is the teacher
       @picture,  #picture being graded
       @picture.project_submission.project   #the project where that picture belongs to 
