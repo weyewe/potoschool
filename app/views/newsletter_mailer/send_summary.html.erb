@@ -46,9 +46,10 @@
 
     <!-- Example row of columns -->
     <div class="row">
-      
+      <% counter = 0 %>
       
       <% UserActivity.all.each do |user_activity| %>
+        <% counter =  counter + 1 %>
         <% actor = user_activity.extract_object(:actor)%>
         <% subject = user_activity.extract_object(:subject)%>
         <% secondary_subject = user_activity.extract_object(:secondary_subject)%>
@@ -56,11 +57,16 @@
         <% if user_activity.event_type != EVENT_TYPE[:reply_comment] %>
         
           <!-- start of feed creator -->
+          <% if counter%2 == 0 %>
+            <div class="row">
+          <% else %>
+            <div class="row horse">
+          <% end %>
                <% if user_activity.event_type == EVENT_TYPE[:create_comment] %>
                <!-- # actor is the teacher 
                    # subject is the comment 
                    # secondary subject is the picture -->
-                 <div class="row">
+                 
 
                    <% title = "xxx telah meninggalkan feedback di file untuk" + 
                          " project #{secondary_subject.project_submission.project.title }" %>
@@ -84,7 +90,7 @@
                      <%= link_to "See Details",
                       project_submission_picture_url(secondary_subject.project_submission, secondary_subject)%>
                    </p>
-                 </div><hr />
+                 
 
                <% elsif user_activity.event_type == EVENT_TYPE[:reply_comment] %>
 
@@ -96,7 +102,7 @@
                  <% title = "xxx meninggalkan comment di diskusi untuk "  + 
                              " project #{secondary_subject.project_submission.project.title}" %>
 
-                 <div class="row">
+                 <!-- <div class="row"> -->
                    <h3>This is the feed for EVENT_TYPE[:reply_comment]</h3>
                    <h3><%= title.html_safe %></h3>
                    <table>
@@ -117,7 +123,7 @@
                       project_submission_picture_url(secondary_subject.project_submission, secondary_subject)%>
                      <!-- <a href="#" class="btn">Lihat Gambar »</a> -->
                    </p>
-                 </div><hr />
+                 <!-- </div><hr /> -->
 
 
                <% elsif user_activity.event_type == EVENT_TYPE[:submit_picture] %>
@@ -129,7 +135,7 @@
 
 
                  <% title = "xxx telah mengupload sebuah file untuk project #{secondary_subject.title}."%>
-                 <div class="row">
+                 <!-- <div class="row"> -->
                    <h3>This is the feed for EVENT_TYPE[:submit_picture].</h3>
                    <h3><%= title %></h3>
                    <%= image_tag  subject.index_image_url %>
@@ -137,7 +143,7 @@
                     project_submission_picture_url(subject.project_submission, subject)%>
                     <!-- <a href="#" class="btn">View details »</a> -->
                    </p>
-                 </div><hr />
+                 <!-- </div><hr /> -->
 
 
                <% elsif user_activity.event_type == EVENT_TYPE[:submit_picture_revision] %>
@@ -147,7 +153,7 @@
                         # secondary_subject is the original_picture  -->
                  <% title = "xxx telah mengupload sebuah file revisi " + 
                          " untuk project #{subject.project_submission.project.title}."%>
-                 <div class="row">
+                 <!-- <div class="row"> -->
                    <h3>This is the feed for EVENT_TYPE[:submit_picture_revision].</h3>
                    <h3><%= title %></h3>
                    <table>
@@ -174,7 +180,7 @@
                       project_submission_picture_url(subject.project_submission, subject)%>
                      <!-- <a href="#" class="btn">View details »</a> -->
                    </p>
-                 </div><hr />
+                 <!-- </div><hr /> -->
 
 
                <% elsif user_activity.event_type == EVENT_TYPE[:grade_picture]  %>
@@ -184,7 +190,7 @@
                        # secondary_subject is the project -->
 
                  <% title = "Guru XXX menilai gambar untuk project #{secondary_subject.title} "%>
-                 <div class="row">
+                 <!-- <div class="row"> -->
                    <h3>This is the feed for EVENT_TYPE[:grade_picture].</h3>
                    <h3><%= title  %></h3>
                    <table>
@@ -212,11 +218,11 @@
                       project_submission_picture_url(subject.project_submission, subject)%>
                      <!-- <a href="#" class="btn">View details »</a> -->
                    </p>
-                 </div><hr />
+                 <!-- </div><hr /> -->
 
                <% elsif  user_activity.event_type == EVENT_TYPE[:create_project] %>
 
-                 <div class="row">
+                 <!-- <div class="row"> -->
                    <h3>This is the feed for EVENT_TYPE[:create_project].</h3>
                    <h3>Guru XXX telah membuat project baru: <%= Project.last.title %></h3>
                    <blockquote>
@@ -224,14 +230,14 @@
                    </blockquote>
 
                    <!-- <p><a href="#" class="btn">View details »</a></p> -->
-                 </div><hr />
+                 <!-- </div><hr /> -->
 
 
 
 
 
                <% end %>   <!-- end of the feed creator -->
-          
+          </div><hr />
         <% end %>
       <% end %>
 
