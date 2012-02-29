@@ -68,6 +68,8 @@ school.users << teacher_2
 school.users << school_admin
 school.save
 
+puts "we are all out of the user creation\n"*10
+
 
 =begin
   This is the minimum seeds. Subject, Project, Course has to be made by the school_admin 

@@ -25,7 +25,7 @@
         <tbody>
           <% @students.each do |student| %>
             <tr>
-              <td><%= "xxx"  %></td>
+              <td>xxx: <%= student.email %></td>
               <td class="total-subjects-taken"><%=  student.subject_registrations.count %></td>
               
               <td class="well">

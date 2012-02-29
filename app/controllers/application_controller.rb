@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  def only_role(role_symbol)
+    if not current_user.has_role?(role_symbol)
+      redirect_to root_url 
+    end
+  end
+
   def layout_by_resource
     if devise_controller? && resource_name == :user && action_name == 'new'
       "devise"

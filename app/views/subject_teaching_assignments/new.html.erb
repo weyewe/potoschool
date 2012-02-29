@@ -30,7 +30,7 @@
         <tbody>
           <% @teachers.each do |teacher| %>
             <tr>
-              <td> xxx </td>
+              <td> xxx: <%= teacher.email %></td>
               <td class="total-subject-teaching-assignment"><%= teacher.total_subjects_count %></td>
               
               <td class="well">
