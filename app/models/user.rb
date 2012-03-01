@@ -145,6 +145,16 @@ class User < ActiveRecord::Base
     }).count
   end
   
+  def all_courses_for_subject(subject)
+    Course.joins(:course_teaching_assignments => :user ).
+          where(
+          { :course_teaching_assignments => {:user => {:id => self.id } } }    &
+          { :course_teaching_assignments => {:is_active => true}} & 
+          { :subject_id => subject.id}
+          
+          )
+  end
+  
   def all_courses_taught
 
     Course.joins(:course_teaching_assignments => :user ).

@@ -6,8 +6,9 @@ class GroupsController < ApplicationController
   end
   
   def select_course_for_group
+    #current user is a teacher
     @subject = Subject.find_by_id( params[:subject_id])
-    @courses = @subject.courses 
+    @courses = current_user.all_courses_for_subject( @subject )
     
     add_breadcrumb "Select Subject", "select_subject_for_project_url"
     set_breadcrumb_for @subject, 'select_course_for_group_path' + "(#{@subject.id})", 
