@@ -37,11 +37,11 @@ class UserActivity < ActiveRecord::Base
   end
   
   def deliver_update
-    if Rails.env.production?
+    # if Rails.env.production?
       self.delay.send_user_activity_update
-    elsif Rails.env.development?
-      self.send_user_activity_update
-    end
+    # elsif Rails.env.development?
+      # self.send_user_activity_update
+    # end
   end
   
   
