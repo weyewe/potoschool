@@ -34,12 +34,13 @@ DEFAULT_DEADLINE_MINUTE = 59
 DISPLAY_IMAGE_WIDTH = 590
 
 EVENT_TYPE  = {
-  :create_comment => 1,  # yes
-  :reply_comment => 2,  # yes 
-  :submit_picture => 3 ,   #added
-  :submit_picture_revision => 4,  #added 
-  :grade_picture => 5,  # added   # rejected and approved 
-  :create_project => 6   #added
+  :create_comment => 1,  # yes  # notification is working 
+  :reply_comment => 2,  # yes  #the view details depends on the destination
+                        #  destination is working 
+  :submit_picture => 3 ,   #added  #notification is working 
+  :submit_picture_revision => 4,  #added # notification is working 
+  :grade_picture => 5,  # added   # rejected and approved   # notification is working 
+  :create_project => 6   #added  # notification working
 }
 # 
 # SECONDARY_SUBJECT_EVENT = [ 2, 4 , 5 ] # reply, revision, grade picture  

@@ -4,7 +4,7 @@ class UserActivity < ActiveRecord::Base
   belongs_to :secondary_subject,  :polymorphic => true
   
   
-  after_create :deliver_update
+  # after_create :deliver_update
   
   
   
@@ -25,12 +25,23 @@ class UserActivity < ActiveRecord::Base
       options[:secondary_subject_id]  = secondary_subject.id 
     end
     
-    self.create( options ) 
+    puts "Gonna create in create_new_entry\n"*10
+    result = self.create( options ) 
+     puts "Done creation, gonna send update now \n"*10
+    result.deliver_update
+    
+    return result 
+    
+   
           
   end
   
   def deliver_update
-    self.delay.send_user_activity_update
+    if Rails.env.production?
+      self.delay.send_user_activity_update
+    elsif Rails.env.development?
+      self.send_user_activity_update
+    end
   end
   
   
@@ -70,29 +81,33 @@ a  = UserActivity.find(:first, :conditions => {
   
   
   def extract_recipient
+    @actor = self.extract_object :actor
+    @subject = self.extract_object :subject
+    @secondary_subject = self.extract_object :secondary_subject
+    
     case self.event_type
     when EVENT_TYPE[:create_comment]
       # actor is the teacher 
       # subject is the comment 
       # secondary subject is the picture
       @user = @secondary_subject.project_submission.user 
-      return @user.email 
+      return [@user.email ]
     when EVENT_TYPE[:reply_comment]
       # actor is the user, can be teacher or student   
       # the subject is the comment itself 
       # the  secondary_subject is the picture
       if @actor.has_role?(:student)
         #we have to get the teacher 
-        @course = @picture.project_submission.project.course 
-        return CourseTeachingAssignment.find(:first, :conditions => {
+        @course = @secondary_subject.project_submission.project.course 
+        return [ CourseTeachingAssignment.find(:first, :conditions => {
           :course_id => @course.id
-        }).user.email
+        }).user.email ] 
         
       elsif @actor.has_role?(:teacher)
         @user = @secondary_subject.project_submission.user
-        return @user.email 
+        return  [@user.email  ]
       else
-        return "rajakuraemas@gmail.com"
+        return [ "rajakuraemas@gmail.com" ]
       end  
       
       
@@ -105,7 +120,7 @@ a  = UserActivity.find(:first, :conditions => {
         :course_id => @course.id
       }).user
       
-      return @teacher.email 
+      return [@teacher.email ] 
       
       
     when EVENT_TYPE[:submit_picture_revision]
@@ -113,25 +128,28 @@ a  = UserActivity.find(:first, :conditions => {
       # subject is the new uploaded picture 
       # secondary_subject is the original_picture
       
-      @course = @secondary_subject.course
+      @course = @secondary_subject.project_submission.project.course
+      
+      # original_picture.project_submission.project.course
+      
       @teacher = CourseTeachingAssignment.find(:first, :conditions => {
         :course_id => @course.id
         }).user
 
-      return @teacher.email
+      return [@teacher.email]
       
     when EVENT_TYPE[:grade_picture]
       # actor is the teacher
       # subject is the picture being graded
       # secondary_subject is the project
       @student = @subject.project_submission.user 
-      return @student.email 
+      return [@student.email ]
                      
     when EVENT_TYPE[:create_project]
       # actor is teacher (project_creator)
       # subject is the project being created
       # seconadary_subject is the course
-      @students = course.students
+      @students = @secondary_subject.students
       collection_of_students_email = @students.map {|x| x.email }
       return collection_of_students_email
     else
@@ -149,7 +167,11 @@ a  = UserActivity.find(:first, :conditions => {
   def send_user_activity_update
     # check if it is development Rails.env.development? 
     # Check if it is production: Rails.env.production? 
-    # recipient = self.extract_recipient 
-    NewsletterMailer.activity_update( "rajakuraemas@gmail.com" , Time.now, self).deliver
+    recipients = self.extract_recipient 
+    if ( not recipients.nil?) and (recipients.length > 0 )  
+        recipients.each do |recipient| 
+          NewsletterMailer.activity_update( recipient , Time.now, self).deliver
+        end
+    end
   end
 end

@@ -10,10 +10,19 @@ class Project < ActiveRecord::Base
   def Project.create_project_by_project_creator( project_creator , new_project)
     if new_project.save 
       # add_create_project_to_user_activity(EVENT_TYPE[:create_project]project_creator)
+      
+      if new_project.course 
+        puts "The course is #{new_project.course.name}\n"*10
+      else
+        puts "The course is empty\n"*5
+      end
+      
       UserActivity.create_new_entry(EVENT_TYPE[:create_project], 
                         project_creator, 
                         new_project , 
                         new_project.course )
+                        
+      puts "Done with creating new user_activity in project"
                         
       return new_project
     else

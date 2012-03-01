@@ -108,8 +108,20 @@
           </table>
         
           <p>
-            <%= link_to "See Details",
-             project_submission_picture_url(@secondary_subject.project_submission, @secondary_subject)%>
+            <% if @actor.has_role?(:teacher) %>
+              <!-- the recipient is gonna be the student  -->
+              <%= link_to "See Details",
+               project_submission_picture_url(@secondary_subject.project_submission, @secondary_subject)%>
+            <% elsif @actor.has_role?(:student)%>
+            <!-- the recipient is gonna be the teacher  -->
+              <%= link_to "See Details",
+               grade_project_submission_picture_url(@secondary_subject)%>
+            <% end %>
+            
+            
+             
+             
+            
             <!-- <a href="#" class="btn">Lihat Gambar »</a> -->
           </p>
         </div><hr />
@@ -129,7 +141,7 @@
           <h3><%= title %></h3>
           <%= image_tag  @subject_object.index_image_url %>
           <p><%= link_to "See Details",
-           project_submission_picture_url(@subject_object.project_submission, @subject_object)%>
+           grade_project_submission_picture_url(@subject_object)%>
            <!-- <a href="#" class="btn">View details »</a> -->
           </p>
         </div><hr />
@@ -165,7 +177,11 @@
             </tbody>
           </table>
           <p>
+            
             <%= link_to "See Details",
+             grade_project_submission_picture_url(@subject_object)%>
+             
+            <%#= link_to "See Details",
              project_submission_picture_url(@subject_object.project_submission, @subject_object)%>
             <!-- <a href="#" class="btn">View details »</a> -->
           </p>
@@ -193,9 +209,16 @@
               <tr>
                 <td><%= image_tag @subject_object.index_image_url %></td>
                 <td style="vertical-align:top;"> 
-                  <span style="background-color:rgb(230,230,230);">
-                    Score: <%= @subject_object.original_picture.score %>
-                  </span>
+                  <% if @subject_object.is_approved == false %>
+                    <span style="background-color:rgb(230,230,230); font-size:x-large; font-weight:bold;">
+                      REJECTED
+                    </span>
+                  <% elsif @subject_object.is_approved == true  %>
+                    <span style="background-color:rgb(230,230,230);">
+                      Score: <%= @subject_object.original_picture.score %>
+                    </span>
+                  <% end %>
+                  
                 </td>
               </tr>
             </tbody>
