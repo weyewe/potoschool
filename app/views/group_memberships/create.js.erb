@@ -12,11 +12,11 @@ $(document).ready(function(){
   <% if @decision == TRUE_CHECK %>
     
     <% group_name = escape_javascript(@group.name) %> 
-    console.log("This is a true check: <%= group_name %>");
+    // console.log("This is a true check: <%= group_name %>");
   // added new shite, change td.membership-info text 
     $td_membership.text('<%= group_name %>');
   <% elsif @decision == FALSE_CHECK %>
-    console.log("This is a false check " );
+    // console.log("This is a false check " );
     $td_membership.text("Unregistered");
   <% end %>
   
