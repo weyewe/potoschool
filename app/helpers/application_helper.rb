@@ -1,9 +1,44 @@
+# require 'rubygems'
+# require 'openssl'
+# require 'json'
+
 module ApplicationHelper
   ACTIVE = 'active'
   REVISION_SELECTED = "selected"
   NEXT_BUTTON_TEXT = "Next &rarr;"
   PREV_BUTTON_TEXT = " &larr; Prev "
   
+=begin
+  Our version of transloadit 
+=end
+  
+  def transloadit_with_max_size( template , max_size )
+    
+    transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit.yml") )
+    
+    
+    
+    
+    auth_key = transloadit_read['auth']['key']
+    auth_secret = transloadit_read['auth']['secret']
+    duration = transloadit_read['auth']['duration']
+    template = transloadit_read['templates'][template]
+  
+    params = JSON.generate({
+      :auth => {
+        :expires => (Time.now + duration).utc.strftime('%Y/%m/%d %H:%M:%S+00:00') ,
+      # Time.now.utc.strftime('%Y/%m/%d %H:%M:%S+00:00'),
+        :key => auth_key,
+        :max_size => 100
+      },
+      :template => template 
+    })
+    
+    
+    digest = OpenSSL::Digest::Digest.new('sha1')
+    signature = OpenSSL::HMAC.hexdigest(digest, auth_secret, params)
+    [params, signature]
+  end
   
 =begin
   For the grade display 
