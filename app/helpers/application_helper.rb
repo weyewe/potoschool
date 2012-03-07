@@ -12,7 +12,7 @@ module ApplicationHelper
   Our version of transloadit 
 =end
   
-  def transloadit_with_max_size( template , max_size )
+  def transloadit_with_max_size( template , size_mb )
     
     transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit.yml") )
     
@@ -29,9 +29,9 @@ module ApplicationHelper
         :expires => (Time.now + duration).utc.strftime('%Y/%m/%d %H:%M:%S+00:00') ,
       # Time.now.utc.strftime('%Y/%m/%d %H:%M:%S+00:00'),
         :key => auth_key,
-        :max_size => 100
+        :max_size => size_mb*1024*1024
       },
-      :template => template 
+      :template_id => template 
     })
     
     

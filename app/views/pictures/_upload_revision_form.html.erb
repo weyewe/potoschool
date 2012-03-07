@@ -8,7 +8,7 @@
           REVISION_PICTURE  %>
   <%= transloadit :potoschool_store_image %>
   <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
-            :multiple => "multiple", :style=>"width:200px;" %>
+             :style=>"width:200px;" %>
             <br />
   <%= hidden_field_tag 'original_picture_id', 
           @picture.original_picture.id  %>

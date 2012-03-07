@@ -5,7 +5,7 @@
   
   
   
-  <h3>You have to upload: <b><%= @project.total_submission %> images</b>
+  <h3>You have to upload: <b><%= @project.total_submission %> images</b></h3>
     
     
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
@@ -20,7 +20,7 @@
                   :id => 'upload_picture' }  do |f| %>
         <%= hidden_field_tag 'is_original', 
                 ORIGINAL_PICTURE  %>
-        <% tranloadit_array = transloadit_with_max_size('potoschool_store_image', 100) %>
+        <% tranloadit_array = transloadit_with_max_size('potoschool_store_image', 1) %>
         <%#= transloadit :potoschool_store_image, { :auth => {:max_size => 2000}}  %>
         <%= hidden_field_tag 'params',  tranloadit_array[0]  %>
         <%= hidden_field_tag 'signature',  tranloadit_array[1]  %>
