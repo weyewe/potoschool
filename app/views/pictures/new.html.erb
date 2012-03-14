@@ -15,28 +15,27 @@
 
     
     <% if Time.now < @project.deadline_datetime %>
-      <%= form_for @new_picture, :url => project_submission_pictures_url(@project_submission) , 
-                :html => {:class=> "well form-search",
-                  :id => 'upload_picture' }  do |f| %>
-        <%= hidden_field_tag 'is_original', 
-                ORIGINAL_PICTURE  %>
-        <% tranloadit_array = transloadit_with_max_size('potoschool_store_image', 1) %>
-        <%#= transloadit :potoschool_store_image, { :auth => {:max_size => 2000}}  %>
-        <%= hidden_field_tag 'params',  tranloadit_array[0]  %>
-        <%= hidden_field_tag 'signature',  tranloadit_array[1]  %>
-                
-        <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
-                  :multiple => "multiple", :style=>"width:200px;" %>
-                  <br />
-                  <br />
-                  
-                  <!-- params    = Transloadit::Rails::Engine.template(template, options).to_json -->
-                  
-                  
-        <button type="submit" class=" hide btn submit-button">Upload</button>
-        <p class="help-inline">You can upload multiple images at once.</p>
+    
+  
+    
+    
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#image_tab" data-toggle="tab">Upload Image</a></li>
+        <li><a href="#document_tab" data-toggle="tab">Upload Document</a></li>
+      </ul>
+
+      <div class="tab-content">
+        <div class="tab-pane active" id="image_tab">
+          <%= render :partial => "pictures/new_picture_upload" %>
+        </div>
+        <div class="tab-pane" id="document_tab">
+          <%= render :partial => "pictures/new_document_upload" %>
+        </div>
+      </div>
+    
+  
       
-      <% end %>
+      
     
       <% content_for :additional_js do %>
         <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
@@ -48,8 +47,20 @@
                pollTimeout : 15000,
                processZeroFiles : false,
                onStart : function(assembly){
+                 
                }
              });
+             
+             $('#upload_document').transloadit({
+                wait : true, 
+                pollTimeout : 15000,
+                processZeroFiles : false,
+                onStart : function(assembly){
+                }
+              });
+              
+              
+              
            });
         </script>
       <% end %>

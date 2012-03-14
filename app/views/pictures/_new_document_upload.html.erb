@@ -1,0 +1,24 @@
+<%= form_for @new_picture, :url => project_submission_pictures_url(@project_submission) , 
+          :html => {:class=> "well form-search",
+            :id => 'upload_document' }  do |f| %>
+  <%= hidden_field_tag 'is_original', 
+          ORIGINAL_PICTURE  %>
+  <%= hidden_field_tag 'picture_filetype', 
+          PICTURE_FILETYPE[:scribd]  %>
+  <% tranloadit_array = transloadit_with_max_size('potoschool_store_document', 5) %>
+  <%#= transloadit :potoschool_store_image, { :auth => {:max_size => 2000}}  %>
+  <%= hidden_field_tag 'params',  tranloadit_array[0]  %>
+  <%= hidden_field_tag 'signature',  tranloadit_array[1]  %>
+          
+  <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
+            :multiple => "multiple", :style=>"width:200px;" %>
+            <br />
+            <br />
+            
+            <!-- params    = Transloadit::Rails::Engine.template(template, options).to_json -->
+            
+            
+  <button type="submit" class=" hide btn submit-button">Upload</button>
+  <p class="help-inline">You can upload documents one by one.</p>
+
+<% end %>

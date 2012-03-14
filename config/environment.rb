@@ -42,3 +42,56 @@ EVENT_TYPE  = {
   :grade_picture => 5,  #reject is working  
   :create_project => 6   #added  # notification working  # working with background job
 }
+
+
+# Special for File Upload
+PICTURE_FILETYPE = {
+  :image => 1,
+  :doc => 2,
+  :ppt => 3,
+  :xls => 4,
+  :pdf => 5,
+  :open_document => 6,
+  :open_office_xml => 7,
+  :plain_text => 8,
+  :postscript => 9,
+  :rtf => 10,
+  :tif => 11, 
+  :others => 999
+}
+
+FILETYPE_REGEX = {
+  :doc => /(\.(doc|docx))$/,
+  :ppt => /(\.(ppt|pps|pptx|ppsx))$/,
+  :xls => /(\.(xls|xlsx))$/,
+  :pdf => /(\.(pdf))$/,
+  :open_document => /(\.(odt|odp|ods|odf|odg))$/,
+  :open_office_xml => /(\.(sxw|sxi|sxc|sxd))$/,
+  :plain_text => /(\.(txt))$/,
+  :postscript => /(\.(ps))$/,
+  :rtf => /(\.(rtf))$/,
+  :tif => /(\.(tif|tiff))$/
+}
+
+FILEICON_URL= {
+  :doc => 'https://s3.amazonaws.com/potoschool_icon/doc_file_icon1.png',
+  :ppt => 'https://s3.amazonaws.com/potoschool_icon/recover-powerpoint-presentations.png',
+  :xls => 'https://s3.amazonaws.com/potoschool_icon/Excel-icon.png',
+  :pdf => 'https://s3.amazonaws.com/potoschool_icon/pdf_icon-300x300.png',
+  :open_document => 'https://s3.amazonaws.com/potoschool_icon/odt.png',
+  :open_office_xml => 'https://s3.amazonaws.com/potoschool_icon/open_office.png',
+  :plain_text => 'https://s3.amazonaws.com/potoschool_icon/txt.png',
+  :postscript => 'https://s3.amazonaws.com/potoschool_icon/post_script.png',
+  :rtf => 'https://s3.amazonaws.com/potoschool_icon/rtf_icon.png',
+  :tif => 'https://s3.amazonaws.com/potoschool_icon/tif_icon.png', 
+  :others => 'https://s3.amazonaws.com/potoschool_icon/other_file_type.png'
+}
+
+=begin
+  The update to be done 
+  Picture.all.each {|x| x.picture_filetype = PICTURE_FILETYPE[:image] ; x.save }
+  
+  Picture.where(:picture_filetype => 2).each do |x|
+    x.assign_filetype
+  end
+=end

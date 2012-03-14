@@ -179,7 +179,6 @@ $(document).ready(function() {
    		data: $(this).serialize(),
    		dataType: 'script',
    		success: function(response){
-   		  console.log("Yeah baby, we are cleared");
    		  $this.clearForm();
         $this.hideLoading();
         PilipotoJcropApi.release();
@@ -192,19 +191,15 @@ $(document).ready(function() {
    /* AjaxForm, special for grading approval */
    
    $(".grading-button").live('click', function(){
-     console.log("eh, clicked");
      var $this = $(this);
      var $form = $this.parents("form.grading-ajaxform"); 
      var destination = $form.attr('action');
-     console.log(destination);
      var $table = $("table", $form);
      
      if( $this.attr("id") == "approve_submission" ){
        $("#approval_code").attr('value',  '<%= ACCEPT_SUBMISSION %>' );
-       console.log("The value is " + <%= ACCEPT_SUBMISSION %> );
      }else {
        $("#approval_code").attr('value',  '<%= REJECT_SUBMISSION %>' );
-       console.log("The value is " + <%= REJECT_SUBMISSION %> );
      }
      
      
@@ -333,6 +328,7 @@ $(document).ready(function() {
    
 
    $('.transloadit-input').change(function(){
+     
      var $this = $(this);
      var $form = $this.parents("form");
      var $submit_button = $(".submit-button", $form);
@@ -405,3 +401,23 @@ function is_mobile() {
 
 
 }
+
+
+
+function fileTypeFromExt(val, def) {
+  // http://support.transloadit.com/discussions/questions/133-restricting-uploads-by-file-type
+  var
+      ext = val.split('.').pop().toLowerCase(),
+      type = def,
+      imageExtensions = ['jpg', 'jpeg', 'tiff', 'png', 'gif', 'bmp'];
+
+  for (var i = 0; i < imageExtensions.length; i++) {
+      if (imageExtensions[i] == ext) {
+          type = 'image';
+          break;
+      }
+  }
+  return type;
+  
+}
+

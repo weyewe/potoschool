@@ -3,9 +3,7 @@
                       :child_comment => @comment} ) %>
                       
 $(document).ready(function(){
-  console.log("before before");
   $("#child_root_comment-<%= @root_comment.id %>").before('<%= new_child_comment %>');
-  console.log("After shit");
   
   //  we have to hide the form, show the reply button
   

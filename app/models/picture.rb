@@ -1,3 +1,5 @@
+require 'rscribd'
+
 class Picture < ActiveRecord::Base
   belongs_to :project_submission
   
@@ -256,11 +258,104 @@ class Picture < ActiveRecord::Base
       project_submission.update_submission_data( new_picture )
     end
     
-
-    
-    
     return new_picture
   end
+  
+  
+  def self.extract_scribd_upload(resize_original, params, uploads )
+    # only 1 image upload at once.. 
+    project_submission = ProjectSubmission.find_by_id(params[:project_submission_id] )
+    new_picture = ""
+    image_name = ""
+    
+    original_image_url  = resize_original.first[:url]    
+    original_image_size    = resize_original.first[:size] 
+    image_name = resize_original.first[:name]
+    
+    new_picture = Picture.new(
+    # original image url is the s3 store location. 
+    # the original image size remains constant
+         :original_image_url => original_image_url     ,  
+         :project_submission_id => project_submission.id, 
+         :original_image_size    => original_image_size      ,     
+         :name => image_name
+    )
+    
+    
+    if params[:is_original].to_i == ORIGINAL_PICTURE
+      new_picture[:is_original] = true 
+    elsif params[:is_original].to_i == REVISION_PICTURE
+      original_picture = Picture.find_by_id(params[:original_picture_id])
+      new_picture[:original_id] = original_picture.id 
+    end
+    
+    new_picture.save 
+    
+    if params[:is_original].to_i == REVISION_PICTURE
+      project_submission.update_submission_data( new_picture )
+    end
+    
+    new_picture.upload_to_scribd # this should be delayed
+  end
+  
+
+  def upload_to_scribd
+    scribd_read = YAML::load( File.open( Rails.root.to_s + "/config/scribd.yml") )
+    
+    Scribd::API.instance.key = scribd_read['auth']['key']
+    Scribd::API.instance.secret = scribd_read['auth']['secret']
+    
+    begin
+      
+      Scribd::User.login scribd_read['auth']['username'], scribd_read['auth']['password']
+      doc = Scribd::Document.new 
+      doc.file = self.original_image_url  
+      doc.access = "private"
+      doc.title = self.name 
+      doc.save
+      
+      self.doc_id = doc.id.to_s
+      self.doc_access_key  = doc.access_key 
+      # self.picture_filetype = PICTURE_FILETYPE[:scribd]
+      self.save 
+      self.assign_filetype
+      
+      # Launch a checking code to start observing, 30 seconds from now 
+    
+      
+    rescue Scribd::ResponseError => e
+      puts "failed code=#{e.code} error='#{e.message}'"
+    end
+  end
+  
+  
+  def assign_filetype
+    FILETYPE_REGEX.each do |key, value|
+      if value.match self.original_image_url
+        self.picture_filetype = PICTURE_FILETYPE[key] 
+        self.save
+        return
+      end
+    end
+    
+    self.picture_filetype = PICTURE_FILETYPE[:others] 
+    self.save 
+  end
+  
+  # the display section is the location of the display: index? revision? 
+  def get_icon( display_section ) 
+    if self.picture_filetype == PICTURE_FILETYPE[:image]
+      message = display_section + "_image_url"
+      return self.send( message )
+    else
+      return FILEICON_URL[ PICTURE_FILETYPE.invert[ self.picture_filetype ]  ]
+    end
+  end
+  
+  
+=begin  
+  Related to the UserActivity Timeline 
+=end
   
   def self.new_user_activity_for_grading( event_type, grader, subject, secondary_subject )
     UserActivity.create_new_entry(event_type , 
@@ -273,9 +368,3 @@ class Picture < ActiveRecord::Base
 
   
 end
-
-=begin
-  root_comment = Comment.find(:first, :conditions => {
-  :comment_id => 
-  })
-=end

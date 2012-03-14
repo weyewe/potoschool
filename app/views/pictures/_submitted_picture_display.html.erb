@@ -9,12 +9,12 @@
     <% if  original_picture.any_picture_submission_approved? %>
       <%= link_to  project_submission_picture_url( project_submission, original_picture.approved_picture ),
           :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
-        <%= image_tag original_picture.approved_picture.index_image_url %>
+        <%= image_tag original_picture.approved_picture.get_icon("index") %>
       <% end %>
     <% else %>
       <%= link_to  project_submission_picture_url( project_submission, picture.last_revision),
        :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
-        <%= image_tag picture.last_revision.index_image_url %>
+        <%= image_tag picture.last_revision.get_icon("index") %>
       <% end %>
     <% end %>
     
@@ -25,6 +25,13 @@
             class="table table-striped table-bordered" id="example">
         
         <tbody>
+          
+            <tr>
+              <td colspan="2">
+                <b><%= original_picture.name[0..20] %></b>
+              </td>
+            </tr>
+          
           <tr>
             <td>Revisions</td>
             <td><%= original_picture.revisions.count %></td>

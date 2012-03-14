@@ -1,0 +1,21 @@
+<h3><%= @picture.name %></h3>
+<hr />
+
+<script type='text/javascript' src='http://www.scribd.com/javascripts/scribd_api.js'></script>
+
+ <div id='embedded_doc'><a href="#"><%= @picture.name %></a></div>
+
+ <script type="text/javascript">
+   var scribd_doc = scribd.Document.getDoc(<%= @picture.doc_id.html_safe %>, 
+              '<%= @picture.doc_access_key.html_safe %>');
+   // var scribd_doc = scribd.Document.getDoc(85285861, 'key-2gcoey1ied5i0qrppa6y');
+
+   var onDocReady = function(e){
+   }
+
+   scribd_doc.addParam('jsapi_version', 2);
+   scribd_doc.addEventListener('docReady', onDocReady);
+   scribd_doc.write('embedded_doc');
+ </script>
+
+<hr />

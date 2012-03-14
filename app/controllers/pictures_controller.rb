@@ -16,13 +16,22 @@ class PicturesController < ApplicationController
     
     @project_submission = ProjectSubmission.find_by_id(params[:project_submission_id])
     new_picture = ""
-    if not params[:transloadit].nil?
-      new_picture = Picture.extract_uploads( 
-        params[:transloadit][:results][":original".to_sym],
-        params[:transloadit][:results][:resize_index], 
-        params[:transloadit][:results][:resize_show], 
-        params[:transloadit][:results][:resize_revision], 
-        params, params[:transloadit][:uploads] )
+    if not params[:transloadit].nil? and not params[:picture_filetype].nil?
+      if params[:picture_filetype].to_i ==  PICTURE_FILETYPE[:image]  
+        puts "Strangely, we are inside the image\n"*10
+        new_picture = Picture.extract_uploads( 
+          params[:transloadit][:results][":original".to_sym],
+          params[:transloadit][:results][:resize_index], 
+          params[:transloadit][:results][:resize_show], 
+          params[:transloadit][:results][:resize_revision], 
+          params, params[:transloadit][:uploads] )
+      elsif params[:picture_filetype].to_i ==  PICTURE_FILETYPE[:scribd]  
+        puts "Yeah baby, we are inside the scribd\n"*10
+        new_picture = Picture.extract_scribd_upload( 
+          params[:transloadit][:results][":original".to_sym],
+          params, params[:transloadit][:uploads] )
+      end
+      
     end 
       
     if params[:original_picture_id].nil?
