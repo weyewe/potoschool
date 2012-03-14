@@ -25,7 +25,7 @@ class PicturesController < ApplicationController
           params[:transloadit][:results][:resize_show], 
           params[:transloadit][:results][:resize_revision], 
           params, params[:transloadit][:uploads] )
-      elsif params[:picture_filetype].to_i ==  PICTURE_FILETYPE[:scribd]  
+      elsif params[:picture_filetype].to_i !=  PICTURE_FILETYPE[:image]  
         puts "Yeah baby, we are inside the scribd\n"*10
         new_picture = Picture.extract_scribd_upload( 
           params[:transloadit][:results][":original".to_sym],

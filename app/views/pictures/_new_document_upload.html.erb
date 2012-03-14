@@ -4,7 +4,7 @@
   <%= hidden_field_tag 'is_original', 
           ORIGINAL_PICTURE  %>
   <%= hidden_field_tag 'picture_filetype', 
-          PICTURE_FILETYPE[:scribd]  %>
+          PICTURE_FILETYPE[:others]  %>
   <% tranloadit_array = transloadit_with_max_size('potoschool_store_document', 5) %>
   <%#= transloadit :potoschool_store_image, { :auth => {:max_size => 2000}}  %>
   <%= hidden_field_tag 'params',  tranloadit_array[0]  %>

@@ -6,8 +6,12 @@
   <li class="span6">
     <%= link_to project_submission_picture_url(project_submission, revision),
             :class => "thumbnail #{class_for_current_displayed_revision(revision, current_display)}" do %>
-      <%= image_tag revision.revision_image_url %>
+      <%= image_tag revision.get_icon("revision") %>
     <% end %>
+    
+    <p>
+      <b><%= revision.name %></b>
+    </p>
   </li>
   <% end %>
 

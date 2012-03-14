@@ -3,7 +3,15 @@
   <li class="span6">
     <%= link_to project_submission_picture_url(project_submission, original_picture), 
           :class => "thumbnail" do %>
-      <%= image_tag original_picture.revision_image_url %>
+      <%# if original_picture.picture_filetype == PICTURE_FILETYPE[:image] %>
+        <%#= image_tag original_picture.revision_image_url %>
+      <%# else %>
+        <%= image_tag original_picture.get_icon("revision") %>
+      <%# end %>
+      
     <% end %>
+    <p>
+      <b><%= original_picture.name %></b>
+    </p>
   </li>
 </ul>

@@ -1,0 +1,27 @@
+<h3>Upload Revision</h3>
+
+
+<%= form_for Picture.new, :url => project_submission_pictures_url(@project_submission) , 
+          :html => {:class=> "well form-search",
+            :id => 'upload_document_revision' }  do |f| %>
+  <%= hidden_field_tag 'is_original', 
+          REVISION_PICTURE  %>
+  <% tranloadit_array = transloadit_with_max_size('potoschool_store_document', 5) %>
+  <%= hidden_field_tag 'picture_filetype', 
+          0  %>
+  <%= hidden_field_tag 'params',  tranloadit_array[0]  %>
+  <%= hidden_field_tag 'signature',  tranloadit_array[1]  %>
+  <%= f.file_field :original_image_url, :class => "input-medium search-query transloadit-input" , 
+             :style=>"width:200px;" %>
+            <br />
+  <%= hidden_field_tag 'original_picture_id', 
+          @picture.original_picture.id  %>
+           
+  <button type="submit" class=" hide btn submit-button">Upload Revision</button>
+  
+<% end %>
+
+
+<hr />
+
+

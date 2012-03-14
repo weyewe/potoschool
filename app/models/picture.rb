@@ -265,37 +265,40 @@ class Picture < ActiveRecord::Base
   def self.extract_scribd_upload(resize_original, params, uploads )
     # only 1 image upload at once.. 
     project_submission = ProjectSubmission.find_by_id(params[:project_submission_id] )
-    new_picture = ""
-    image_name = ""
-    
+   
     original_image_url  = resize_original.first[:url]    
     original_image_size    = resize_original.first[:size] 
     image_name = resize_original.first[:name]
+    new_picture = ""
+    original_picture = ""
     
-    new_picture = Picture.new(
+    new_picture_hash = {
     # original image url is the s3 store location. 
     # the original image size remains constant
-         :original_image_url => original_image_url     ,  
-         :project_submission_id => project_submission.id, 
-         :original_image_size    => original_image_size      ,     
+         :original_image_url => original_image_url  ,  
+         :project_submission_id => project_submission.id  , 
+         :original_image_size    => original_image_size ,     
          :name => image_name
-    )
+    }
     
     
     if params[:is_original].to_i == ORIGINAL_PICTURE
-      new_picture[:is_original] = true 
+      new_picture_hash[:is_original] = true 
+      new_picture = Picture.create(new_picture_hash)
     elsif params[:is_original].to_i == REVISION_PICTURE
       original_picture = Picture.find_by_id(params[:original_picture_id])
-      new_picture[:original_id] = original_picture.id 
+      new_picture_hash[:original_id] = original_picture.id 
+      new_picture = original_picture.revisions.create( new_picture_hash )
     end
     
-    new_picture.save 
+    # new_picture.save 
     
     if params[:is_original].to_i == REVISION_PICTURE
       project_submission.update_submission_data( new_picture )
     end
     
     new_picture.upload_to_scribd # this should be delayed
+    return new_picture 
   end
   
 

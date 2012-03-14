@@ -1,8 +1,7 @@
 
 <div class="span9 content" >
-  <%= create_guide("Analyze Picture", 
-        "You can comment <b>on the picture</b>. 
-        Just drag the mouse on the desired position, and create comment.").html_safe %>
+  <%= create_guide("Your Submission", 
+        "You can add revision <b>of the picture</b>").html_safe %>
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
 
@@ -27,7 +26,7 @@
           
           <% content_for :additional_js do %>
             <%= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
-            <%= transloadit_jquerify :upload_revision, :wait => true %>
+            <%= transloadit_jquerify :upload_picture_revision, :wait => true %>
 
             <script type='text/javascript'>
               $(document).ready(function(){
@@ -40,7 +39,7 @@
         
         <% if @picture.picture_filetype != PICTURE_FILETYPE[:image]  %>
           <% content_for :additional_js do %>
-            <%= transloadit_jquerify :upload_revision, :wait => true %>
+            <%= transloadit_jquerify :upload_document_revision, :wait => true %>
           <% end %>
         <% end %>
         
@@ -80,7 +79,17 @@
       <% if current_user.is_submission_owner?(@project_submission) %>
       <!-- if it is not approved, revision still can be uploaded  -->
         <% if not @original_picture.any_picture_submission_approved? %>
-          <%= render :partial => "pictures/upload_revision_form"%>
+          <% if @picture.picture_filetype == PICTURE_FILETYPE[:image] %>
+            <%= render :partial => "pictures/upload_picture_revision_form"%>
+            <%#= render :partial => "pictures/upload_revision_form"%>
+          <% end %>
+          
+          <% if @picture.picture_filetype != PICTURE_FILETYPE[:image] %>
+            <%= render :partial => "pictures/upload_document_revision_form"%>
+            <%#= render :partial => "pictures/upload_revision_form"%>
+          <% end %>
+          
+          
         <% end %>
         
       <% end %>
