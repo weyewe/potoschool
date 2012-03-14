@@ -1,9 +1,11 @@
 <h3><%= @picture.name %></h3>
 <hr />
+
 <ul class="pager">
-      <%= get_previous_project_picture(@picture, false ).html_safe %>
-      <%= get_next_project_picture(@picture, false).html_safe %>
+      <%= get_previous_project_picture(@picture, true).html_safe %>
+      <%= get_next_project_picture(@picture, true ).html_safe %>
 </ul>
+
 
   <script type='text/javascript' src='http://www.scribd.com/javascripts/scribd_api.js'></script>
 

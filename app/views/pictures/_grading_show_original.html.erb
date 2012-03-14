@@ -3,7 +3,11 @@
   <li class="span6">
     <%= link_to grade_project_submission_picture_url( original_picture), 
           :class => "thumbnail" do %>
-      <%= image_tag original_picture.revision_image_url %>
+      <%#= image_tag original_picture.revision_image_url %>
+      <%= image_tag original_picture.get_icon("revision") %>
     <% end %>
+    <p>
+      <b><%= original_picture.name %></b>
+    </p>
   </li>
 </ul>

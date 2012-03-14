@@ -1,0 +1,51 @@
+
+<h3> <%= @picture.name %></h3>
+<h4> Uploaded on: <%= @picture.created_at.in_time_zone("Jakarta")%> </h4> 
+<% if @picture.is_original == true  %>
+  <span class="label">Original Submission</span>
+<% else %>
+	<span class="label label-success">Revision Submission</span>
+<% end %>
+<hr />
+
+
+<!-- The navigation element (<= Prev)  and (Next =>)-->
+<ul class="pager">
+      <%= get_previous_project_picture(@picture, true).html_safe %>
+      <%= get_next_project_picture(@picture, true ).html_safe %>
+</ul>
+
+
+<!-- The image in display -->
+  <div class="thumbnail image display_image_wrapper">
+    
+    <%= render :partial => "pictures/positional_comment_form", 
+                    :locals => {:picture => @picture}%>
+ 
+    
+    
+    <%= image_tag @picture.display_image_url,  
+          :style => "width:590px;", :id => "target" %>
+          
+    <!-- render all the positional_comment -->
+    <%= render :partial => "pictures/feedback_map", :locals => {:picture => @picture }%>
+  </div>
+ 
+          
+          
+<!-- Supporting JS and CSS for create comment -->
+<% if @picture.allow_comment?(current_user) %>
+  <%  content_for :additional_css  do %>
+    <%= stylesheet_link_tag "jcrop.css", "image_map.css"%>
+  <% end %>
+
+  <% content_for :additional_js do %>
+    <%= javascript_include_tag "jquery.Jcrop.min.js", "phototagging_exe.js" %>
+    <%= transloadit_jquerify :upload_revision, :wait => true %>
+    <script type='text/javascript'>
+      $(document).ready(function(){
+        refreshMap();
+      });
+    </script>
+  <% end %>
+<% end %>
