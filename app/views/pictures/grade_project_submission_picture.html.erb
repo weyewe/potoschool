@@ -39,10 +39,13 @@
         <% end %>
       </ol>
       
+      
+      <% if @picture.picture_filetype != PICTURE_FILETYPE[:image]  %>
       <div id="non_positional_root_comment_wrapper">
         <a href="" class="btn non_positional_root_comment_clicker" style="display: inline-block;">Add Feedback</a>
         <%= render :partial => "pictures/non_positional_root_comment" %>
       </div>
+      <% end %>
       
       
       
