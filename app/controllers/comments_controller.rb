@@ -10,6 +10,19 @@ class CommentsController < ApplicationController
   end
   
   
+  def create
+    @picture = Picture.find_by_id( params[:picture_id] )
+    @root_comment = Comment.build_from(@picture, current_user.id, params[:comment][:body])
+    @root_comment.save
+    
+    respond_to do |format|
+      format.html {  redirect_to root_url }
+      format.js
+    end
+    
+    
+  end
+  
   
   
   def create_child_comment

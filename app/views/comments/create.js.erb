@@ -1,0 +1,24 @@
+
+
+<% new_root_comment =  escape_javascript(render :partial => "pictures/root_comment", 
+      :locals=> {:root_comment => @root_comment, 
+                :picture => @picture}) %> ;
+                
+                
+$(document).ready(function(){
+  // add the comment
+  $("ol.root_comment_wrapper").append('<%= new_root_comment %>');
+  
+  
+  
+  // hide + clear the form, and show the add new feedback button
+  
+  // done 
+});
+
+
+
+
+
+
+

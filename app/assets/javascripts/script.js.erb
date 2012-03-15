@@ -239,6 +239,32 @@ $(document).ready(function() {
          return false;
         });
    
+   /*
+    Respond to clicking New Feedback 
+   */
+   $("a.non_positional_root_comment_clicker").live("click", function(){
+     var $this = $(this);
+     var $container = $(this).parents("#non_positional_root_comment_wrapper");
+     var $form = $("form", $container);
+     
+     $this.hide();
+     $form.fadeIn();
+     $(".comment_body", $form).focus();
+     return false ;
+   });
+   
+   $('#cancel-non-positional-comment').live("click", function(){
+     var $this = $(this);
+     var $container = $(this).parents("#non_positional_root_comment_wrapper");
+     var $form = $("form", $container);
+     
+     var $clicker = $(".non_positional_root_comment_clicker", $container);
+     $clicker.show();
+     $form.hide(); 
+     $form.clearForm();
+     return false;
+      
+   });
    
    
    /* Respond to clicking Reply -> first child comment creation .. we have to use event delegation for 
@@ -299,32 +325,6 @@ $(document).ready(function() {
    });
    
    
-   /* The event delegation */
-   // $("ol.root_comment_wrapper").live('click', function(e){
-   //    if ( $(e.target).hasClass("first_root_comment_clicker") ) {  
-   //      var $this = $(e.target);
-   //      var $container = $(this).parents(".first_child_comment_wrapper");
-   //      var $form = $(".first_child_form", $container);
-   // 
-   //      $this.hide();
-   //      $form.fadeIn();
-   // 
-   //      return false;
-   //    }
-   // 
-   //    if ( $(e.target).hasClass("cancel_first_child_comment") ) {  
-   //      var $this = $(e.target);
-   //      var $container = $this.parents(".first_child_comment_wrapper");
-   //      var $form = $(".first_child_form", $container);
-   //      var $reply_button = $(".first_root_comment_clicker", $container);
-   // 
-   //      $form.hide();
-   //      $reply_button.show();
-   //      return false;
-   //    }
-   // 
-   //  });
-   //  
    
 
    $('.transloadit-input').change(function(){
