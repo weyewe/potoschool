@@ -324,18 +324,51 @@ $(document).ready(function() {
      return false;
    });
    
-   
-   
+
 
    $('.transloadit-input').change(function(){
-     
+      console.log("here we are");
+      console.log( file_location );
+      
      var $this = $(this);
      var $form = $this.parents("form");
+     var $feedback_paragraph = $("p.feedback", $form);
      var $submit_button = $(".submit-button", $form);
+     var file_location = $(this).val();
+    
+     
+     var regex_of_image_format =  /(\.(jpg|jpeg|tiff|png|gif|bmp))$/  ;
+     var regex_of_document_format = /(\.(doc|docx|ppt|pptx|pps|ppsx|xls|xlsx|pdf))$/  ; 
      
      if ($(this).val()) {
-       $submit_button.show();
-       // $('input:submit').attr('disabled',false);
+       //  we should check the filetype as well! if it is only for documents
+       // show the notification 
+
+       if( $form.attr("id") == "upload_picture" || $form.attr("id") == "upload_picture_revision"){
+         if( hasFileFormat( file_location, regex_of_image_format ) ){
+           $feedback_paragraph.html('');
+           $submit_button.show();
+         }else{
+           // give notification that it has to be in image format
+           $feedback_paragraph.html('<b>Your file has to be in one of these format:<br />' +
+            'jpg, jpeg, png, tiff, gif, or bmp' + '</b>');
+            $submit_button.hide();
+         }
+         
+       }else if( $form.attr("id") == "upload_document" || $form.attr("id") == "upload_document_revision") {
+         // Notify that it has to be in the right format 
+         if( hasFileFormat( file_location, regex_of_document_format ) ){
+           $feedback_paragraph.html('');
+           $submit_button.show();
+         }else{
+           $feedback_paragraph.html('<b>Your file has to be in one of these format:<br />' + 
+            'word(.doc, .docx), powerpoint(.ppt, .pptx, .pps, .ppsx), excel(.xls, .xslx), or pdf(.pdf)' + 
+            '</b>');
+            $submit_button.hide();
+         }
+       }
+       
+       
      }else{
        $submit_button.hide();
      }
@@ -403,6 +436,14 @@ function is_mobile() {
 }
 
 
+
+function hasFileFormat( file_location, regex_matcher ) {
+  if( file_location.match( regex_matcher) ){
+    return true;
+  }else{
+    return false ;
+  }
+}
 
 function fileTypeFromExt(val, def) {
   // http://support.transloadit.com/discussions/questions/133-restricting-uploads-by-file-type
