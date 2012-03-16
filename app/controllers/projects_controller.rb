@@ -24,7 +24,19 @@ class ProjectsController < ApplicationController
   end
   
   def new 
+    # ensure_current_user_is_related( :teacher )
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @course = Course.find_by_id( params[:course_id])
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return 
+    end
+    
     @subject = @course.subject
     @new_project = Project.new
     
@@ -39,7 +51,20 @@ class ProjectsController < ApplicationController
   
   
   def create
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @course = Course.find_by_id( params[:course_id])
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
+    
     @project = Project.new( params[:project])
     @project.course_id = @course.id
     if params[:project][:is_group_project].to_i == TRUE_CHECK
@@ -78,6 +103,11 @@ class ProjectsController < ApplicationController
   2. Select submission 
 =end
   def select_project_for_grading
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
     # current_user is teacher 
     @projects = current_user.all_active_projects
     
@@ -91,12 +121,34 @@ class ProjectsController < ApplicationController
   end
   
   def close_project
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @project = Project.find_by_id( params[:entry_id])
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+      return 
+    end
+    
     @project.deactivate
   end
   
   def recover_project
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @project = Project.find_by_id( params[:entry_id])
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+      return 
+    end
+    
     @project.re_activate
   end
   

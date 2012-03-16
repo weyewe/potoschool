@@ -38,6 +38,32 @@ class ApplicationController < ActionController::Base
     add_breadcrumb "#{opening_words}", destination_path
   end
   
+  
+  def has_membership?(  membership_class, membership_provider_id , membership_consumer_id )
+    # check the role why do we need to check the role? just check the membership .clear cut. 
+    # has the membership? ok, you can see. no membership? you can see the root_url
+      # check the ownership 
+    membership_class_sym = membership_class.to_s.underscore.to_sym
+    provider_property = MEMBERSHIP_DATA[membership_class_sym][:provider_property] 
+    consumer_property = MEMBERSHIP_DATA[membership_class_sym][:consumer_property] 
+    
+    membership = membership_class.send(:find, :first, :conditions => {
+      provider_property.to_sym => membership_provider_id , 
+      consumer_property.to_sym => membership_consumer_id
+    } )
+    
+    not membership.nil?
+  end
+  
+  def ensure_role(role_sym)
+    if not current_user.has_role?(role_sym)
+      redirect_to root_url 
+      return 
+    end
+  end
+  
+  
+  
   protected
   def add_breadcrumb name, url = ''
     @breadcrumbs ||= []

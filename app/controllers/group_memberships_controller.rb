@@ -29,8 +29,19 @@ class GroupMembershipsController < ApplicationController
   end
   
   def new
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @group = Group.find_by_id( params[:group_id])
     @course = @group.course
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
     @subject = @course.subject
     @course_students = @course.students
     
@@ -47,8 +58,22 @@ class GroupMembershipsController < ApplicationController
   
   
   def create
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    
     @group_id = params[:membership_provider]
     @group = Group.find_by_id(@group_id)
+    @course = @group.course 
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
+    
     @user_id = params[:membership_consumer]
     @decision = params[:membership_decision].to_i
     

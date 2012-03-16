@@ -14,16 +14,12 @@
   <div class="row-fluid">
 
     
-    <% if Time.now < @project.deadline_datetime %>
-    
-  
-    
-    
+    <% if Time.now <= @project.deadline_datetime  and not  @project_submission.excess_quota? %>
       <ul class="nav nav-tabs">
         <li class="active"><a href="#image_tab" data-toggle="tab">Upload Image</a></li>
         <li><a href="#document_tab" data-toggle="tab">Upload Document</a></li>
       </ul>
-
+      
       <div class="tab-content">
         <div class="tab-pane active" id="image_tab">
           <%= render :partial => "pictures/new_picture_upload" %>
@@ -32,11 +28,7 @@
           <%= render :partial => "pictures/new_document_upload" %>
         </div>
       </div>
-    
-  
       
-      
-    
       <% content_for :additional_js do %>
         <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
         <script type="text/javascript">
@@ -64,14 +56,13 @@
            });
         </script>
       <% end %>
-    <% else %>
+    <% elsif Time.now > @project.deadline_datetime %>
       <h2>You can't submit more project. Deadline has just passed</h2>
       <hr />
+    <% elsif @project_submission.excess_quota?  %>
+      <h2>You can't submit more project. Your have reached the total limit: <%= @project.total_submission %></h2>
+      <hr />
     <% end %>
-    
-    
-
-    
   </div><!--/row-->
 
 

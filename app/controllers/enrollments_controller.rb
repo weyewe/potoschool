@@ -4,6 +4,7 @@ class EnrollmentsController < ApplicationController
   
   # only school_admin that can be here
   def new_teacher
+    
     produce_new_enrollment
   end
   

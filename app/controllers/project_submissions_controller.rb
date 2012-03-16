@@ -14,7 +14,19 @@ class ProjectSubmissionsController < ApplicationController
   end
   
   def select_project_submission_for_grading
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @project = Project.find_by_id( params[:project_id] )
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+      return 
+    end
+    
     @project_submissions = ProjectSubmission.eager_load_project_submissions_for(@project)
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
@@ -23,8 +35,22 @@ class ProjectSubmissionsController < ApplicationController
   end
   
   def show_submission_pictures_for_grading 
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
     @project_submission = ProjectSubmission.find_by_id( params[:project_submission_id])
     @project = @project_submission.project 
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+      return 
+    end
+    
+    
+    
+    
     @original_pictures = @project_submission.original_pictures #.includes(:positional_comments) 
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"

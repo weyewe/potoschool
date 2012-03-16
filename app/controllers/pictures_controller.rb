@@ -65,9 +65,19 @@ class PicturesController < ApplicationController
   TEACHER's VIEW
 =end
   def grade_project_submission_picture
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    # ensure_role(:teacher)
     @picture = Picture.find_by_id( params[:picture_id] )
     @project_submission = @picture.project_submission
     @project = @project_submission.project
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+    end
+    
     @root_comments = @picture.root_comments.order("created_at ASC")
     
     @original_picture = @picture.original_picture
@@ -88,9 +98,23 @@ class PicturesController < ApplicationController
 
 
   def execute_grading
+    
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    # ensure_role(:teacher) # ensuring role is not enough. further information is needed , like project ownership
+    # if we are only protecting in the role level, what if there is a corrupted user? 
+    # we are doomed 
     @picture = Picture.find_by_id(params[:picture_id])
     @original_picture = @picture.original_picture
     @project_submission = @picture.project_submission
+    @project = @project_submission.project 
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+    end
  
     
     if params[:picture][:is_approved].to_i == ACCEPT_SUBMISSION

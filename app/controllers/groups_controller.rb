@@ -17,23 +17,46 @@ class GroupsController < ApplicationController
   
   def new
     
-     @course = Course.find_by_id( params[:course_id])
-      @subject = @course.subject
-      @groups =  @course.groups
-      @new_group = Group.new
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    @course = Course.find_by_id( params[:course_id])
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
+    
+    @subject = @course.subject
+    @groups =  @course.groups
+    @new_group = Group.new
 
 
-      add_breadcrumb "Select Subject", "select_subject_for_project_url"
-      set_breadcrumb_for @subject, 'select_course_for_group_path' + "(#{@subject.id})", 
-                  "Select Course for #{@subject.name}"
-      set_breadcrumb_for @course, 'new_course_group_path' + "(#{@course.id})", 
-                  "Create Group"
-                  
-                  
+    add_breadcrumb "Select Subject", "select_subject_for_project_url"
+    set_breadcrumb_for @subject, 'select_course_for_group_path' + "(#{@subject.id})", 
+    "Select Course for #{@subject.name}"
+    set_breadcrumb_for @course, 'new_course_group_path' + "(#{@course.id})", 
+    "Create Group"
+
+
   end
   
   def create
-    @course = Course.find_by_id(params[:course_id])
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    @course = Course.find_by_id( params[:course_id])
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return 
+    end
+    
     @group = Group.new(params[:group])
     @group.course_id = @course.id
     
@@ -56,7 +79,21 @@ class GroupsController < ApplicationController
   
   
   def select_group_leader
+    
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @group = Group.find_by_id( params[:group_id])
+    @course  = @group.course 
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
+    
     @students = @group.students
     
     add_breadcrumb "Select Group", "select_group_for_group_leader_url"
@@ -68,8 +105,22 @@ class GroupsController < ApplicationController
   def execute_select_group_leader
    
     
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
     @group_id = params[:membership_provider]
     @group = Group.find_by_id(@group_id)
+    @course = @group.course 
+    
+    if not current_user.teach_course?(@course)
+      redirect_to root_url 
+      return
+    end
+    
+    
+    
     @user_id = params[:membership_consumer]
     @decision = params[:membership_decision].to_i
     

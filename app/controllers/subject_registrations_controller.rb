@@ -6,6 +6,13 @@ class SubjectRegistrationsController < ApplicationController
   end
   
   def new
+   if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
+    
+    
+    
     @subject = Subject.find_by_id( params[:subject_id]) 
     @students = current_user.get_managed_school.students 
     add_breadcrumb "Select Subject", "pick_subject_for_student_registrations_path"
@@ -15,19 +22,31 @@ class SubjectRegistrationsController < ApplicationController
   
   
   def create
-    
-      @subject_id = params[:membership_provider]
-      @user_id = params[:membership_consumer]
-      @decision = params[:membership_decision].to_i
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
 
-      @student = User.find_by_id @user_id
+    @subject_id = params[:membership_provider]
+    @subject  = Subject.find_by_id(@subject_id)
 
-      @subject_registration = SubjectRegistration.assignment_update( @subject_id, @user_id, @decision )
+    if not current_user.manage_school?( @subject.school )
+      redirect_to root_url
+      return 
+    end
 
 
-      respond_to do |format|
-        format.html {  redirect_to new_subject_subject_teaching_assignment_path(@subject)}
-        format.js
-      end
+    @user_id = params[:membership_consumer]
+    @decision = params[:membership_decision].to_i
+
+    @student = User.find_by_id @user_id
+
+    @subject_registration = SubjectRegistration.assignment_update( @subject_id, @user_id, @decision )
+
+
+    respond_to do |format|
+      format.html {  redirect_to new_subject_subject_teaching_assignment_path(@subject)}
+      format.js
+    end
   end
 end

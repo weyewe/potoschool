@@ -124,6 +124,10 @@ class User < ActiveRecord::Base
     self.schools.first 
   end
   
+  def manage_school?(school)
+    get_managed_school.id == school.id 
+  end
+  
   
 
   
@@ -166,6 +170,13 @@ class User < ActiveRecord::Base
     
   end
   
+  def teach_course?(course)
+    not CourseTeachingAssignment.find(:first,:conditions => {
+      :user_id => self.id,
+      :course_id => course.id
+    }).nil?
+  end
+  
   def all_courses_and_groups_taught
 
     Course.includes(:groups).joins(:course_teaching_assignments => :user ).
@@ -202,6 +213,19 @@ class User < ActiveRecord::Base
       :is_active => true, 
       :course_id  => all_courses_id
     }, :order => "created_at ASC")
+    
+  end
+  
+  def all_projects
+    all_courses_id = self.all_courses_taught.select(:id).collect do | course |
+      course.id
+    end
+    
+    # Project.find(:all, :conditions => {
+    #       :course_id  => all_courses_id
+    #     }, :order => "created_at ASC")
+    
+    Project.where(:course_id => all_courses_id)
     
   end
   
@@ -262,6 +286,13 @@ class User < ActiveRecord::Base
 =begin
   Code for student
 =end
+
+  def project_submission_for_project( project ) 
+    ProjectSubmission.find(:first, :conditions => {
+      :project_id => project.id , 
+      :user_id => self.id
+    })
+  end
   
   def is_subject_registered?(subject)
     not SubjectRegistration.find(:first, :conditions => {

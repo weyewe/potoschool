@@ -1,6 +1,17 @@
 class SubjectTeachingAssignmentsController < ApplicationController
   def new
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
     @subject = Subject.find_by_id( params[:subject_id] )
+    
+    if not current_user.manage_school?( @subject.school )
+      redirect_to root_url
+      return 
+    end
+    
+    
     @teachers = @subject.school.teachers
     
     add_breadcrumb "Pick the subject", 'new_subject_teaching_assignment_path'
@@ -10,7 +21,20 @@ class SubjectTeachingAssignmentsController < ApplicationController
   end
   
   def create
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
+    
+    
     @subject = Subject.find_by_id( params[:subject_id] )
+    
+    
+    if not current_user.manage_school?( @subject.school )
+      redirect_to root_url
+      return 
+    end
+    
     
     
     @subject_id = params[:membership_provider]

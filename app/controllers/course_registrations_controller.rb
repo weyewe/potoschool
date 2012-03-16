@@ -20,6 +20,11 @@ class CourseRegistrationsController < ApplicationController
   
   
   def new 
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
+    
     @course = Course.find_by_id( params[:course_id] )
     @subject  = @course.subject
     
@@ -37,6 +42,12 @@ class CourseRegistrationsController < ApplicationController
   end
   
   def create
+    
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
+    
 
     @course_id = params[:membership_provider]
     @user_id = params[:membership_consumer]
@@ -44,6 +55,12 @@ class CourseRegistrationsController < ApplicationController
 
     @student = User.find_by_id @user_id
     @course = Course.find_by_id @course_id
+    
+    if not current_user.manage_school?( @course.subject.school )
+      redirect_to root_url
+      return 
+    end
+    
     
     @course_registration = CourseRegistration.assignment_update( @course_id, @user_id, @decision )
 

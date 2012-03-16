@@ -50,6 +50,14 @@ class Project < ActiveRecord::Base
     self.is_active = true
     self.save
   end
+  
+  def created_by?(current_user)
+    if not current_user.has_role?(:teacher)
+      return false 
+    end
+    
+    not current_user.all_projects.where(:project_id => self.id ).nil?
+  end
 
   
  

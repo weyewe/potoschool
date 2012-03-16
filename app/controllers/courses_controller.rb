@@ -21,6 +21,11 @@ class CoursesController < ApplicationController
   
   
   def pick_subject_for_course_teaching_assignment
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return 
+    end
+    
     add_breadcrumb "Pick the subject", 'pick_subject_for_course_teaching_assignment_path'
     @subjects = current_user.get_managed_school.all_active_subjects 
   end

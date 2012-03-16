@@ -18,6 +18,7 @@ gem 'acts_as_commentable_with_threading',
   :git => 'https://github.com/elight/acts_as_commentable_with_threading.git'
 gem 'awesome_print'
 gem 'rscribd'
+gem 'simple_form'
 
 gem "squeel" 
 gem "timeline_fu"
