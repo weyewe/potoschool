@@ -2,6 +2,12 @@ class PicturesController < ApplicationController
   def new
     
     @project_submission = ProjectSubmission.find_by_id( params[:project_submission_id] )
+    
+    if @project_submission.user_id != current_user.id
+      redirect_to root_url
+      return
+    end
+    
     @project = @project_submission.project
     @pictures = @project_submission.original_pictures
     @new_picture = Picture.new  
@@ -15,6 +21,12 @@ class PicturesController < ApplicationController
   def create
     
     @project_submission = ProjectSubmission.find_by_id(params[:project_submission_id])
+    if @project_submission.user_id != current_user.id
+      redirect_to root_url
+      return
+    end
+    
+    
     new_picture = ""
     if not params[:transloadit].nil? and not params[:picture_filetype].nil?
       if params[:picture_filetype].to_i ==  PICTURE_FILETYPE[:image]  
@@ -47,6 +59,11 @@ class PicturesController < ApplicationController
   
   def show
     @project_submission = ProjectSubmission.find_by_id(params[:project_submission_id])
+    if @project_submission.user_id != current_user.id
+      redirect_to root_url
+      return
+    end
+    
     @picture = Picture.find_by_id( params[:id] )
     @original_picture = @picture.original_picture
     @all_revisions = @original_picture.revisions.order("created_at DESC")
