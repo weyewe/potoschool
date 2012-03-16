@@ -21,7 +21,17 @@ class ApplicationController < ActionController::Base
   
   
   def after_sign_in_path_for(resource)
-    dashboard_url 
+    if current_user.has_role?( :school_admin)
+      return new_teacher_url
+    end
+    
+    if current_user.has_role?(:teacher)
+      return select_subject_for_project_url
+    end
+    
+    if current_user.has_role?(:student)
+      return project_submissions_url
+    end
   end
 
 
