@@ -30,10 +30,18 @@ filter:alpha(opacity=80);
 opacity:0.8;
 }
 .map li a.hover, .map li a:hover {
+<% if Rails.env.development? %>  
 background:url( <%= asset_path 'tag_hotspot_on_62x62.png' %>) no-repeat;
+<% elsif Rails.env.production? %>
+background:url( <%=  TAGGER_IMAGE_URL %>) no-repeat;
+<% end %>
 cursor:pointer;
 }
 
 .map li a.tag {
-  background: url(<%= asset_path 'tag_hotspot_on_62x62.png' %>) no-repeat scroll 0 0 transparent;
+  <% if Rails.env.development? %>  
+    background: url(<%= asset_path 'tag_hotspot_on_62x62.png' %>) no-repeat scroll 0 0 transparent;
+  <% elsif Rails.env.production? %>
+    background: url(<%= TAGGER_IMAGE_URL %>) no-repeat scroll 0 0 transparent;
+  <% end %>
 }

@@ -87,6 +87,12 @@ FILEICON_URL= {
   :others => 'https://s3.amazonaws.com/potoschool_icon/other_file_type.png'
 }
 
+# Rails.env.production?
+# Rails.env.development?
+
+TAGGER_IMAGE_URL = "https://s3.amazonaws.com/potoschool_icon/tag_hotspot_on_62x62.png"
+SHOWLOADING_LOADER_URL = "https://s3.amazonaws.com/potoschool_icon/loading.gif"
+DEFAULT_PROFILE_PIC_URL = "https://s3.amazonaws.com/potoschool_icon/default_profile_pic.jpg"
 =begin
   The update to be done 
   Picture.all.each {|x| x.picture_filetype = PICTURE_FILETYPE[:image] ; x.save }
