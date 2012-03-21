@@ -25,9 +25,9 @@ class UserActivity < ActiveRecord::Base
       options[:secondary_subject_id]  = secondary_subject.id 
     end
     
-    puts "Gonna create in create_new_entry\n"*10
+    # puts "Gonna create in create_new_entry\n"*10
     result = self.create( options ) 
-     puts "Done creation, gonna send update now \n"*10
+     # puts "Done creation, gonna send update now \n"*10
     result.deliver_update
     
     return result 
