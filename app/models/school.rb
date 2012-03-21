@@ -4,6 +4,7 @@ class School < ActiveRecord::Base
   
   has_many :subjects
   
+  has_many :failed_registrations
   
   
   

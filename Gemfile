@@ -32,6 +32,8 @@ gem "delayed_job_active_record", "~> 0.2.1" # delayed_job
 gem 'hirefireapp'
 gem "daemons"
 
+gem 'newrelic_rpm'
+
 # http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
 #  breadcrumb
 # Gems used only for assets and not required
