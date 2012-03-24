@@ -14,8 +14,8 @@ class EnrollmentsController < ApplicationController
   
   
   def create
-    role_id = params[:role_id]
-    school_id = current_user.school.id 
+    role_id = params[:role_id].to_i
+    school_id = current_user.get_managed_school.id 
     
     @enrollment = Enrollment.create_user_with_enrollment( params[:user],params[:enrollment],
                                             school_id, role_id )

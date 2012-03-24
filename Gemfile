@@ -32,7 +32,10 @@ gem "delayed_job_active_record", "~> 0.2.1" # delayed_job
 gem 'hirefireapp'
 gem "daemons"
 
-gem 'newrelic_rpm'
+
+gem 'fastercsv'
+ #http://stackoverflow.com/questions/1328250/how-do-i-import-using-fastercsv-a-row-with-a-name-like-ciaran
+
 
 # http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
 #  breadcrumb
@@ -42,6 +45,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.1.4'
   gem 'coffee-rails', '~> 3.1.1'
   gem 'uglifier', '>= 1.0.3'
+  gem 'newrelic_rpm'
 end
 
 gem 'jquery-rails'

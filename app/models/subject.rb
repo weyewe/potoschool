@@ -11,6 +11,14 @@ class Subject < ActiveRecord::Base
   has_many :users, :through => :subject_registrations
   has_many :subject_registrations
   
+  
+  def find_course_by_name( name ) 
+    Course.find(:first, :conditions => {
+      :name => name.upcase ,
+      :subject_id => self.id
+    })
+  end
+  
   def teachers
     # SubjectTeachingAssignment.find(:all, :conditions => {:subject_id => self.id})
     # 

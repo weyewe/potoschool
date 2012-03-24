@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321151007) do
+ActiveRecord::Schema.define(:version => 20120323171747) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(:version => 20120321151007) do
     t.integer  "school_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "reason"
   end
 
   create_table "group_memberships", :force => true do |t|
@@ -252,6 +253,8 @@ ActiveRecord::Schema.define(:version => 20120321151007) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nim"
+    t.string   "name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

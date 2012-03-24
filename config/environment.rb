@@ -101,3 +101,6 @@ DEFAULT_PROFILE_PIC_URL = "https://s3.amazonaws.com/potoschool_icon/default_prof
     x.assign_filetype
   end
 =end
+
+
+POTOSCHOOL_TUTORIAL_URL = "https://s3.amazonaws.com/potoschool_icon/TUTORIAL+POTOSCHOOL.pdf"

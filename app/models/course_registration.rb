@@ -2,6 +2,9 @@ class CourseRegistration < ActiveRecord::Base
   belongs_to :user
   belongs_to  :course
   
+  after_create :send_notification_to_student
+  handle_asynchronously :send_notification_to_student
+  
   
   def self.assignment_update( course_id, user_id, decision )
      # teacher teaches a subject based on subject_teaching_assignment 
@@ -36,6 +39,7 @@ class CourseRegistration < ActiveRecord::Base
        })
 
        if not course_registration.nil?
+         # send the email as well, but later
          course_registration.destroy
        end
 
@@ -44,6 +48,11 @@ class CourseRegistration < ActiveRecord::Base
    end
   
   
+  
+  def send_notification_to_student
+    user = self.user 
+    NewsletterMailer.notify_new_user_registration( user , self ).deliver
+  end
   
   
   def deactivate 

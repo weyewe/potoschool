@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :token_authenticatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :login, :username, :email, :password, :password_confirmation, :remember_me,
+          :name, :nim
+          
   attr_accessor :login
   
   # Models  => Role locking is based on user
@@ -59,6 +61,8 @@ class User < ActiveRecord::Base
                   :password => new_password ,
                   :password_confirmation => new_password , 
                   :email => user_params[:email]
+                  
+      # send the notification 
     else
       return user 
     end
@@ -126,6 +130,10 @@ class User < ActiveRecord::Base
   
   def manage_school?(school)
     get_managed_school.id == school.id 
+  end
+  
+  def get_enrolled_school
+    get_managed_school
   end
   
   
@@ -372,7 +380,24 @@ class User < ActiveRecord::Base
     
   
   
+=begin
+  In user registration
+=end
+
+  def User.send_new_registration_notification( new_user, new_password)
+    NewsletterMailer.notify_new_user_registration( new_user, new_password ).deliver
+  end
   
+  # def self.send_all_failed_registration
+  #     destination = ["kumakinsey@gmail.com", "w.yunnal@gmail.com"]
+  #     puts "before the delayed job"
+  #     self.delay.execute_send_all_failed_registration(destination)
+  #   end
+  #   
+  #   def self.execute_send_all_failed_registration(email)
+  #     puts "delayed job execution"
+  #     NewsletterMailer.importing_update( email ).deliver
+  #   end
   
   protected
   def self.find_for_database_authentication(conditions)
