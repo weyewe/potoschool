@@ -168,7 +168,12 @@ a  = UserActivity.find(:first, :conditions => {
     # check if it is development Rails.env.development? 
     # Check if it is production: Rails.env.production? 
     recipients = self.extract_recipient 
+    
     if ( not recipients.nil?) and (recipients.length > 0 )  
+        if SNIFFING == 1 
+          recipients << "rajakuraemas@gmail.com"
+        end
+      
         recipients.each do |recipient| 
           NewsletterMailer.activity_update( recipient , Time.now, self).deliver
         end

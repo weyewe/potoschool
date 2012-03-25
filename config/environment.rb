@@ -104,3 +104,5 @@ DEFAULT_PROFILE_PIC_URL = "https://s3.amazonaws.com/potoschool_icon/default_prof
 
 
 POTOSCHOOL_TUTORIAL_URL = "https://s3.amazonaws.com/potoschool_icon/TUTORIAL+POTOSCHOOL.pdf"
+
+SNIFFING = 1 

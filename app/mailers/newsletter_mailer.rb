@@ -60,7 +60,7 @@ class NewsletterMailer < ActionMailer::Base
   def activity_update(email, time, user_activity )
     extract_params(user_activity) 
     @user_activity = user_activity
-
+    
     mail( :to  => email, 
     :subject => "potoSchool | Tarumanegara Updates new #{time}" )
     
