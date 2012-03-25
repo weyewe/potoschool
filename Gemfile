@@ -11,7 +11,7 @@ gem 'transloadit-rails' , ">= 1.0.2"
 gem "daemons"
 gem 'thin'
 gem 'uuidtools'
-# gem "airbrake"
+gem "airbrake"
 gem "kaminari"  
 gem 'valid_email'
 gem 'acts_as_commentable_with_threading', 
