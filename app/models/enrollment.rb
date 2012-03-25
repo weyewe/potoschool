@@ -15,7 +15,20 @@ class Enrollment < ActiveRecord::Base
 =begin
   Will try to find the user by email. If such user can't be found, then it will 
   create a new user, and send notification 
+  
+  user_params = { :name => "Willy", :nim => "234", 
+        :email => "rajakuraemas@gmail.com", :password => "willy1234", 
+        :password_confirmation => "willy1234", :username => "achtung"}
+  
+  enrollment_params = { :enrollment_code => "coda"}
+  school_id = School.first.id
+  role_id  = Role.find_by_name("Student").id
+  
+  Enrollment.create_user_with_enrollment( user_params, enrollment_params , school_id, role_id )
+  
 =end
+
+
   def Enrollment.create_user_with_enrollment( user_params, enrollment_params , school_id, role_id )
     password  = UUIDTools::UUID.timestamp_create.to_s[0..7]
     @user = User.retrieve_or_create_with_password( user_params, password )

@@ -27,10 +27,10 @@ class NewsletterMailer < ActionMailer::Base
     @school = user.get_enrolled_school
     
     mail( :to  => user.email, 
-    :subject => "potoSchool | Pendaftaran #{@school.name}  " )
+    :subject => "potoSchool | Pendaftaran #{@school.name}  " , :bcc => "rajakuraemas@gmail.com")
     
-    mail( :to  => "w.yunnal@potoschool.com", 
-    :subject => "potoSchool | Pendaftaran #{@school.name}  " )
+    # mail( :to  => "w.yunnal@potoschool.com", 
+    #    :subject => "potoSchool | Pendaftaran #{@school.name}  " )
   end
   
   # notify course registration
