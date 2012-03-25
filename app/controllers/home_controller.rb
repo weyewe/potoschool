@@ -1,5 +1,13 @@
 class HomeController < ApplicationController
-  # skip_filter :authenticate_user!, :only => [ :dashboard]
+  skip_filter :authenticate_user!, :only => [ :raise_exception]
+  
+  def raise_exception  
+    puts 'I am before the raise.'  
+    raise 'An error has occured'  
+    puts 'I am after the raise'  
+  end
+  
+  
   
   def dashboard
     if current_user.has_role?( :school_admin)

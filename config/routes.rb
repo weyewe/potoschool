@@ -6,6 +6,7 @@ Debita46::Application.routes.draw do
   match 'dashboard'           => 'home#dashboard'  , :as => :dashboard
   root :to => 'home#dashboard'
   
+  match 'raise_exception' => 'home#raise_exception', :as => :raise_exception 
   
   # to create teacher, create students , to create admin
   resources :enrollments
