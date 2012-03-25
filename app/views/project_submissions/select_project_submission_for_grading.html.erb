@@ -31,7 +31,7 @@
         <tbody>
              <% @project_submissions.each do |project_submission| %>
                 <tr>
-                  <td><%= link_to "xxx", 
+                  <td><%= link_to "#{project_submission.user.name}", 
                         show_submission_pictures_for_grading_url(project_submission)%> </td>
                   <% if  project_submission.first_submission_time.nil? %>
                     <td>NA</td>

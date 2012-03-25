@@ -31,7 +31,7 @@
         <tbody>
           <% @course_students.each do |student| %>
             <tr>
-              <td class="user-nim"> xxx </td>
+              <td class="user-nim"> <%= student.name %> </td>
               
               <% registered_group = student.group_for_course(@course) %>
               <td class="membership-info">

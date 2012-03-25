@@ -2,8 +2,8 @@ class CourseRegistration < ActiveRecord::Base
   belongs_to :user
   belongs_to  :course
   
-  after_create :send_notification_to_student
-  handle_asynchronously :send_notification_to_student
+  # after_create :send_notification_to_student
+  # handle_asynchronously :send_notification_to_student
   
   
   def self.assignment_update( course_id, user_id, decision )

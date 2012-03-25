@@ -51,6 +51,8 @@ class User < ActiveRecord::Base
   has_many :project_submissions
   
   
+  # after_create :send_invitation 
+  
   
   def User.retrieve_or_create( user_params )
     user = User.find_by_email user_params[:email]
@@ -63,6 +65,25 @@ class User < ActiveRecord::Base
                   :email => user_params[:email]
                   
       # send the notification 
+      # User.delay.send_new_registration_notification( new_user, new_password)
+    else
+      return user 
+    end
+  end
+  
+  def User.retrieve_or_create_with_password( user_params , password )
+    user = User.find_by_email user_params[:email]
+    
+    if user.nil?
+      User.create :username => (User.count + 1).to_s,
+                  :password => password ,
+                  :password_confirmation => password , 
+                  :email => user_params[:email],
+                  :name => user_params[:name],
+                  :nim => user_params[:nim]
+                  
+      # send the notification 
+      # User.delay.send_new_registration_notification( new_user, new_password)
     else
       return user 
     end

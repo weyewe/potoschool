@@ -42,6 +42,13 @@
     <div class="hero-unit">
       <h1>Selamat Bergabung di Potoschool</h1>
       <h3>Sekolah : <%= @school.name %></h3>
+      <h3>Posisi: 
+        <% if @user.has_role?(:student) %>
+          <b>Pelajar</b>
+        <% elsif @user.has_role?(:teacher) %>
+          <b>Guru</b>
+        <% end %>
+      </h3>
     </div>
     
     <p>

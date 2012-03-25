@@ -53,10 +53,10 @@ module UserActivityMailerHelper
       
       if not @subject.nil? 
         commented_object = @subject.commented_object
-        title = "xxx has just replied the discussion in project #{commented_object.project_submission.project.title}"
+        title = "#{actor.name} has just replied the discussion in project #{commented_object.project_submission.project.title}"
         return title 
       else
-        return "xxx has just replied the discussion"
+        return "#{actor.name} has just replied the discussion"
       end
         
       

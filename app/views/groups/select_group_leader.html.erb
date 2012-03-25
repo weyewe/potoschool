@@ -24,9 +24,9 @@
         <tbody>
           <% @students.each do |student| %>
             <tr>
-              <td>xxx</td>
+              <td><%= student.name %></td>
 
-              <td> xxx </td>
+              <td> <%= student.nim %> </td>
               <td class="well">
                 <label class="checkbox">
                   <% checkbox_value = @group.is_leader?(student)  %>

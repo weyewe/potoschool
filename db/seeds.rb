@@ -91,6 +91,7 @@ school.users << teacher_2
 school.users << school_admin
 school.save
 
+puts "Done with creating enrollment "
 
 
 =begin
@@ -112,6 +113,7 @@ subject_3 = Subject.create :code => "POTO7777", :name => "Advanced Photography",
                         :description => "Directing the photo object (models, cars, and so on)",
                         :school_id => school.id
                         
+puts "Done with creating subject"
                         
 =begin
   Subject has_many :teachers, :through => :subject_teaching_assignments
@@ -230,13 +232,13 @@ course_1_subject_1.students.each do |x|
 end
       
 # let's create project
-project_1 = course_1_subject_1.create_project_with_submissions :title => "This is the first project",
-          :description => "Take any picture that you want. Submit it.",
-          :deadline_datetime => DateTime.new( 2013, 3, 4).to_date
-          
-project_2 = course_1_subject_1.create_project_with_submissions :title => "This is the second project",
-          :description => "Take any sexy images. Submit it.",
-          :deadline_datetime => DateTime.new( 2012, 5, 4).to_date
+# project_1 = course_1_subject_1.create_project_with_submissions :title => "This is the first project",
+#           :description => "Take any picture that you want. Submit it.",
+#           :deadline_datetime => DateTime.new( 2013, 3, 4).to_date
+#           
+# project_2 = course_1_subject_1.create_project_with_submissions :title => "This is the second project",
+#           :description => "Take any sexy images. Submit it.",
+#           :deadline_datetime => DateTime.new( 2012, 5, 4).to_date
 
     # model this shit tomorrow                          
 =begin

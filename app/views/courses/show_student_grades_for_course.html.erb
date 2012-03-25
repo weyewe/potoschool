@@ -51,7 +51,7 @@
           
           <% @students.each do |student| %>
              <tr>
-                <td>xxx</td>
+                <td><%= student.nim %></td>
 
                 <% if @projects.length == 0 %>
                   <td>-</td>

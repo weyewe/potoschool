@@ -68,34 +68,31 @@ task :parse_student => :environment do
     new_password = UUIDTools::UUID.timestamp_create.to_s[0..7]
     
     puts "creating user"
-    new_user = User.new :name => name, 
+    new_user_params = {:name => name, 
                 :email => email,
                 :nim => nim,
                 :password => new_password,
                 :password_confirmation => new_password,
-                :username => UUIDTools::UUID.timestamp_create.to_s
-=begin
-new_password = UUIDTools::UUID.timestamp_create.to_s[0..7]
+                :username => UUIDTools::UUID.timestamp_create.to_s}
+    new_user = User.new new_user_params
 
-puts "creating user"
-new_user = User.new :name => "Willy Yunnal", 
-            :email => "rajakuraemas@gmail.com",
-            :nim => "2342",
-            :password => "willy1234",
-            :password_confirmation => "willy1234",
-            :username => UUIDTools::UUID.timestamp_create.to_s
-  
-=end
- 
-    if new_user.save == true 
+    
+    if new_user.valid? 
       
       # User.delay.send_new_registration_notification( new_user, new_password)
       #  Test it 
       puts 'in the save block'
       # school enrollment
-      new_user.add_role_if_not_exist( student_role.id )
-      Enrollment.create( :user_id => new_user.id, :school_id => school.id)
-       
+      # new_user.add_role_if_not_exist( student_role.id )
+      # Enrollment.create( :user_id => new_user.id, :school_id => school.id)
+      
+      
+      enrollment_params = {:enrollment_code => ( User.count + 1)}
+      enrollment = Enrollment.create_user_with_enrollment( new_user_params, 
+                enrollment_params , school.id, student_role.id  )
+                
+      new_user = enrollment.user 
+      
       
       fotografi_subject = SUBJECT_MAP[subject_symbol]
       

@@ -32,7 +32,7 @@
           <% @teachers.each do |teacher| %>
             <tr>
               <td><%#= "#{teacher.enrollment_code_for(@subject)}" %>
-                xxx: 
+                <%= teacher.name  %>: 
                 <%= teacher.email %></td>
               <td><%= teacher.total_subjects_count %></td>
               <td class="total-course-teaching-assignment"><%= teacher.total_courses_count %></td>
