@@ -23,7 +23,8 @@ gem 'simple_form'
 gem "squeel" 
 gem "timeline_fu"
 
-gem 'airbrake'
+# gem 'airbrake'
+gem 'exceptional'
 gem 'heroku'
 
 gem 'roadie' # for sending email 
