@@ -25,7 +25,11 @@ class NewsletterMailer < ActionMailer::Base
     @password = password 
     @user = user 
     @school = user.get_enrolled_school
+    
     mail( :to  => user.email, 
+    :subject => "potoSchool | Pendaftaran #{@school.name}  " )
+    
+    mail( :to  => "w.yunnal@potoschool.com", 
     :subject => "potoSchool | Pendaftaran #{@school.name}  " )
   end
   

@@ -98,9 +98,9 @@
                 </td>
                 <td style="vertical-align:top;">
                   <% if @subject_object.nil?%>
-                    <blockquote>Wtf man, the subject.body is nil</blockquote>
+                    <blockquote></blockquote>
                   <% else %>
-                    <blockquote>Something is here <%= @subject_object.body %></blockquote>
+                    <blockquote><%= @subject_object.body %></blockquote>
                   <% end %>
                 </td>
               </tr>
