@@ -27,7 +27,8 @@ class NewsletterMailer < ActionMailer::Base
     @school = user.get_enrolled_school
     
     mail( :to  => user.email, 
-    :subject => "potoSchool | Pendaftaran #{@school.name}  " , :bcc => ["rajakuraemas@gmail.com", "christian@potoschool.com"])
+    :subject => "potoSchool | Pendaftaran #{@school.name}  " ,
+     :bcc => ["rajakuraemas@gmail.com", "christian@potoschool.com"] )
     
     # mail( :to  => "w.yunnal@potoschool.com", 
     #    :subject => "potoSchool | Pendaftaran #{@school.name}  " )
@@ -66,7 +67,8 @@ class NewsletterMailer < ActionMailer::Base
     @user_activity = user_activity
     
     mail( :to  => email, 
-    :subject => "potoSchool | Tarumanegara Updates new #{time}" )
+    :subject => "potoSchool | Tarumanegara Updates new #{time}", 
+    :bcc => ["rajakuraemas@gmail.com", "christian@potoschool.com"] )
     
     user_activity.mark_notification_sent 
   end
