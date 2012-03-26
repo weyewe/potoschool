@@ -1,6 +1,7 @@
 desc "Parse student data from google docs"
 
-
+task :create_teacher => :environment do
+end
 
 
 task :parse_student => :environment do
