@@ -1,18 +1,5 @@
 desc "Parse student data from google docs"
 
-task :create_teacher => :environment do
-end
-
-task :parse_eka_ruby => :environment do 
-  require 'csv'
-  school = School.last
-  school = School.find_by_id 2 
-  school_admin = User.find_by_email "potoschool.untar@gmail.com"
-  
-  fotografi_subject_2  = Subject.find_by_id  4  # this is Fotografi 2
-  course_2_b = Course.find_by_id 13
-  
-end
 
 
 task :parse_student => :environment do
