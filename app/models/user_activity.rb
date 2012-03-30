@@ -99,9 +99,20 @@ a  = UserActivity.find(:first, :conditions => {
       if @actor.has_role?(:student)
         #we have to get the teacher 
         @course = @secondary_subject.project_submission.project.course 
+        # if 2 teachers are handling 1 class, use this method
+        # @teachers  = CourseTeachingAssignment.find(:a, :conditions => {
+        #          :course_id => @course.id,
+        #          :is_active => true 
+        #        }).map {|x|   x.user.email }
+        #        
+        #        return teachers
+        
+        
+        
         return [ CourseTeachingAssignment.find(:first, :conditions => {
-          :course_id => @course.id
-        }).user.email ] 
+                         :course_id => @course.id,
+                         :is_active => true 
+                       }).user.email ] 
         
       elsif @actor.has_role?(:teacher)
         @user = @secondary_subject.project_submission.user
