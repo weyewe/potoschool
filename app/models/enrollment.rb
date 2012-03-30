@@ -39,6 +39,7 @@ class Enrollment < ActiveRecord::Base
       @enrollment = Enrollment.create( :user_id => @user.id, :school_id => school_id, 
               :enrollment_code => enrollment_params[:enrollment_code] )
               
+              # activate send email
       User.delay.send_new_registration_notification( @user, password)
               
       return @enrollment
