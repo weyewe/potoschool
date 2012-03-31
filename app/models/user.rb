@@ -59,13 +59,14 @@ class User < ActiveRecord::Base
     
     if user.nil?
       new_password = UUIDTools::UUID.timestamp_create.to_s[0..7]
-      User.create :username => (User.count + 1).to_s,
+      new_user = User.create :username => (User.count + 1).to_s,
                   :password => new_password ,
                   :password_confirmation => new_password , 
                   :email => user_params[:email]
                   
       # send the notification 
       User.delay.send_new_registration_notification( new_user, new_password)
+      return new_user
     else
       return user 
     end
@@ -76,7 +77,7 @@ class User < ActiveRecord::Base
     
     if user.nil? 
       puts "in the create retrieve_or_create_with_password"
-      User.create :username => (User.count + 1).to_s,
+      new_user= User.create :username => (User.count + 1).to_s,
                   :password => password ,
                   :password_confirmation => password , 
                   :email => user_params[:email],
@@ -85,11 +86,20 @@ class User < ActiveRecord::Base
                   
       
       # send the notification 
-      # User.delay.send_new_registration_notification( new_user, new_password)
+      User.delay.send_new_registration_notification( new_user, new_password)
+      return new_user
     else
       puts "In the else retrieve_or_create_with_password"
       return user 
     end
+  end
+  
+  def send_admin_failure_registration_notification
+    password = UUIDTools::UUID.timestamp_create.to_s[0..7]
+    self.password = password
+    self.password_confirmation = password_confirmation 
+    self.save 
+     User.delay.send_new_registration_notification( self, password)
   end
   
     

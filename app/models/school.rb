@@ -52,4 +52,11 @@ class School < ActiveRecord::Base
                 order("created_at DESC")
   end
   
+  
+  def send_total_statistic
+    self.courses.each do |course|
+      NewsletterMailer.send_statistic(course)
+    end
+  end
+  
 end
