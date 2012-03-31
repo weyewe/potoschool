@@ -337,8 +337,8 @@ $(document).ready(function() {
      var file_location = $(this).val();
     
      
-     var regex_of_image_format =  /(\.(jpg|jpeg|tiff|png|gif|bmp))$/  ;
-     var regex_of_document_format = /(\.(doc|docx|ppt|pptx|pps|ppsx|xls|xlsx|pdf))$/  ; 
+     var regex_of_image_format =  /(\.(jpg|jpeg|tiff|png|gif|bmp))$/i  ;
+     var regex_of_document_format = /(\.(doc|docx|ppt|pptx|pps|ppsx|xls|xlsx|pdf))$/i  ; 
      
      if ($(this).val()) {
        //  we should check the filetype as well! if it is only for documents
@@ -438,6 +438,7 @@ function is_mobile() {
 
 
 function hasFileFormat( file_location, regex_matcher ) {
+  
   if( file_location.match( regex_matcher) ){
     return true;
   }else{

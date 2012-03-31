@@ -16,9 +16,9 @@ class Enrollment < ActiveRecord::Base
   Will try to find the user by email. If such user can't be found, then it will 
   create a new user, and send notification 
   
-  user_params = { :name => "Kurnia Setiawan", :nim => "", 
-        :email => "kurniast@yahoo.com", :password => "kunia1234k", 
-        :password_confirmation => "kunia1234k", :username => "kurniast"}
+  user_params = { :name => "Ruby Chrissandy", :nim => "", 
+        :email => "chrissandyruby@yahoo.com", :password => "ruby1234r", 
+        :password_confirmation => "ruby1234r", :username => "rubyc"}
   
   enrollment_params = { :enrollment_code => "coda"}
   school_id = School.last.id
