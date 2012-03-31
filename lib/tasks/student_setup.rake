@@ -1,6 +1,29 @@
 desc "Parse student data from google docs"
 
-
+# steps: clean duplicates
+# then, do the final parsing 
+task :clean_duplicates => :environment do 
+  array = []
+  School.last.students.each {|x| array << x.nim }
+  uniq_array = []
+  non_uniq_array = []
+  
+  array.each do |x|
+    if uniq_array.include?(x)
+      non_uniq_array << x 
+    else
+      uniq_array << x 
+    end
+  end
+  
+  non_uniq_array.each do |x|
+    User.find(:all, :conditions => {
+      :nim => x 
+    }, :order =>"created_at ASC" ).first.destroy_student
+  end
+  
+  puts non_uniq_array 
+end
 
 task :parse_student => :environment do
   
@@ -103,9 +126,9 @@ The following are to parse student / school from nothing  ( no school, no school
       puts "student_role: #{student_role}"
       enrollment = Enrollment.create_user_with_enrollment( new_user_params, 
                 enrollment_params , school.id, student_role.id  )
-      puts "after enrollment "
+      puts "after enrollment #{enrollment} "
       new_user = enrollment.user
-      puts "getting new_user " 
+      puts "getting new_user #{new_user} " 
       
       
       fotografi_subject = SUBJECT_MAP[subject_symbol]
@@ -118,6 +141,9 @@ The following are to parse student / school from nothing  ( no school, no school
       else
         puts "in the subject_symbol_block"
         # assign subject_registration
+        puts "new_user : #{new_user}"
+        puts "fotografi_subject: #{fotografi_subject}"
+        
         SubjectRegistration.create :user_id => new_user.id , :subject_id => fotografi_subject.id 
         # assign course_registration 
         puts "before fotografi_course"
@@ -454,6 +480,7 @@ task :parse_student_by_nim => :environment do
 =begin
   Update user 
 =end
+
     test_user = school.find_student_by_nim( nim) 
     if not test_user.nil?
       test_user.update_with_params( new_user_params, new_user_params[:password] )
@@ -466,13 +493,7 @@ task :parse_student_by_nim => :environment do
     
     if new_user.valid? 
       puts "3353 it is not getting next"
-      # User.delay.send_new_registration_notification( new_user, new_password)
-      #  Test it 
       puts 'in the save block'
-      # school enrollment
-      # new_user.add_role_if_not_exist( student_role.id )
-      # Enrollment.create( :user_id => new_user.id, :school_id => school.id)
-      
       
       enrollment_params = {:enrollment_code => ( User.count + 1)}
       puts "before enrollment create user"

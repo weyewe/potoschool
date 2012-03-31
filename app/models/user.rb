@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   
   # validation
   validates_presence_of :username, :email 
-  validates_uniqueness_of :username, :email
+  validates_uniqueness_of :email #:username,  later << ahah. we will make it a truth
   validates_confirmation_of :password , :message => "Password doesn't match password confirmation"
   
   
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
                   :email => user_params[:email]
                   
       # send the notification 
-      # User.delay.send_new_registration_notification( new_user, new_password)
+      User.delay.send_new_registration_notification( new_user, new_password)
     else
       return user 
     end
@@ -74,7 +74,8 @@ class User < ActiveRecord::Base
   def User.retrieve_or_create_with_password( user_params , password )
     user = User.find_by_email user_params[:email]
     
-    if user.nil?
+    if user.nil? 
+      puts "in the create retrieve_or_create_with_password"
       User.create :username => (User.count + 1).to_s,
                   :password => password ,
                   :password_confirmation => password , 
@@ -82,9 +83,11 @@ class User < ActiveRecord::Base
                   :name => user_params[:name],
                   :nim => user_params[:nim]
                   
+      
       # send the notification 
       # User.delay.send_new_registration_notification( new_user, new_password)
     else
+      puts "In the else retrieve_or_create_with_password"
       return user 
     end
   end
