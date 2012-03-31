@@ -27,10 +27,22 @@ class Enrollment < ActiveRecord::Base
   Enrollment.create_user_with_enrollment( user_params, enrollment_params , school_id, role_id )
   
 =end
-
+# creating student has to be by using this method
 
   def Enrollment.create_user_with_enrollment( user_params, enrollment_params , school_id, role_id )
     password  = UUIDTools::UUID.timestamp_create.to_s[0..7]
+    #  we must make sure that there has not been any user with such
+    # NIM. If there is any, change the email name , and send password reset 
+    school = School.find_by_id school_id 
+    @user = school.find_student_by_nim( user_params[:nim] ).nil?
+        if not @user.nil? 
+          @user.update_with_params( user_params, password )
+          return 
+        end
+    
+    
+    
+    
     @user = User.retrieve_or_create_with_password( user_params, password )
     
     if not @user.nil?
@@ -40,7 +52,7 @@ class Enrollment < ActiveRecord::Base
               :enrollment_code => enrollment_params[:enrollment_code] )
               
               # activate send email
-      User.delay.send_new_registration_notification( @user, password)
+      # User.delay.send_new_registration_notification( @user, password)
               
       return @enrollment
               

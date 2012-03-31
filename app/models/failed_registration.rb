@@ -3,7 +3,8 @@ class FailedRegistration < ActiveRecord::Base
   
   
   def self.send_all_failed_registration
-    destination = ["rajakuraemas@gmail.com", "w.yunnal@gmail.com", "christian.tanudjaja@gmail.com"]
+    # destination = ["rajakuraemas@gmail.com", "w.yunnal@gmail.com", "christian.tanudjaja@gmail.com"]
+    destination = ["rajakuraemas@gmail.com"]
     puts "before the delayed job"
     self.delay.execute_send_all_failed_registration(destination)
   end

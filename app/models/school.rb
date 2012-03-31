@@ -17,6 +17,9 @@ class School < ActiveRecord::Base
     })
   end
   
+  def find_student_by_nim( nim ) 
+    self.students.find_by_nim( nim.upcase )
+  end
 
   
   def teachers

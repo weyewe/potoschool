@@ -16,8 +16,8 @@ class User < ActiveRecord::Base
   
   
   # validation
-  validates_presence_of :username
-  validates_uniqueness_of :username
+  validates_presence_of :username, :email 
+  validates_uniqueness_of :username, :email
   validates_confirmation_of :password , :message => "Password doesn't match password confirmation"
   
   
@@ -316,6 +316,16 @@ class User < ActiveRecord::Base
   Code for student
 =end
 
+  def update_with_params( user_params, password )
+    self.name = user_params[:name]
+    self.email = user_params[:email]
+    self.password = password
+    self.password_confirmation = password
+    self.save
+    # over here, send the update registration
+    # User.delay.send_new_registration_notification( self, password)
+  end
+
   def project_submission_for_project( project ) 
     ProjectSubmission.find(:first, :conditions => {
       :project_id => project.id , 
@@ -397,6 +407,16 @@ class User < ActiveRecord::Base
     return group_membership
   end
 
+
+  def destroy_student 
+    self.course_registrations.each {|x| x.destroy}
+    self.subject_registrations.each {|x| x.destroy }
+    
+    self.enrollments.each {|x| x.destroy}
+    self.destroy 
+    
+    
+  end
  
     
   
