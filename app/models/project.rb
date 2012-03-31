@@ -37,6 +37,12 @@ class Project < ActiveRecord::Base
     end
   end
   
+  
+  def format_deadline_date
+    datetime = self.deadline_datetime
+    "#{datetime.month}/#{datetime.day}/#{datetime.year}"
+  end
+  
   def group_project?
     self.is_group_project
   end

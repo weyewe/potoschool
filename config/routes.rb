@@ -82,7 +82,8 @@ Debita46::Application.routes.draw do
   match 'recover_project' => "projects#recover_project", :as => :recover_project, :method => :post 
   match 'past_projects' => "projects#past_projects", :as => :past_projects
   
-
+  match 'select_active_project_to_be_edited' => "projects#select_active_project_to_be_edited", :as => :select_active_project_to_be_edited
+  
   # create group for course
   match 'select_subject_for_group' => "groups#select_subject_for_group", :as => :select_subject_for_group
   match 'select_course_for_group/subject/:subject_id' => "groups#select_course_for_group", :as => :select_course_for_group

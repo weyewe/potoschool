@@ -49,6 +49,47 @@ class ProjectsController < ApplicationController
                 "Create Project"       
   end
   
+  def select_active_project_to_be_edited
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    # current_user is teacher 
+    @projects = current_user.all_active_projects
+    
+    add_breadcrumb "Select Project", "select_active_project_to_be_edited_url"
+  end
+  
+  
+  def edit
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    # current_user is teacher 
+    @project = Project.find_by_id params[:id]
+    @course = @project.course
+    @subject = @course.subject
+    @projects = current_user.all_active_projects
+    
+    
+    add_breadcrumb "Select Project", "select_active_project_to_be_edited_url"
+  end
+  
+  def update
+    @project = Project.find_by_id params[:id]
+    @course = @project.course
+    @subject = @course.subject
+    @projects = current_user.all_active_projects
+    
+    
+    @project.update_attributes( params[:project] )
+    @project.deadline_datetime = extract_deadline_time( params[:project][:deadline_datetime])
+    @project.save 
+  
+    add_breadcrumb "Select Project", "select_active_project_to_be_edited_url"
+  end
   
   def create
     # ensure_role(:teacher)
@@ -152,6 +193,18 @@ class ProjectsController < ApplicationController
     @project.re_activate
   end
   
+  protected
+  
+  def extract_deadline_time( params_deadline_datetime)
+    @deadline_date = params_deadline_datetime
+    # 02/29/2012
+    time_array = @deadline_date.split("/")
+    deadline_time = DateTime.civil(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i, 
+              DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
+              # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
+              Rational(+7,24) )
+              
+  end
   
   
   

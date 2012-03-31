@@ -487,6 +487,24 @@ module ApplicationHelper
        ]
      },
      {
+       :title => "Edit Project",
+       :destination_link => "select_active_project_to_be_edited_url",
+       :conditions => [
+         {
+           :controller => "projects",
+           :action => "select_active_project_to_be_edited"
+         },
+         {
+           :controller => "projects",
+           :action => "edit"
+         },
+         {
+           :controller => "projects",
+           :action => "update"
+         }
+       ]
+     },
+     {
        :title => "Create Group",
        :destination_link => "select_subject_for_group_url",
        :conditions => [

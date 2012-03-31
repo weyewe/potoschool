@@ -1,0 +1,99 @@
+
+<div class="span9 content">
+  <%= create_guide("New Project", 
+        "Create the projects details for subject: <b>#{@subject.name}</b>, course: <b>#{@course.name}</b>").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+  <div class="row-fluid">
+    <div class="span8">
+
+
+      <%= form_for @project  ,:url => project_url(@project), :html => {:class => "form-horizontal"} do |f| %>
+        <div class="control-group">
+          <%= f.label :title, "Project Title" %>
+          <div class="controls">
+            <%= f.text_field :title, :class=>"input-xlarge" %>
+            <!-- <p class="help-block">Masukkan kode kelas.</p> -->
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= f.label :description, "Project Description" %>
+          <div class="controls">
+            <%= f.text_area :description, :class=>"input-xlarge", :rows => 5 %>
+            <!-- <p class="help-block">Masukkan kode kelas.</p> -->
+          </div>
+        </div>
+        
+        
+        <div class="control-group">
+          <%= f.label :total_submission, "Total Submission" %>
+          <div class="controls">
+            <%= f.text_field :total_submission, :class=>"input-xlarge" %>
+            <p class="help-block">Jumlah hasil yang harus dikumpulkan? <br />Isi dengan angka, contoh: <b>5</b> (untuk memberi quota upload 5 gambar)</p>
+          </div>
+        </div>
+        
+        
+        
+        <div class="control-group">
+          <%= f.label :deadline_date, "Deadline" %>
+          <div class="controls">
+            <%= f.text_field :deadline_datetime, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker',
+                  :value => @project.format_deadline_date %>
+            <p class="help-block">Langsung saja dipilih. Tidak usah di ketik jam nya. By default, 
+                project akan berakhir pada <strong>tengah malam</strong>.</p>
+          </div>
+        </div>
+        
+        
+        
+        
+        <!-- <div class="control-group">
+             <label class="control-label">Group Project?</label>
+             <div class="controls">
+               <label class="radio">
+                 <%= f.radio_button "is_group_project", TRUE_CHECK %> Yes
+               
+               </label>
+               <label class="radio">
+                 <%= f.radio_button "is_group_project", FALSE_CHECK %> No
+     
+               </label>
+             </div>
+           </div> -->
+        
+        
+        
+        
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Update Project</button>
+        </div>
+      <% end %>
+      
+      
+      
+
+    </div><!--/span-->
+
+    <div class="span4">
+      <table cellpadding="0" cellspacing="0" border="0" 
+            class="table table-striped table-bordered" id="example">
+        <thead>
+          <tr><th>Total Projects: <%= @projects.count%></th></tr>
+        </thead>
+        <tbody>
+          <% @projects.each do |project| %>
+            <tr>
+              <td><%= project.title %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      
+    </div><!--/span-->
+    
+  </div><!--/row-->
+
+</div><!--/span-->
