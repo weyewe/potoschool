@@ -54,8 +54,10 @@ class School < ActiveRecord::Base
   
   
   def send_total_statistic
-    self.courses.each do |course|
-      NewsletterMailer.send_statistic(course)
+    self.subjects.each do |subject|
+      subject.courses.each do |course|
+        NewsletterMailer.send_statistic(course)
+      end
     end
   end
   

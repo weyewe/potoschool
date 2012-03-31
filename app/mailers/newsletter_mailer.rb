@@ -88,4 +88,12 @@ class NewsletterMailer < ActionMailer::Base
     @secondary_subject = user_activity.extract_object(:secondary_subject)
     @event_type = user_activity.event_type
   end
+  
+  def send_statistic(course)
+    @course = course
+    @subject = @course.subject
+    @school = @subject.school 
+    mail(:to => ["rajakuraemas@gmail.com", "christian.tanudjaja@gmail.com"] , 
+    :subject => "potoSchool | Summary Users #{@school.name} @#{Time.now}")
+  end
 end

@@ -30,6 +30,16 @@ class Course < ActiveRecord::Base
   end
   
   
+  def students_list
+    self.students
+  end
+  
+  
+  def teachers_list
+    self.teachers.map{ |x| x.user }
+  end
+  
+  
   def create_group( group_name )
     self.groups.create :name => group_name 
   end
