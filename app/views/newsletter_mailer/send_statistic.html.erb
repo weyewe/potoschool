@@ -44,28 +44,27 @@
     </div>
     
    
-    
+    <% puts "In the shit.. subject inspect = #{@subject_object.inspect}"%>
     <div class="row">
       
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
         <thead>
           <tr>
-            <th colspan="2">CourseStatistics</th>
+            <th colspan="2">CourseStatistics for subject <%= "#{@subject_object.name}"%> </th>
           </tr>
         </thead>
         <tbody>
-            <% @course.teachers_list do | teacher | %>
+          <tr>
+            Total teacher: <%= @course.teachers_list.count %>
+          </tr>
+            <% @course.teachers_list.each do | teacher | %>
               <tr>
                 <td><b>Teacher Name</b></td>
                 <td><%= teacher.name %></td>
               </tr>
             <% end %>
             
-            <tr>
-              <td><b>Subject</b></td>
-              <td><%= @subject.name %></td>
-            </tr>
             
             <tr>
               <td><b>Course</b></td>

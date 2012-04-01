@@ -89,12 +89,23 @@ class NewsletterMailer < ActionMailer::Base
     @event_type = user_activity.event_type
   end
   
-  def send_statistic(course)
+  def send_statistic(course, subject)
+    puts "gonna send the sendStatistic"
+    
     @course = course
-    @subject = @course.subject
+    #  of course, the subject will be nill in the view because 
+    # there is method called subject
+    @subject = subject
     @school = @subject.school 
     
-    mail(:to => ["rajakuraemas@gmail.com", "christian.tanudjaja@gmail.com"] , 
+    puts "the course #{@course}"
+    puts "the subject #{@subject}"
+    puts "the subject name: #{@subject.name}"
+    puts "the school #{@school}"
+    @subject_object = @subject
+    
+    # , "christian.tanudjaja@gmail.com"
+    mail(:to => ["rajakuraemas@gmail.com" , "christian.tanudjaja@gmail.com"] , 
     :subject => "potoSchool | Summary Users #{@school.name} @#{Time.now}")
   end
 end
