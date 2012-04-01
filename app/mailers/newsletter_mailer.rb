@@ -93,6 +93,7 @@ class NewsletterMailer < ActionMailer::Base
     @course = course
     @subject = @course.subject
     @school = @subject.school 
+    
     mail(:to => ["rajakuraemas@gmail.com", "christian.tanudjaja@gmail.com"] , 
     :subject => "potoSchool | Summary Users #{@school.name} @#{Time.now}")
   end

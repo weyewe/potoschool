@@ -63,6 +63,17 @@
             <% end %>
             
             <tr>
+              <td><b>Subject</b></td>
+              <td><%= @subject.name %></td>
+            </tr>
+            
+            <tr>
+              <td><b>Course</b></td>
+              <td><%= @course.name %></td>
+            </tr>
+            
+            
+            <tr>
               <td><b>Total Students</b></td>
               <td><%= @course.students.count %></td>
             </tr>

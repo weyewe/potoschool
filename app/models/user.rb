@@ -336,7 +336,7 @@ class User < ActiveRecord::Base
     self.password_confirmation = password
     self.save
     # over here, send the update registration
-    # User.delay.send_new_registration_notification( self, password)
+    User.delay.send_new_registration_notification( self, password)
   end
 
   def project_submission_for_project( project ) 
