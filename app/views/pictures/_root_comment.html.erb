@@ -4,7 +4,7 @@
   </a>
 
   <div class="particulars">
-    <div class="name" > Jimmy Lin 
+    <div class="name" > <%= root_comment.user.name %>
       <% if root_comment.user.has_role?(:student)%>
         <span class="label">Student</span>
       <% elsif root_comment.user.has_role?(:teacher) %>

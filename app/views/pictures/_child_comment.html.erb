@@ -12,7 +12,7 @@
       <% elsif child_comment.user.has_role?(:teacher) %>
         <span class="label label-info">Teacher</span>
       <% end %>
-      Jimmy Lin Child 
+      <%= child_comment.user.name %>
     </div>
     
     <blockquote class="pull-right">
