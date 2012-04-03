@@ -455,7 +455,7 @@ task :parse_student_by_nim => :environment do
       :reason => reason
   end
   
-  filename = "final_shit.csv"
+  filename = "latest_update.csv"
   CSV.foreach(Rails.root.to_s + "/lib/tasks/" + "#{filename}") do |row|
     
     
