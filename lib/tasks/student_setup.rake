@@ -487,6 +487,7 @@ task :parse_student_by_nim => :environment do
       if test_user.errors.count != 0 
         store_failed_registration( name, email, nim, course, subject_symbol, "The Updat user is wrong #{test_user.errors.messages}")
       end
+      
       next 
     end
 ############################## end 
