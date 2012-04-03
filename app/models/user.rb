@@ -86,7 +86,7 @@ class User < ActiveRecord::Base
                   
       
       # send the notification 
-      User.delay.send_new_registration_notification( new_user, new_password)
+      User.delay.send_new_registration_notification( new_user, password)
       return new_user
     else
       puts "In the else retrieve_or_create_with_password"
