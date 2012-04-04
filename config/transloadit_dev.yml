@@ -1,0 +1,8 @@
+auth:
+  key     : a919ae5378334f20b8db4f7610cdd1a7
+  secret  : 7dff49aab9dc91cb62a0fd34bf9e8c2d6eb3b207
+  duration: 1800      # 30 minute validity period for signed upload forms
+
+templates:
+  potoschool_store_image : '90ff00cf9b9d4b91bd8f49fb0335c80d'
+  potoschool_store_document : '207207ad4c13421b986ed506a93b7c79'

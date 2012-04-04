@@ -14,7 +14,11 @@ module ApplicationHelper
   
   def transloadit_with_max_size( template , size_mb )
     
-    transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit.yml") )
+    if Rails.env.development?
+      transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit.yml") )
+    elsif Rails.env.production?
+      transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit_dev.yml") )
+    end
     
     
     
