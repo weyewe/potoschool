@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120404072116) do
+ActiveRecord::Schema.define(:version => 20120404120033) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20120404072116) do
     t.boolean  "is_active",         :default => true
     t.datetime "deadline_datetime"
     t.integer  "total_submission"
+    t.datetime "starting_datetime"
   end
 
   create_table "revisionships", :force => true do |t|
