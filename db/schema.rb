@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120323171747) do
+ActiveRecord::Schema.define(:version => 20120404072116) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -194,6 +194,7 @@ ActiveRecord::Schema.define(:version => 20120323171747) do
     t.string   "billing_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "time_zone",    :default => "UTC"
   end
 
   create_table "subject_registrations", :force => true do |t|

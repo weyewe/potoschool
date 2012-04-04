@@ -430,6 +430,16 @@ module ApplicationHelper
               :action => "new"
             }
           ]
+        },
+        {
+          :title => "Set Timezone",
+          :destination_link => 'timezone_setup_url',
+          :conditions => [
+            {
+              :controller => "schools",
+              :action => "timezone_setup"
+            }
+          ]
         }
       ]
     }

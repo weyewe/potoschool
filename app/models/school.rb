@@ -61,4 +61,8 @@ class School < ActiveRecord::Base
     end
   end
   
+  def set_time_zone( time_zone)
+    self.time_zone = time_zone
+  end
+  
 end

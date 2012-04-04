@@ -125,6 +125,10 @@ Debita46::Application.routes.draw do
   match 'first_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_first_child_comment", :as => :create_first_child_comment
   match 'create_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_child_comment", :as => :create_child_comment
   
+  # setting up the timezone
+  match 'timezone_setup' => 'schools#timezone_setup', :as => :timezone_setup 
+  match 'execute_timezone_setup' => 'schools#execute_timezone_setup', :as => :execute_timezone_setup, :method => :post 
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
