@@ -61,17 +61,28 @@ class School < ActiveRecord::Base
     end
   end
   
-  def set_time_zone( time_zone)
+  def set_time_zone( offset_timezone)
+    offset = offset_timezone.split("_")[0]
+    timezone = offset_timezone.split("_")[1]
     self.time_zone = time_zone
+    self.utc_offset= offset.to_i
     self.save
   end
   
   def get_time_zone
-    if self.time_zone.nil? 
+    if self.time_zone.nil?  ||self.time_zone.length == 0 
       return "UTC"
     end
     
     self.time_zone 
+  end
+  
+  def get_utc_offset
+    if self.utc_offset.nil?
+      return 0
+    end
+    
+    return self.utc_offset 
   end
   
 end

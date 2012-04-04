@@ -106,7 +106,7 @@
           <%= label_tag :deadline_minute, "Deadline Minute" %>
           <div class="controls">
             <%= select_tag "deadline_minute", 
-              select_minute_options_with_selected( @project.starting_minute ).html_safe %>
+              select_minute_options_with_selected( @project.deadline_minute ).html_safe %>
             <p class="help-block"></p>
           </div>
         </div>

@@ -86,9 +86,9 @@ class ProjectsController < ApplicationController
     
     @project.update_attributes( params[:project] )
     @project.deadline_datetime = extract_date_time( params[:project][:deadline_datetime],
-                params[:deadline_hour], params[:deadline_minute],  @school)
+                params[:deadline_hour], params[:deadline_minute],  @school).getutc
     @project.starting_datetime = extract_date_time( params[:project][:starting_datetime],
-                params[:starting_hour], params[:starting_minute],  @school)
+                params[:starting_hour], params[:starting_minute],  @school).getutc
     @project.save 
   
     add_breadcrumb "Select Project", "select_active_project_to_be_edited_url"
@@ -125,9 +125,9 @@ class ProjectsController < ApplicationController
     # school#timezone 
     
     # our new approach -> server will only store the UTS
-    @deadline_date = params[:project][:deadline_datetime]
+    # @deadline_date = params[:project][:deadline_datetime]
     # 02/29/2012
-    time_array = @deadline_date.split("/")
+    # time_array = @deadline_date.split("/")
     # deadline_time = DateTime.civil(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i, 
     #               DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
     #               # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
@@ -222,17 +222,21 @@ class ProjectsController < ApplicationController
   end
   
   def extract_date_time( params_deadline_datetime, params_hour , params_minute , school)
+    if params_deadline_datetime.nil? or params_deadline_datetime.length ==0 
+      return DateTime.now.in_time_zone(school.get_time_zone)
+    end
+    
     time_array = params_deadline_datetime.split("/")
   
     hour = 0 
-    if params_hour.nil || params_hour.length ==0  
+    if params_hour.nil? || params_hour.length ==0  
       hour = 0
     else
       hour = params_hour.to_i
     end
     
     minute = 0 
-    if params_minute.nil || params_minute.length ==0  
+    if params_minute.nil? || params_minute.length ==0  
       minute = 0
     else
       minute = params_minute.to_i
@@ -241,7 +245,8 @@ class ProjectsController < ApplicationController
               
               
     DateTime.new(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i,
-                  hour, minute, 0).in_time_zone( school.get_time_zone)
+                  hour, minute, 0,
+                  Rational(school.get_utc_offset , 24) )
               
               
   end

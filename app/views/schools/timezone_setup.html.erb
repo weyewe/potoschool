@@ -2,7 +2,8 @@
 <div class="span9 content">
   <%= create_guide("Set Timezone", 
         "School: <b>#{@school.name}</b><br />" + 
-        "Timezone: <b>#{@school.time_zone}</b>").html_safe %>
+        "Timezone: <b>#{@school.time_zone}</b>" + "<br />" + 
+        "Offset from GMT: <b>#{get_offset(@school.utc_offset)}</b>").html_safe %>
   
   <%#= create_breadcrumb(@breadcrumbs).html_safe %>
   
@@ -28,7 +29,9 @@
           <%= f.label :title, "Timezone" %>
           <div class="controls">
             <%#= f.text_field :title, :class=>"input-xlarge" %>
-            <%= f.time_zone_select :time_zone %>
+            <%#= f.time_zone_select :time_zone %>
+            <%= select_tag "time_zone", 
+              select_timezone_for_school( @school ).html_safe %>
             <!-- <p class="help-block">Masukkan kode kelas.</p> -->
           </div>
         </div>

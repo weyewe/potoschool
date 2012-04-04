@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120404120033) do
+ActiveRecord::Schema.define(:version => 20120404154332) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(:version => 20120404120033) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",    :default => "UTC"
+    t.integer  "utc_offset"
   end
 
   create_table "subject_registrations", :force => true do |t|

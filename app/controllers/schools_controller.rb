@@ -21,7 +21,7 @@ class SchoolsController < ApplicationController
     @school = current_user.get_managed_school
     
     
-    if @school.set_time_zone( params[:school][:time_zone]) 
+    if @school.set_time_zone( params[:time_zone]) 
       flash[:notice] = "Timezone is changed"
     else
       flash[:error] = "Failed to change timezone"

@@ -68,13 +68,22 @@ class Project < ActiveRecord::Base
 =begin
   Time display logic
 =end
+  def get_starting_datetime_local_time
+    school = self.course.subject.school 
+    self.starting_datetime.in_time_zone(school.get_time_zone)
+  end
+  
+  def get_deadline_datetime_local_time
+    school = self.course.subject.school 
+    self.deadline_datetime.in_time_zone(school.get_time_zone)
+  end
+
   def starting_hour
     if self.starting_datetime.nil?
       return 0
     end
     
-    school = self.course.subject.school 
-    self.starting_datetime.in_time_zone(school.get_time_zone).hour
+    self.get_starting_datetime_local_time.hour
   end
   
   def starting_minute
@@ -82,8 +91,7 @@ class Project < ActiveRecord::Base
       return 0
     end
     
-    school = self.course.subject.school 
-    self.starting_datetime.in_time_zone(school.get_time_zone).minute
+    self.get_starting_datetime_local_time.min
   end
   
   def deadline_hour
@@ -91,8 +99,7 @@ class Project < ActiveRecord::Base
       return 0
     end
     
-    school = self.course.subject.school 
-    self.deadline_datetime.in_time_zone(school.get_time_zone).hour
+    self.get_deadline_datetime_local_time.hour
   end
   
   def deadline_minute
@@ -100,8 +107,7 @@ class Project < ActiveRecord::Base
       return 0
     end
     
-    school = self.course.subject.school 
-    self.deadline_datetime.in_time_zone(school.get_time_zone).minute
+    self.get_deadline_datetime_local_time.min
   end
   
   
