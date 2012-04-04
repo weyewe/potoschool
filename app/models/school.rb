@@ -63,7 +63,7 @@ class School < ActiveRecord::Base
   
   def set_time_zone( offset_timezone)
     offset = offset_timezone.split("_")[0]
-    timezone = offset_timezone.split("_")[1]
+    time_zone = offset_timezone.split("_")[1]
     self.time_zone = time_zone
     self.utc_offset= offset.to_i
     self.save
