@@ -37,16 +37,79 @@
         
         
         
+        <!-- <div class="control-group">
+              <%#= f.label :deadline_date, "Deadline" %>
+              <div class="controls">
+                <%#= f.text_field :deadline_datetime, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker',
+                      :value => @project.format_deadline_date %>
+                <p class="help-block">Langsung saja dipilih. Tidak usah di ketik jam nya. By default, 
+                    project akan berakhir pada <strong>tengah malam</strong>.</p>
+              </div>
+            </div>
+             -->
+        
+        
+        
         <div class="control-group">
-          <%= f.label :deadline_date, "Deadline" %>
+          <%= f.label :starting_datetime, "Starting Date" %>
           <div class="controls">
-            <%= f.text_field :deadline_datetime, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker',
-                  :value => @project.format_deadline_date %>
-            <p class="help-block">Langsung saja dipilih. Tidak usah di ketik jam nya. By default, 
-                project akan berakhir pada <strong>tengah malam</strong>.</p>
+            <%= f.text_field :starting_datetime, :class=>"input-xlarge"  ,
+                  'data-datepicker'=>'datepicker',
+                  :value =>format_date_from_datetime(@project.starting_datetime)   %>
+            <p class="help-block"></p>
           </div>
         </div>
         
+        
+        <div class="control-group">
+          <%= label_tag :starting_hour, "Starting Hour" %>
+          <div class="controls">
+            <%= select_tag "starting_hour", 
+              select_hour_options_with_selected( @project.starting_hour ).html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= label_tag :starting_minute, "Starting Minute" %>
+          <div class="controls">
+            <%= select_tag "starting_minute", 
+              select_minute_options_with_selected( @project.starting_minute ).html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <hr />
+        
+        
+        <div class="control-group">
+          <%= f.label :deadline_datetime, "Deadline Date" %>
+          <div class="controls">
+            <%= f.text_field :deadline_datetime, 
+              :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker',
+              :value =>format_date_from_datetime(@project.deadline_datetime)  %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        
+        <div class="control-group">
+          <%= label_tag :deadline_hour, "Deadline Hour" %>
+          <div class="controls">
+            <%= select_tag "deadline_hour", 
+              select_hour_options_with_selected( @project.deadline_hour ).html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= label_tag :deadline_minute, "Deadline Minute" %>
+          <div class="controls">
+            <%= select_tag "deadline_minute", 
+              select_minute_options_with_selected( @project.starting_minute ).html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
         
         
         

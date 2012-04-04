@@ -66,4 +66,12 @@ class School < ActiveRecord::Base
     self.save
   end
   
+  def get_time_zone
+    if self.time_zone.nil? 
+      return "UTC"
+    end
+    
+    self.time_zone 
+  end
+  
 end

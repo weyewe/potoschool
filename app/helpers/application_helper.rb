@@ -44,6 +44,62 @@ module ApplicationHelper
     [params, signature]
   end
   
+  
+=begin
+  For project creation, select time and hour
+=end
+
+  def select_hour_options
+    array = ""
+    (0..23).each do |x|
+      array << "<option>#{x}</option>"
+    end
+    return array 
+  end
+  
+  def select_hour_options_with_selected(value)
+    array = ""
+    (0..23).each do |x|
+      if x != value 
+        array << "<option>#{x}</option>"
+      else
+        array << "<option selected='selected'>#{x}</option>"
+      end
+    end
+    return array 
+  end
+  
+  
+  
+  def select_minute_options
+    array = ""
+    (0..59).each do |x|
+      array << "<option>#{x}</option>"
+    end
+    return array 
+  end
+  
+  def select_minute_options_with_selected(value)
+    array = ""
+    (0..59).each do |x|
+      if x != value 
+        array << "<option>#{x}</option>"
+      else
+        array << "<option selected='selected'>#{x}</option>"
+      end
+    end
+    return array 
+  end
+  
+  def format_date_from_datetime( datetime) 
+    if datetime.nil? 
+      return ""
+    end
+    "#{datetime.month}/#{datetime.day}/#{datetime.year}"
+  end
+  
+  
+  
 =begin
   For the grade display 
 =end

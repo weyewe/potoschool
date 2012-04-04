@@ -82,10 +82,13 @@ class ProjectsController < ApplicationController
     @course = @project.course
     @subject = @course.subject
     @projects = current_user.all_active_projects
-    
+    @school = current_user.get_enrolled_school 
     
     @project.update_attributes( params[:project] )
-    @project.deadline_datetime = extract_deadline_time( params[:project][:deadline_datetime])
+    @project.deadline_datetime = extract_date_time( params[:project][:deadline_datetime],
+                params[:deadline_hour], params[:deadline_minute],  @school)
+    @project.starting_datetime = extract_date_time( params[:project][:starting_datetime],
+                params[:starting_hour], params[:starting_minute],  @school)
     @project.save 
   
     add_breadcrumb "Select Project", "select_active_project_to_be_edited_url"
@@ -106,6 +109,8 @@ class ProjectsController < ApplicationController
     end
     
     
+    @school = current_user.get_enrolled_school 
+    
     @project = Project.new( params[:project])
     @project.course_id = @course.id
     if params[:project][:is_group_project].to_i == TRUE_CHECK
@@ -118,17 +123,27 @@ class ProjectsController < ApplicationController
     # but the server will think that it is GMT + 0 
     # we have to adjust it -> The info of the offset is in the 
     # school#timezone 
+    
+    # our new approach -> server will only store the UTS
     @deadline_date = params[:project][:deadline_datetime]
     # 02/29/2012
     time_array = @deadline_date.split("/")
-    deadline_time = DateTime.civil(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i, 
-              DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
-              # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
-              Rational(+7,24) )
+    # deadline_time = DateTime.civil(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i, 
+    #               DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
+    #               # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
+    #               Rational(+7,24) )
+    deadline_time =  extract_date_time( params[:project][:deadline_datetime] , params[:deadline_hour], 
+                params[:deadline_minute], @school )
               
+    starting_time =   extract_date_time( params[:project][:starting_datetime] , params[:starting_hour], 
+                  params[:starting_minute], @school )
+              
+              # DateTime.new(2012,8,8, deadline_hour, deadline_minute, 0).in_time_zone("Jakarta")
+              # DateTime.new(2012,8,8, 12, 30, 0).in_time_zone(@school.get_time_zone)
+    
     @project.deadline_datetime = deadline_time.getutc # server time is UTC 
     # @project.deadline_date = deadline_time.getutc.to_date  # server time is UTC, again.. 
-    
+    @project.starting_datetime = starting_time.getutc
     
     @project =  Project.create_project_by_project_creator( current_user , @project) 
  
@@ -203,6 +218,31 @@ class ProjectsController < ApplicationController
               DEFAULT_DEADLINE_HOUR, DEFAULT_DEADLINE_MINUTE, 0, 
               # adjust to Jakarta Time +7 -> GMT + 7, out of 24 hours 
               Rational(+7,24) )
+              
+  end
+  
+  def extract_date_time( params_deadline_datetime, params_hour , params_minute , school)
+    time_array = params_deadline_datetime.split("/")
+  
+    hour = 0 
+    if params_hour.nil || params_hour.length ==0  
+      hour = 0
+    else
+      hour = params_hour.to_i
+    end
+    
+    minute = 0 
+    if params_minute.nil || params_minute.length ==0  
+      minute = 0
+    else
+      minute = params_minute.to_i
+    end        
+              
+              
+              
+    DateTime.new(time_array[2].to_i, time_array[0].to_i, time_array[1].to_i,
+                  hour, minute, 0).in_time_zone( school.get_time_zone)
+              
               
   end
   

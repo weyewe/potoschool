@@ -65,6 +65,46 @@ class Project < ActiveRecord::Base
     not current_user.all_projects.where(:project_id => self.id ).nil?
   end
 
+=begin
+  Time display logic
+=end
+  def starting_hour
+    if self.starting_datetime.nil?
+      return 0
+    end
+    
+    school = self.course.subject.school 
+    self.starting_datetime.in_time_zone(school.get_time_zone).hour
+  end
+  
+  def starting_minute
+    if self.starting_datetime.nil?
+      return 0
+    end
+    
+    school = self.course.subject.school 
+    self.starting_datetime.in_time_zone(school.get_time_zone).minute
+  end
+  
+  def deadline_hour
+    if self.starting_datetime.nil?
+      return 0
+    end
+    
+    school = self.course.subject.school 
+    self.deadline_datetime.in_time_zone(school.get_time_zone).hour
+  end
+  
+  def deadline_minute
+    if self.starting_datetime.nil?
+      return 0
+    end
+    
+    school = self.course.subject.school 
+    self.deadline_datetime.in_time_zone(school.get_time_zone).minute
+  end
+  
+  
   
  
 end

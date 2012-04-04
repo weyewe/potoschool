@@ -36,14 +36,65 @@
         </div>
         
         
+        <div class="control-group">
+          <%= f.label :starting_datetime, "Starting Date" %>
+          <div class="controls">
+            <%= f.text_field :starting_datetime, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker'  %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
         
         <div class="control-group">
-          <%= f.label :deadline_date, "Deadline" %>
+          <%= label_tag :starting_hour, "Starting Hour" %>
+          <div class="controls">
+            <%= select_tag "starting_hour", 
+              select_hour_options.html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= label_tag :starting_minute, "Starting Minute" %>
+          <div class="controls">
+            <%= select_tag "starting_minute", select_minute_options.html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <hr />
+        
+        
+        <div class="control-group">
+          <%= f.label :deadline_datetime, "Deadline Date" %>
           <div class="controls">
             <%= f.text_field :deadline_datetime, :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker'  %>
             <p class="help-block"></p>
           </div>
         </div>
+        
+        
+        <div class="control-group">
+          <%= label_tag :deadline_hour, "Deadline Hour" %>
+          <div class="controls">
+            <%= select_tag "deadline_hour", 
+              select_hour_options.html_safe , :selected => 20 %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        <div class="control-group">
+          <%= label_tag :deadline_minute, "Deadline Minute" %>
+          <div class="controls">
+            <%= select_tag "deadline_minute", select_minute_options.html_safe %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+        
+        
+        <%#= f.time_select :attribute_name, :minute_step => 15, :ampm => true %>
+        
+        
         
         
         
