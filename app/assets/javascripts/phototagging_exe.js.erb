@@ -1,15 +1,49 @@
 
 
 jQuery(function($){
-  // console.log("Yeah.gonna set cropper to target");
-  $('#target').Jcrop({
-    onChange:   showCoords,
-    onSelect:   showCoordsFinal,
-    onRelease:  clearCoords,
-    maxSize: [62,62]
-  }  ,function(){
-    PilipotoJcropApi = this;
+  
+  $("#cropper_wrapper img").load(function(){
+  
+    $('#target').Jcrop({
+      onChange:   showCoords,
+      onSelect:   showCoordsFinal,
+      onRelease:  clearCoords,
+      maxSize: [62,62]
+    }  ,function(){
+      PilipotoJcropApi = this;
+    });
+
+ 
   });
+    // 
+    // console.log("Gonne start wait for the real image");
+    // $("#display_wrapper img").load(function(){
+    //   var display_wrapper_width = parseInt( $("#display_wrapper").width()  );
+    //   var display_image_width  = parseInt( $(this).width() );
+    //   var display_image_height = parseInt( $(this).height() );
+    //   
+    //   console.log("Gonna start waiting for the crop image");
+    //   if($("#cropper_wrapper img").length > 0  ){
+    //     console.log("Such thing exists");
+    //   }
+    //   
+    //   $("#cropper_wrapper img").load(function(){
+    //     // var display_image_width  = parseInt( $(this).width() );
+    //     //      var display_image_height = parseInt( $(this).height() );
+    //     // adjust the width of the wrapper
+    //     console.log("Done loading");
+    //     $(this).width(display_wrapper_width);
+    //     $("#target").width( display_image_width );
+    //     $("#target").height(display_image_height);
+    //     console.log("Done changing the widht and heihgt of crop image");
+    //     refreshMap();
+    //     
+    //    
+    //   });
+    // });
+    // 
+  
+  
   
   // console.log("Done setting up cropper to target");
   
