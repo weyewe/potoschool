@@ -2,11 +2,22 @@
 
 jQuery(function($){
   
-  $("#cropper_wrapper img").load(function(){
+  // $("#cropper_wrapper").show();
+  
+  if( IsImageOk('target') ){
     var $wrapper = $("#cropper_wrapper");
-    executeJcropBinding(); 
-    $wrapper.addClass("hide");
-  });
+    $wrapper.hide();
+  }else{
+    $("#cropper_wrapper img").load(function(){
+      // console.log("after loading");
+      var $wrapper = $("#cropper_wrapper");
+      // console.log("before binding");
+      executeJcropBinding(); 
+      alert("before hiding");
+      $wrapper.hide();
+    });
+  }
+  
    
   
   // console.log("Done setting up cropper to target");
@@ -166,11 +177,25 @@ function showCoordsFinal(c)
 
 
 
-function clearCoords()
-{
+function clearCoords(){
   $('#coords input').val('');
   $('#h').css({color:'red'});
   window.setTimeout(function(){
     $('#h').css({color:'inherit'});
     },500);
-  };
+};
+
+function IsImageOk(img_id){
+  // http://www.sajithmr.me/javascript-check-an-image-is-loaded-or-not
+  var img = document.getElementById( img_id );
+  if (!img.complete) {
+    return false;
+  }
+  
+  if (typeof img.naturalWidth != undefined && img.naturalWidth  == 0) {
+    return false;
+  }
+
+  // No other way of checking: assume it’s ok.
+  return true;
+}
