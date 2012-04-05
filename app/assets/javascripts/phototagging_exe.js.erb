@@ -13,7 +13,7 @@ jQuery(function($){
       var $wrapper = $("#cropper_wrapper");
       // console.log("before binding");
       executeJcropBinding(); 
-      alert("before hiding");
+      // alert("before hiding");
       $wrapper.hide();
     });
   }
@@ -101,7 +101,10 @@ function destroyJCropHTML(){
 }
 
 function refreshJCropBinding(){
-  PilipotoJcropApi.destroy();
+  if(PilipotoJcropApi != undefined  ){
+    PilipotoJcropApi.destroy();
+  }
+  
   destroyJCropHTML();
   // resize the target image 
   // following the display picture
