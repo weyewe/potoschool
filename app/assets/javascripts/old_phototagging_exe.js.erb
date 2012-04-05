@@ -1,38 +1,32 @@
 
 
 jQuery(function($){
-  // console.log("Yeah.gonna set cropper to target");
-  $('#target').Jcrop({
-    onChange:   showCoords,
-    onSelect:   showCoordsFinal,
-    onRelease:  clearCoords,
-    maxSize: [62,62]
-  }  ,function(){
-    PilipotoJcropApi = this;
-  });
+
+
   
-  // console.log("Done setting up cropper to target");
   
   $("#pilipoto-switcher").click(function(){
     
-    // console.log("switcher is clicked");
+    
     
     var $switcher = $(this);
     
     
     
     if( $switcher.hasClass("waitMode")){
-      // console.log("gonna swtich to cropping mode");
       $switcher.addClass("croppingMode");
       $switcher.removeClass("waitMode");
       $switcher.text("Turn Off Feedback Mode");
       $("#actionWrapper").addClass("turnOn");
-      
-      $("#cropper_wrapper").show();
-      $("#display_wrapper").hide();
-      // console.log("done switching to cropping mode");
+        $('#target').Jcrop({
+           onChange:   showCoords,
+           onSelect:   showCoordsFinal,
+           onRelease:  clearCoords,
+           maxSize: [62,62]
+         },  function(){
+           PilipotoJcropApi = this;
+         });
     }else if( $switcher.hasClass("croppingMode")){
-      // console.log("fuck, returning to view mode");
         if( is_mobile() ) {
           window.location.reload();
         } else {
@@ -41,10 +35,7 @@ jQuery(function($){
           $switcher.text("Turn On Feedback Mode");
 
           $("#actionWrapper").removeClass("turnOn");
-          $("#cropper_wrapper").hide();
-          $("#display_wrapper").show();
-          // console.log("done switching");
-        // PilipotoJcropApi.destroy(); 
+          PilipotoJcropApi.destroy(); 
         }
     }
     

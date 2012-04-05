@@ -398,6 +398,22 @@ $.fn.clearForm = function() {
 };
 
 function refreshMap(){
+  // the following block is used for the weird case when the user is playing with
+  // window size. 
+  // var $pilipoto_switcher = $("#pilipoto-switcher");
+  //   if( $("#pilipoto-switcher").length > 0 ){
+  //     if( $pilipoto_switcher.hasClass("croppingMode") ){
+  //       // ok, good, gonna turn it off
+  //       $pilipoto_switcher.removeClass("croppingMode");
+  //       $pilipoto_switcher.addClass("waitMode");
+  //       $pilipoto_switcher.text("Turn On Feedback Mode");
+  // 
+  //       $("#actionWrapper").removeClass("turnOn");
+  //       $("#cropper_wrapper").hide();
+  //       $("#display_wrapper").show();
+  //     }
+  //   }
+  
   var displayed_image_wrapper_width = parseInt( $(".display_image_wrapper").width()  );
   var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
   var scaling_ratio = displayed_image_wrapper_width / normal_image_wrapper_width; 
@@ -418,6 +434,10 @@ function refreshMap(){
         
         $this.removeClass("hide");
    });
+   
+   
+ 
+   
 }
 
 
