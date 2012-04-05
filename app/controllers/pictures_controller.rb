@@ -64,6 +64,9 @@ class PicturesController < ApplicationController
       return
     end
     
+    @project = @project_submission.project 
+    @school = current_user.get_enrolled_school
+    
     @picture = Picture.find_by_id( params[:id] )
     @original_picture = @picture.original_picture
     @all_revisions = @original_picture.revisions.order("created_at DESC")

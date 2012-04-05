@@ -70,29 +70,14 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
-      <% if @picture.picture_filetype == PICTURE_FILETYPE[:image]  %>
-       <button data-toggle="button" id="pilipoto-switcher" 
-            class="btn btn-primary waitMode">Turn On Feedback Mode</button>
-        <hr />
+      
+      <% if @project.allow_student_activities? %>
+        <%= render :partial =>"pictures/student_activities" %>
+      <% else %>
+        <%= render :partial =>"pictures/no_student_activities_notification",
+        :locals =>{:project => @project} %>
       <% end %>
       
-      <% if current_user.is_submission_owner?(@project_submission) %>
-      <!-- if it is not approved, revision still can be uploaded  -->
-        <% if not @original_picture.any_picture_submission_approved? %>
-          <% if @picture.picture_filetype == PICTURE_FILETYPE[:image] %>
-            <%= render :partial => "pictures/upload_picture_revision_form"%>
-            <%#= render :partial => "pictures/upload_revision_form"%>
-          <% end %>
-          
-          <% if @picture.picture_filetype != PICTURE_FILETYPE[:image] %>
-            <%= render :partial => "pictures/upload_document_revision_form"%>
-            <%#= render :partial => "pictures/upload_revision_form"%>
-          <% end %>
-          
-          
-        <% end %>
-        
-      <% end %>
       
       
       <% if not @original_picture.any_picture_submission_approved? %>

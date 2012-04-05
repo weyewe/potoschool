@@ -1,0 +1,18 @@
+<% if @picture.picture_filetype == PICTURE_FILETYPE[:image]  %>
+ <button data-toggle="button" id="pilipoto-switcher" 
+      class="btn btn-primary waitMode">Turn On Feedback Mode</button>
+  <hr />
+<% end %>
+
+<% if current_user.is_submission_owner?(@project_submission) %>
+<!-- if it is not approved, revision still can be uploaded  -->
+  <% if not @original_picture.any_picture_submission_approved? %>
+    <% if @picture.picture_filetype == PICTURE_FILETYPE[:image] %>
+      <%= render :partial => "pictures/upload_picture_revision_form"%>
+    <% end %>
+    
+    <% if @picture.picture_filetype != PICTURE_FILETYPE[:image] %>
+      <%= render :partial => "pictures/upload_document_revision_form"%>
+    <% end %>
+  <% end %>
+<% end %>

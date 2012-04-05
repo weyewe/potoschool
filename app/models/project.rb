@@ -43,6 +43,71 @@ class Project < ActiveRecord::Base
     "#{datetime.month}/#{datetime.day}/#{datetime.year}"
   end
   
+  def passed_deadline?
+    Time.now.to_datetime > self.deadline_datetime
+  end
+  
+  def submission_has_exceed_quota(student)
+    project_submission  = ProjectSubmission.find(:first, :conditions => {
+      :user_id => student.id,
+      :project_id => self.id 
+    })
+    
+    project_submission.exceed_quota?
+  end
+  
+  def is_closed?
+    self.is_active == false 
+  end
+  
+  def in_between_starting_and_deadline_time?
+    current_time = Time.now.to_datetime
+    deadline_time = ''
+    starting_time = ''
+    
+    if self.deadline_datetime.nil?
+      deadline_time = current_time 
+    else
+      deadline_time = self.deadline_datetime
+    end
+    
+    if self.starting_datetime.nil?
+      starting_time = current_time 
+    else
+      starting_time = self.starting_datetime
+    end
+    
+    (current_time <=  deadline_time) && (current_time >= starting_time )
+  end
+  
+  def earlier_than_starting_time?(current_time )
+    current_time < starting_datetime
+  end
+  
+  def later_than_deadline_time?(current_time )
+    current_time > deadline_datetime
+  end
+  
+  def possible_to_upload_more?(student)
+    # 1. time <= deadline_datetime
+    # 2. hasn't exceeded quota
+    # 3. project is not closed 
+    
+    ( self.in_between_starting_and_deadline_time? ) and 
+    (not self.submission_has_exceed_quota(student) ) and 
+    (not  self.is_closed?)
+    
+  end
+  
+  def allow_student_activities?
+    ( self.in_between_starting_and_deadline_time? ) and 
+    (not self.is_closed?)
+  end
+  
+  
+  
+  
+  
   def group_project?
     self.is_group_project
   end

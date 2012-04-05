@@ -356,6 +356,11 @@ class Picture < ActiveRecord::Base
   end
   
   
+  
+  def upload_datetime_local(school)
+    self.created_at.in_time_zone(school.get_time_zone)
+  end
+  
 =begin  
   Related to the UserActivity Timeline 
 =end

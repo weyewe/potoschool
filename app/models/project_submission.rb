@@ -124,7 +124,7 @@ class ProjectSubmission < ActiveRecord::Base
    end
   
   
-  def excess_quota?
+  def exceed_quota?
     project = self.project 
     self.original_pictures.count  >= project.total_submission
   end 

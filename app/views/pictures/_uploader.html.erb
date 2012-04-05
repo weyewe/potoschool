@@ -1,0 +1,38 @@
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#image_tab" data-toggle="tab">Upload Image</a></li>
+  <li><a href="#document_tab" data-toggle="tab">Upload Document</a></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="image_tab">
+    <%= render :partial => "pictures/new_picture_upload" %>
+  </div>
+  <div class="tab-pane" id="document_tab">
+    <%= render :partial => "pictures/new_document_upload" %>
+  </div>
+</div>
+
+<% content_for :additional_js do %>
+  <script type="text/javascript" src="//assets.transloadit.com/js/jquery.transloadit2.js"></script>
+  <script type="text/javascript">
+     // We call .transloadit() after the DOM is initialized:
+     $(document).ready(function() {
+       $('#upload_picture').transloadit({
+         wait : true, 
+         pollTimeout : 15000,
+         processZeroFiles : false,
+         onStart : function(assembly){
+         
+         }
+       });
+     
+       $('#upload_document').transloadit({
+          wait : true, 
+          pollTimeout : 15000,
+          processZeroFiles : false,
+          onStart : function(assembly){
+          }
+        });
+     });
+  </script>
+<% end %>

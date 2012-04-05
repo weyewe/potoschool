@@ -1,0 +1,29 @@
+<% reasons = [] %>
+<% current_time = Time.now.to_datetime %>
+
+<% if  not project.in_between_starting_and_deadline_time? %>
+  <% if project.earlier_than_starting_time?(current_time )%>
+    <% reasons << "Project has not started: #{project.get_starting_datetime_local_time}"%>
+  <% elsif  project.later_than_deadline_time?(current_time ) %>
+   <% reasons << "Deadline has passed: #{project.get_deadline_datetime_local_time}"%>
+  <% end %>
+<% end %>
+
+
+<% if project.is_closed? %>
+  <% reasons << "The project is closed" %>
+<% end %>
+
+<div class="alert alert-error">
+  <strong>No activities allowed.</strong> 
+     
+
+  <% if reasons.length > 0 %>
+    <ol>
+      <% reasons.each do |reason| %>
+        <li><%= reason %></li>
+      <% end %>
+    </ol>
+  <% end %>
+  
+</div>
