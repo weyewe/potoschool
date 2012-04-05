@@ -10,6 +10,9 @@ class HomeController < ApplicationController
   
   
   def dashboard
+    
+   
+    
     if current_user.has_role?( :school_admin)
       redirect_to new_teacher_url 
       return 

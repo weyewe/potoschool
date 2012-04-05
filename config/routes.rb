@@ -129,6 +129,14 @@ Debita46::Application.routes.draw do
   match 'timezone_setup' => 'schools#timezone_setup', :as => :timezone_setup 
   match 'execute_timezone_setup' => 'schools#execute_timezone_setup', :as => :execute_timezone_setup, :method => :post 
   
+  
+  
+  # edit password
+  
+  match 'edit_credential' => "passwords#edit_credential" , :as => :edit_credential
+  match 'update_password' => "passwords#update" , :as => :update_password, :method => :put
+  
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

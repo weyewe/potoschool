@@ -6,10 +6,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">potoSchool</a>
+      <%= link_to "potoSchool", root_url, :class => "brand" %>
+      <!-- <a class="brand" href="#">potoSchool</a> -->
       <div class="nav-collapse">
         <ul class="nav">
-          <li class="active"><a href="#">Home</a></li>
+          <li class="active"><%= link_to "Home", root_url %></li>
+          
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -19,8 +21,8 @@
           <li class="dropdown" id="fat-menu">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#"><%= current_user.email%><b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Setting</a></li>
-              <li><a href="#">Profile</a></li>
+              <li><%= link_to "Setting", edit_credential_url %></li>
+              <!-- <li><a href="#">Profile</a></li> -->
               <li class="divider"></li>
               <li><%= link_to "Logout", destroy_user_session_url %></li>
             </ul>
