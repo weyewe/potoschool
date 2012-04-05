@@ -1,9 +1,9 @@
 <% new_positional_comment =  escape_javascript(render :partial => "pictures/positional_comment", 
-              :locals=> {:positional_comment => @positional_comment }) %> ;
+              :locals=> {:positional_comment => @positional_comment }) %> 
               
 <% new_root_comment =  escape_javascript(render :partial => "pictures/root_comment", 
       :locals=> {:root_comment => @positional_comment.comment, 
-                :picture => @picture}) %> ;
+                :picture => @picture}) %> 
               
               
 $(document).ready(function(){

@@ -26,13 +26,13 @@
   
   
   <%= image_tag @picture.display_image_url,  
-        :style => "width:590px;"  %>
+        :style => "width:590px;" , :id => "display_image" %>
         
   <!-- render all the positional_comment -->
   <%= render :partial => "pictures/feedback_map", :locals => {:picture => @picture }%>
 </div>
 
-<div class="thumbnail image display_image_wrapper " id="cropper_wrapper" >
+<div class="thumbnail image display_image_wrapper" id="cropper_wrapper" >
   
   <%= render :partial => "pictures/positional_comment_form", 
                   :locals => {:picture => @picture}%>

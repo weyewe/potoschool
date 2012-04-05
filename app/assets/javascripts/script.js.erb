@@ -397,30 +397,71 @@ $.fn.clearForm = function() {
   });
 };
 
+/*
+This one is to refresh map after positional comment creation 
+*/
 function refreshMap(){
-  // the following block is used for the weird case when the user is playing with
-  // window size. 
-  // var $pilipoto_switcher = $("#pilipoto-switcher");
-  //   if( $("#pilipoto-switcher").length > 0 ){
-  //     if( $pilipoto_switcher.hasClass("croppingMode") ){
-  //       // ok, good, gonna turn it off
-  //       $pilipoto_switcher.removeClass("croppingMode");
-  //       $pilipoto_switcher.addClass("waitMode");
-  //       $pilipoto_switcher.text("Turn On Feedback Mode");
-  // 
-  //       $("#actionWrapper").removeClass("turnOn");
-  //       $("#cropper_wrapper").hide();
-  //       $("#display_wrapper").show();
-  //     }
-  //   }
-  
-  var displayed_image_wrapper_width = parseInt( $(".display_image_wrapper").width()  );
+  // console.log("refresh map normal");
+  var $switcher = $("#pilipoto-switcher"); 
+  var $wrapper, scaling_ratio; 
   var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
-  var scaling_ratio = displayed_image_wrapper_width / normal_image_wrapper_width; 
   
+  if(  $switcher.hasClass("croppingMode")){
+    $wrapper = $("#cropper_wrapper");
+    var wrapper_width = parseInt( $wrapper.width()  );
+    scaling_ratio = wrapper_width / normal_image_wrapper_width;
+    refreshJCropBinding();
+    
+    
+    
+  }else if($switcher.length == 0 ||  $switcher.hasClass("waitMode")){
+    // no switcher at all. 
+    $wrapper = $("#display_wrapper");
+    var wrapper_width = parseInt( $wrapper.width()  );
+    scaling_ratio = wrapper_width / normal_image_wrapper_width;
+  }
   
+   $(".positional_comment_wrapper", $wrapper).each(function(){
+        var $this = $(this);
+        var x_start = parseInt(  $(".x_start", $this ).attr("value")) ;
+        var y_start = parseInt(  $(".y_start", $this ).attr("value")  )  ; 
   
-   $(".positional_comment_wrapper").each(function(){
+        var final_x_start = x_start * scaling_ratio;
+        var final_y_start = y_start * scaling_ratio;
+     
+        var $tag = $(".tag", $this);
+        $tag.css("left", final_x_start.toString() + "px" );
+        $tag.css("top", final_y_start.toString() + "px" );
+        
+        $this.removeClass("hide");
+   });
+}
+
+function refreshMapAfterClick(){
+  // console.log("refresh map after click");
+  
+  var $switcher = $("#pilipoto-switcher"); 
+  var $wrapper, scaling_ratio; 
+  var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
+  
+  if( $switcher.hasClass("croppingMode")){
+    // so, the switcher has gone from waitMode to croppingMode to the waitMode
+    // (we need to rearrange the displayWrapper) 
+    // or there is no switcher at all 
+
+    $wrapper = $("#cropper_wrapper");
+    var wrapper_width = parseInt( $wrapper.width()  );
+    scaling_ratio = wrapper_width / normal_image_wrapper_width;
+    
+  }else if( $switcher.hasClass("waitMode")){
+    $wrapper = $("#display_wrapper");
+    var wrapper_width = parseInt( $wrapper.width()  );
+    scaling_ratio = wrapper_width / normal_image_wrapper_width;
+  }
+  
+ 
+  
+   $(".positional_comment_wrapper", $wrapper).each(function(){
         var $this = $(this);
         var x_start = parseInt(  $(".x_start", $this ).attr("value")) ;
         var y_start = parseInt(  $(".y_start", $this ).attr("value")  )  ; 
