@@ -424,11 +424,20 @@ class User < ActiveRecord::Base
   def destroy_student 
     self.course_registrations.each {|x| x.destroy}
     self.subject_registrations.each {|x| x.destroy }
-    self.project_submissions.each {|x| x.destory }
+    self.project_submissions.each {|x| x.destroy }
     self.enrollments.each {|x| x.destroy}
     self.destroy 
+  end
+  
+  def change_email_admin( new_email )
+    password  = UUIDTools::UUID.timestamp_create.to_s[0..7]
+    self.email = new_email
+    self.password = password
+    self.password_confirmation = password
+    self.save
     
     
+    User.delay.send_new_registration_notification( self, password)
   end
  
     
