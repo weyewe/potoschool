@@ -424,7 +424,7 @@ class User < ActiveRecord::Base
   def destroy_student 
     self.course_registrations.each {|x| x.destroy}
     self.subject_registrations.each {|x| x.destroy }
-    
+    self.project_submissions.each {|x| x.destory }
     self.enrollments.each {|x| x.destroy}
     self.destroy 
     
