@@ -208,6 +208,25 @@ class ProjectsController < ApplicationController
     @project.re_activate
   end
   
+  
+=begin
+  School admin perspective 
+=end
+
+  def select_active_project_for_admin
+    # ensure_role(:teacher)
+    if not current_user.has_role?(:school_admin)
+      redirect_to root_url
+      return
+    end
+    # current_user is teacher 
+    @school = current_user.get_managed_school
+    @teachers = @school.teachers
+    
+    add_breadcrumb "Select Project", "select_active_project_for_admin_url"
+  end
+
+
   protected
   
   def extract_deadline_time( params_deadline_datetime)

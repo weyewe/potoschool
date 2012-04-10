@@ -39,6 +39,15 @@ class School < ActiveRecord::Base
      
   end
   
+  def has_enrollment?(user)
+    Enrollment.find(:first,:conditions => {
+      :user_id => user.id,
+      :school_id => self.id
+    })
+  end
+  
+  
+  
   
   def all_active_subjects
     self.subjects.where(:is_active => true ).

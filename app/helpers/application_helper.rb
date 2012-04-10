@@ -558,6 +558,20 @@ module ApplicationHelper
             :action => 'duplicate_passive_subject'
           }
         ]
+      },
+      {
+        :title => "Active Projects",
+        :destination_link => "select_active_project_for_admin_url",
+        :conditions => [
+          {
+            :controller => "projects",
+            :action => "select_active_project_for_admin"
+          },
+          {
+            :controller => "pictures",
+            :action => "gallery_mode_active_project"
+          }
+        ]
       }
     ]
   }
