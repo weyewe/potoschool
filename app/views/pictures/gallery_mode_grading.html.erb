@@ -1,0 +1,90 @@
+
+<div class="span9 content">
+  
+  
+  <%= create_guide("Gallery Mode", 
+        "Select the submission to be graded in project: <b> #{@project.title}</b>" + "<br />" + 
+        "Course: #{@project.course.name}"  + "<br />" + 
+        "Subject: #{@project.course.subject.code}" + "<br />" + 
+        "Deadline: #{@project.deadline_datetime.in_time_zone("Jakarta")}" + "<br />" +  
+        "Total Student: <b>#{@project.project_submissions.count }</b> "+ "<br />" +
+        "Completed: <b>#{@project.completion_rate }</b> " + "<br />" + 
+        "Submission quota: <b>#{@project.total_submission }</b> " ) .html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  <hr />
+  
+  
+  <!-- display the uploaded image here!  -->
+ 
+    <div class="span12">
+      <ul class="thumbnails" id="uploaded_image_container">
+        
+        <% @project_submissions.each do |project_submission| %>
+          <% if project_submission.pictures.count == 0 %>
+            <% next %>
+          <% end %>
+          <% pictures = project_submission.original_pictures.order("created_at DESC") %>
+          <!-- rendering the pics -->
+          <% pictures.each do |picture| %>
+            <% if picture.picture_filetype == PICTURE_FILETYPE[:image]%>
+              <%= render :partial => "pictures/gallery_mode_picture_display" , :locals => {
+                :picture => picture,
+                :original_picture => picture.original_picture , 
+                :project_submission => project_submission
+              }%>
+            <% end %>
+          <% end %>
+        <% end %>
+        
+        
+      </ul>
+    </div>
+  
+</div><!--/span-->
+
+
+
+
+<div class="modal" id="myModal" style="display:none;">
+  <div class="modal-header">
+  </div>
+  <div class="modal-body">
+    <p>
+      <img src='' id="modalImage" />
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn modal-closer">Close</a>
+    <a href="#" class="btn btn-primary details-viewer">See Details</a>
+  </div>
+</div>
+
+
+
+<% content_for :additional_js  do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".gallery_thumbnail").live('click', function(){
+        
+        var pic_id = $(this).attr("id").split("_")[1];
+        var displayImageUrl = $("#pic_"+pic_id).text();
+        // alert("thedisplay: " + displayImageUrl);
+        
+        summonGalleryModalHTML(displayImageUrl,"myModal");
+       
+        
+        return false ;
+      });
+    });
+  </script>
+<% end %>
+
+
+
+
+
+
+
+
+

@@ -522,3 +522,77 @@ function fileTypeFromExt(val, def) {
   
 }
 
+
+function summonModal(header_text, body_text, modal_id){
+  var $modal_wrapper = $("#" + modal_id); 
+  var $header = $(".modal-header h3", $modal_wrapper);
+  var $body  = $(".modal-body p", $modal_wrapper);
+  var $modal_closer = $(".modal-footer .modal-closer ", $modal_wrapper);
+  // setting the header text
+  $header.text( header_text );
+  $body.text( body_text );
+  
+  $modal_wrapper.modal('show');
+  
+  $modal_closer.click(function(){
+    // console.log("Oh yeah baby, closed");
+    $modal_wrapper.modal('hide');
+    return false;
+  });
+}
+
+function summonGalleryModalHTML(display_image_url, modal_id ){
+  var $modal_wrapper = $("#" + modal_id); 
+  // var $header = $(".modal-header", $modal_wrapper);
+  var $body  = $(".modal-body", $modal_wrapper);
+  var $modal_closer = $(".modal-footer .modal-closer ", $modal_wrapper);
+  // setting the header text
+  // $header.html( "<h1>Display Image</h1>" );
+  // $body.html( "<p>This is the content</p>" );
+  
+  
+  // $modal_wrapper.modal('show');
+
+  $modal_wrapper.modal({
+    backdrop: true,
+    keyboard: true
+  }).css({
+    width: '650px'
+  });
+
+  // $("<img id='modalImage' src='' />").appendTo("#modal_image_wrapper");
+      
+  $body.showLoading();
+     
+     $("#modalImage").loadImage(display_image_url,function(){
+       // $(this).css({height:'120px'});//alter the css styling after the image has loaded
+       $body.hideLoading();
+     });
+  
+  $modal_closer.click(function(){
+    $modal_wrapper.modal('hide');
+    $("#modalImage").attr("src", '');
+    // $("#modalImage").remove();
+    return false;
+  });
+}
+
+
+(function( $ ) {
+  $.fn.loadImage = function(src,cb,image) {
+    // console.log("calling me: " +  (new Date).getTime() );
+    var self = this,
+    image = image || new Image();
+    setTimeout(function() {
+      if (image.src != src)
+        image.src = src;
+      if (!image.complete)
+        return self.loadImage(src,cb,image)
+
+      $(self).attr('src',src)
+      cb.call(self)
+    },50);
+  };
+})( jQuery );
+
+

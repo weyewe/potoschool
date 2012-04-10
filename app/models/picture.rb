@@ -1,4 +1,6 @@
 require 'rscribd'
+require 'transloadit'
+require 'open-uri'
 
 class Picture < ActiveRecord::Base
   belongs_to :project_submission
@@ -359,6 +361,121 @@ class Picture < ActiveRecord::Base
   
   def upload_datetime_local(school)
     self.created_at.in_time_zone(school.get_time_zone)
+  end
+  
+  
+  
+=begin
+  For resizing in image-default quality (smaller size)
+=end
+  def resize_quality
+    if Rails.env.production?
+      transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit.yml") )
+      bucket = 'potoschool'
+    elsif Rails.env.development?
+      transloadit_read = YAML::load( File.open( Rails.root.to_s + "/config/transloadit_dev.yml") )
+      bucket = 'potoschool-dev'
+    end
+    
+    
+    transloadit = Transloadit.new(
+      :key    => transloadit_read['auth']['key'],
+      :secret => transloadit_read['auth']['secret']
+    )
+    
+    # step = import, crop, resize_comment, resize_collaborator, store_to_s3
+
+
+    import = transloadit.step 'import', '/http/import', 
+      :url => self.original_image_url
+      
+      
+      # "original_image_url
+      #   "index_image_url"
+      #   "revision_image_url
+      #   "display_image_url"
+      #   
+
+    
+    resize_revision = transloadit.step 'revision', '/image/resize', 
+      :use => "import",
+      :width => 160
+      
+    resize_index = transloadit.step 'index', '/image/resize', 
+      :use => "import",
+      :width => 260
+      
+    resize_display = transloadit.step 'display', '/image/resize', 
+      :use => "import",
+      :width => 590
+        
+    
+  
+    store_revision  = transloadit.step 'store_revision', '/s3/store',
+      :key    => 'AKIAIIMPWOLZCXR3TNLA',
+      :secret => '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',
+      :bucket => bucket, 
+      :use => 'revision'
+      
+    store_index  = transloadit.step 'store_index', '/s3/store',
+      :key    => 'AKIAIIMPWOLZCXR3TNLA',
+      :secret => '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',
+      :bucket => bucket, 
+      :use => 'index'
+      
+    store_display  = transloadit.step 'store_display', '/s3/store',
+      :key    => 'AKIAIIMPWOLZCXR3TNLA',
+      :secret => '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',
+      :bucket => bucket, 
+      :use => 'display'
+
+    assembly = transloadit.assembly(
+      :steps => [ import,  resize_index, resize_revision, resize_display, 
+              store_index, store_revision, store_display ]
+    )
+    
+    # file = open(self.profile_pic)
+    #  response = assembly.submit! file
+    response = assembly.submit!
+
+    while not response.completed? do
+      puts "In the cycle"
+      sleep 5
+      response.reload!
+    end
+    
+    puts "The content of result is \n"*10
+    puts response["results"]
+        # 
+        # @profile.save_profile_pic_post_cropping( params[:transloadit][:results][:resize_comment].first[:url],
+        #   params[:transloadit][:results][:resize_collaborator].first[:url] )
+        #   
+        
+        # "original_image_url
+        #   "index_image_url"
+        #   "revision_image_url
+        #   "display_image_url"
+        #
+      
+      
+    puts "The result is \n"*5
+      
+    self.index_image_url = response["results"]["index"].first["url"]
+    self.revision_image_url = response["results"]["revision"].first["url"]
+    self.display_image_url = response["results"]["display"].first["url"]
+    
+    self.index_image_size = response["results"]["index"].first["size"]
+    self.revision_image_size = response["results"]["revision"].first["size"]
+    self.display_image_size = response["results"]["display"].first["size"]
+    self.save
+  end
+  
+  def match_dev
+    dev_regex =  /potoschool_dev/
+    ( not dev_regex.match(self.original_image_url).nil? ) or 
+    ( not dev_regex.match(self.revision_image_url).nil? ) or 
+    ( not dev_regex.match(self.index_image_url).nil? ) or 
+    ( not dev_regex.match(self.display_image_url).nil? ) 
   end
   
 =begin  

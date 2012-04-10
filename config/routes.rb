@@ -106,6 +106,8 @@ Debita46::Application.routes.draw do
   match 'grade_project_submission_picture/picture/:picture_id' => "pictures#grade_project_submission_picture", :as => :grade_project_submission_picture
   match 'execute_grading/picture/:picture_id' => "pictures#execute_grading", :as => :execute_grading, :method => :post
   
+  # gallery mode grading 
+  match 'gallery_mode_grading/project/:project_id' => "pictures#gallery_mode_grading" , :as => :gallery_mode_grading
   
 =begin
   FOR STUDENTS 

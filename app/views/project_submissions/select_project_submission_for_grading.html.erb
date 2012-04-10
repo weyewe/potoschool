@@ -6,11 +6,15 @@
         "Select the submission to be graded in project: <b> #{@project.title}</b>" + "<br />" + 
         "Course: #{@project.course.name}"  + "<br />" + 
         "Subject: #{@project.course.subject.code}" + "<br />" + 
-        "Deadline: #{@project.deadline_datetime.in_time_zone("Jakarta")}").html_safe %>
+        "Deadline: #{@project.deadline_datetime.in_time_zone("Jakarta")}" + "<br />" +  
+        "Total Student: <b>#{@project.project_submissions.count }</b> "+ "<br />" +
+        "Completed: <b>#{@project.completion_rate }</b> " + "<br />" + 
+        "Submission quota: <b>#{@project.total_submission }</b> " + "<br />" + 
+        link_to( "Gallery Mode", gallery_mode_grading_url(@project) )    ) .html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
-  <h3>Total Teachers: 3</h3>
+ 
   <hr />
   
   
@@ -22,7 +26,7 @@
         <thead>
           <tr>
             <th>Student NIM</th>
-            <th>First Submission Date</th>
+            <!-- <th>First Submission Date</th> -->
             <th>Total Original Submission</th>
             <th>Total Submission</th>
             <th>Approved?</th>
@@ -34,12 +38,12 @@
                   <td><%= link_to "#{project_submission.user.name}", 
                         show_submission_pictures_for_grading_url(project_submission)%> </td>
                   <% if  project_submission.first_submission_time.nil? %>
-                    <td>NA</td>
+                    <!-- <td>NA</td> -->
                     <td>-</td>  
                     <td>-</td>
                     <td>-</td>
                   <% else %>
-                    <td><%= project_submission.first_submission_time %></td>
+                    <!-- <td><%= project_submission.first_submission_time %></td> -->
                     <td><%= project_submission.total_original_submission %></td>  
                     <td><%= project_submission.total_picture_submission %></td>
                     <% if project_submission.is_approved.nil? %>

@@ -723,6 +723,10 @@ module ApplicationHelper
           {
             :controller => 'pictures',
             :action => 'grade_project_submission_picture'
+          },
+          {
+            :controller => "pictures",
+            :action => 'gallery_mode_grading'
           }
         ]
       },

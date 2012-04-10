@@ -175,7 +175,15 @@ class Project < ActiveRecord::Base
     self.get_deadline_datetime_local_time.min
   end
   
-  
+=begin
+  Completion logic 
+=end
+  def completion_rate
+    project_submission_limit = self.total_submission
+    completed_submissions = self.project_submissions.
+                      where(:total_original_submission => project_submission_limit ).
+                      count 
+  end
   
  
 end

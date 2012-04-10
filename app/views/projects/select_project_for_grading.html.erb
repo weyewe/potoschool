@@ -22,6 +22,8 @@
             <th>Course</th>
             <th>Subject</th>
             <th>Deadline</th>
+            <th>Total Student</th>
+            <th>Completed Submission</th>
             <th>Close</th>
           </tr>
         </thead>
@@ -34,6 +36,8 @@
               <td><%= project.course.subject.code %>
               <td><%= project.deadline_datetime.in_time_zone("Jakarta") %>
               
+              <td><%= project.project_submissions.count %></td>
+              <td><%= project.completion_rate %></td>
               <td>
                 <%= link_to "Close", '#', 
                           :class => "btn btn-danger entry-link entry-closer",
