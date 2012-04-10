@@ -23,6 +23,10 @@ end
 
 task :change_image_quality => :environment do 
   Picture.all.each do |pic|
-    pic.delay.resize_quality
+    if pic.picture_filetype == PICTURE_FILETYPE[:image]
+      pic.delay.resize_quality
+    else
+      next
+    end
   end
 end
