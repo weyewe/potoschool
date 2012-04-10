@@ -18,3 +18,11 @@ task :store_current => :environment do
     end
   end
 end
+
+
+
+task :change_image_quality => :environment do 
+  Picture.all.each do |pic|
+    pic.delay.resize_quality
+  end
+end
