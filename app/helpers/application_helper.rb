@@ -49,22 +49,30 @@ module ApplicationHelper
   For gallery grading
 =end
 
-  def get_last_revision_score( original_picture )
-    # if only original picture
-    # and not approved == pending
-    # if there is last_approved revision, not graded, shows pending
-    # if no last_approved_revision, shows the original picture
+  def get_last_revision_score( original_picture, project )
     last_approved_revision = original_picture.last_approved_revision
-    if last_approved_revision.id == original_picture.id
-      if original_picture.is_graded.nil?
-      elsif not original_picture.is_graded.nil? 
-      end
+    if last_approved_revision.is_graded == false 
+      return gallery_grading_link("Pending", last_approved_revision, project)
+    elsif  last_approved_revision.is_graded == true 
+      return gallery_grading_link(last_approved_revision.score , last_approved_revision, project)
     end
-    
   end
   
-  def get_highest_score( original_picture )
+  def get_highest_score( original_picture , project )
+    max_score = original_picture.highest_approved_pictures_score
+    
+    if max_score.nil?
+      return  gallery_grading_link("Pending", original_picture, project)
+    else
+      return gallery_grading_link(max_score[1], original_picture, project) #max_score[1] # max_score.first[0] returns pic_id
+    end
   end
+  
+  def gallery_grading_link( score, picture, project ) 
+    link_to "#{score}", gallery_picture_grading_url( project, picture)
+  end
+  
+  
 
 
 =begin

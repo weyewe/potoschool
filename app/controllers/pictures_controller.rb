@@ -96,6 +96,7 @@ class PicturesController < ApplicationController
     
     if @project.nil? or not @project.created_by?(current_user)
       redirect_to root_url 
+      return 
     end
     
     @root_comments = @picture.root_comments.order("created_at ASC")
@@ -117,6 +118,10 @@ class PicturesController < ApplicationController
   end
 
 
+  # the method name might be misleading
+  # there is no grade involved. Just a notification whether a certain submission is rejected or 
+  # approved. Used during the tutorial period: student upload image, 
+  # asks for teacher's feedback, or approval, whether such image is OK 
   def execute_grading
     
     if not current_user.has_role?(:teacher)
@@ -134,12 +139,13 @@ class PicturesController < ApplicationController
     
     if @project.nil? or not @project.created_by?(current_user)
       redirect_to root_url 
+      return 
     end
  
     
     if params[:picture][:is_approved].to_i == ACCEPT_SUBMISSION
       @picture.is_approved = true 
-      @picture.score = params[:picture][:score]
+      # @picture.score = params[:picture][:score]
       @picture.save
       @original_picture.approved_revision_id = @picture.id 
       @original_picture.save 
@@ -150,7 +156,7 @@ class PicturesController < ApplicationController
       
     elsif params[:picture][:is_approved].to_i == REJECT_SUBMISSION
       @picture.is_approved = false
-      @picture.score = params[:picture][:score]
+      # @picture.score = params[:picture][:score]
       @picture.save
     else
     end
@@ -169,6 +175,27 @@ class PicturesController < ApplicationController
     end
   end
   
+  def execute_grading_score
+    # sleep 3 
+    @picture=  Picture.find_by_id params[:picture_id]
+    @project= @picture.project_submission.project 
+    
+    if ( not current_user.has_role?(:teacher) ) or
+        ( not @project.created_by?(current_user) )
+        redirect_to root_url 
+        return 
+    end
+    
+    @picture.set_score( params[:picture][:score].to_i, current_user )
+    
+
+    respond_to do |format|
+      format.html {  redirect_to root_url  }
+      format.js
+    end
+    
+  end
+  
   def gallery_mode_grading
     if not current_user.has_role?(:teacher)
       redirect_to root_url
@@ -179,6 +206,7 @@ class PicturesController < ApplicationController
     
     if @project.nil? or not @project.created_by?(current_user)
       redirect_to root_url 
+      return
     end
     
     @project_submissions = @project.project_submissions.
@@ -205,6 +233,7 @@ class PicturesController < ApplicationController
     
     if @project.nil? or not @project.created_by?(current_user)
       redirect_to root_url 
+      return 
     end
     
     @root_comments = @picture.root_comments.order("created_at ASC")
@@ -243,6 +272,7 @@ class PicturesController < ApplicationController
           (not @school.has_enrollment?( @teacher ) )  or 
           ( not @teacher.has_role?(:teacher))
       redirect_to root_url 
+      return 
     end
     
     @project_submissions = @project.project_submissions.

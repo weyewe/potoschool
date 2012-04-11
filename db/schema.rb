@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(:version => 20120411060150) do
     t.string   "doc_access_key"
     t.integer  "picture_filetype",      :default => 1
     t.boolean  "conversion_status",     :default => false
-    t.boolean  "is_graded"
+    t.boolean  "is_graded",             :default => false
   end
 
   create_table "positional_comments", :force => true do |t|

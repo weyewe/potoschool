@@ -1,0 +1,15 @@
+<% if @picture.is_original == false %>
+  <%= render :partial => "pictures/grading_show_original", :locals =>{
+    :original_picture => @original_picture,
+    :project_submission => @project_submission
+  }%>
+<% end %>
+
+<% if @all_revisions.count != 0 %>
+  <%= render :partial => "pictures/gallery_grading_revision_list",
+            :locals => {:all_revisions => @all_revisions, 
+                    :current_display => @picture,
+                    :project_submission => @project_submission,
+                    :project => @project}%>
+                
+<% end %>

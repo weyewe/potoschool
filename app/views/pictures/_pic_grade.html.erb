@@ -1,0 +1,5 @@
+<% if picture.is_graded == false %>
+  <span class="label label-info"  style="font-size:15px;">Pending</span>
+<% elsif picture.is_graded == true  %>
+  <span class="label label-success" style="font-size:15px;"><%= picture.score%></span>
+<% end %>

@@ -4,13 +4,13 @@
 <li class="span3">
   <div class="thumbnail gallery_thumbnail_wrapper">
     
-    <!-- <div class="" style="display:none;">
-          <span class="original_image" id="pic_<%= original_picture.id %>"><%#= original_picture.display_image_url.html_safe %></span>
-          
-          <%# original_picture.revisions.each do |revision| %>
-            <span class="revision_image" id="pic_<%#= revision.id %>"><%#= revision.display_image_url.html_safe %></span>
-          <%# end %>
-        </div> -->
+    <div class="" style="display:none;">
+      <span class="original_image" id="pic_<%= original_picture.id %>"><%= original_picture.display_image_url.html_safe %></span>
+
+      <% original_picture.revisions.each do |revision| %>
+      <span class="revision_image" id="pic_<%= revision.id %>"><%= revision.display_image_url.html_safe %></span>
+      <% end %>
+    </div>
     <% last_approved_revision = original_picture.last_approved_revision %>
     
     <%= link_to  project_submission_picture_url( project_submission, 
@@ -39,14 +39,14 @@
           <tr>
             <td>Last Rev. Score</td>
             <td>
-              Pending<%#= get_last_revision_score( original_picture ) %>
+              <%= get_last_revision_score( original_picture , project) %>
             </td>
           </tr>
           
           <tr>
             <td>Highest</td>
             <td>
-             11 <%#= get_highest_score( original_picture ) %>
+             <%= get_highest_score( original_picture , project) %>
             </td>
           </tr>
          </tbody>

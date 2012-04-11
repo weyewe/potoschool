@@ -1,0 +1,60 @@
+<!-- if not rejected, if not accepted, if not graded  => SHOW THE GRADER -->
+
+<!-- show the grade result -->
+
+
+
+
+<% if picture.is_approved == true   %>
+  <table cellpadding="0" cellspacing="0" border="0" 
+        class="table table-striped table-bordered" id="grade_result">
+    <tbody>
+      <tr>
+      
+        <td style="text-align:center;" id="score_table_data">
+          <%= render :partial => "pictures/pic_grade", :locals => {
+            :picture => picture
+          }%>
+          
+        </td>
+        
+        <% if picture.can_be_graded? %>
+          <td style="text-align:center;">
+            <button href="#" class="btn" id='picture_grade_edit_button'>Edit</button>
+          </td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+<% end %>
+
+
+<% if picture.can_be_graded? %>
+<!-- show the grader -->
+  <%= form_for picture, :url => execute_grading_score_url(picture) , 
+          :html => {:id => "grader_form" , :style => "display:none;"} do |f| %>
+    <table cellpadding="0" cellspacing="0" border="0"  
+          class="table table-striped table-bordered" id="grade_result">
+      <tbody>
+        <tr>
+          <td style="width:40%;">
+            <!-- <label for="input01" class="control-label">Score</label> -->
+            <%= f.label :score , :style =>"font-weight:bold;"%>
+          </td>
+          <td>
+            <%= f.text_field :score %>
+          </td>
+            
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:right;">
+            <button class="btn" id="picture_grade_cancel_button">Cancel</button>
+            <button class="btn btn-primary" type="submit">Save Grade</button>
+          </td>
+        </tr>
+    
+      </tbody>
+    </table>
+  <% end %>
+  
+<% end %>

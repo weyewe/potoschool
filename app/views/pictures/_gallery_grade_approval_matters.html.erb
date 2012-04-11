@@ -1,0 +1,36 @@
+<% if   @original_picture.any_picture_submission_approved?  %>
+  <!-- not putting any form.. just notification -->
+  <!-- rejected, approved, or even not graded  -->
+  <% if @picture.is_approved.nil? %>
+    <%= render :partial => "pictures/ungradded_submission", :locals => {
+      :picture => @picture }%>
+  <% end %>
+<% else %>
+  <!-- display the grading form -->
+  <% if @picture.is_approved.nil? %>
+    <%= render :partial => "pictures/submission_grading_form", :locals => {
+      :picture => @picture }%>
+  <% end %>
+<% end %>
+
+<h3 style="text-align:center;">Approval</td>
+<% if @picture.is_approved == true %>
+  <%= render :partial => "pictures/accepted_submission", :locals => {
+    :picture => @picture }%>
+<% elsif @picture.is_approved == false %>
+  <%= render :partial => "pictures/rejected_submission", :locals => {
+    :picture => @picture }%>
+<% end %>
+
+<hr />
+
+<h3 style="text-align:center;">Grade</td>
+<%= render :partial => "pictures/grade_display_edit", :locals => {
+  :picture => @picture 
+} %>
+
+
+<hr />
+<%= render :partial => "pictures/download_original" , :locals => {
+  :picture => @picture
+}%>

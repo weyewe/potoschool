@@ -215,29 +215,83 @@ $(document).ready(function() {
          //  the response is a script, removing the form 
        }
      });
-         return false; 
+     return false; 
      
    });
    
+   /*
+   Ajax for Grade Editor
+   */
    
-   $("form.grading-ajaxform").live('submit',function(){
-          var $this = $(this);
-          var destination = $(this).attr('action');
-          var $form_container = $this.parent();
-          $this.showLoading();
-         $.ajax({
-           url: destination,
-           type: "POST",
-           data: $(this).serialize(),
-           dataType: 'script',
-           success: function(response){
-             $this.clearForm();
-             $this.hideLoading();
-             PilipotoJcropApi.release();
-           }
-         });
-         return false;
-        });
+   $("#picture_grade_edit_button").live("click",function(){
+     $("#grader_form").fadeIn();
+     return false; 
+   });
+   
+   $("#picture_grade_cancel_button").live("click", function(){
+     $("#grader_form").fadeOut();
+     return false; 
+   });
+   
+   
+   $("#grader_form").live("submit", function(){
+     
+     var $form = $(this);
+     // var $form_closer = $("#picture_grade_cancel_button");
+     var $score = $("#picture_score");
+     var score = parseInt( $score.attr("value") );
+     if( isNaN(score) ) {
+       alert("Please enter the valid score.");
+       // return false; 
+     }else if( score < 0 || score > 100){
+       alert("Score can only be within range 0-100.");
+       // return false 
+     }else{
+       if( confirm("Are you sure to set the grade: " + score ) ) {
+         // alert("hahah, yeah, AJAX SENT");
+         // return false;
+         var destination = $form.attr('action');
+         $form.showLoading();
+          $.ajax({
+            url  : destination,
+            type : "POST",
+            data : $form.serialize(),
+            dataType :'script',
+            success: function(response){
+              $form.clearForm();
+              $form.hideLoading();
+              $form.fadeOut();
+              //  the response is a script, removing the form 
+            }
+          });
+          
+          
+       }else{
+         // return false; 
+       }
+     }
+     
+     return false ;
+   });
+   
+   // $("form.grading-ajaxform").live('submit',function(){
+   //           var $this = $(this);
+   //           var destination = $(this).attr('action');
+   //           var $form_container = $this.parent();
+   //           $this.showLoading();
+   //          $.ajax({
+   //            url: destination,
+   //            type: "POST",
+   //            data: $(this).serialize(),
+   //            dataType: 'script',
+   //            success: function(response){
+   //              $this.clearForm();
+   //              $this.hideLoading();
+   //              PilipotoJcropApi.release();
+   //            }
+   //          });
+   //          return false;
+   //         });
    
    /*
     Respond to clicking New Feedback 

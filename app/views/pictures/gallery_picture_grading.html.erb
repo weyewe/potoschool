@@ -100,57 +100,13 @@
       
       <!-- Grading Form -->
       <% if current_user.is_allowed_to_grade?(@project_submission) %>
-        <% if   @original_picture.any_picture_submission_approved?  %>
-          <!-- not putting any form.. just notification -->
-          <!-- rejected, approved, or even not graded  -->
-          <% if @picture.is_approved.nil? %>
-            <%= render :partial => "pictures/ungradded_submission", :locals => {
-              :picture => @picture }%>
-          <% end %>
-        <% else %>
-          <!-- display the grading form -->
-          <% if @picture.is_approved.nil? %>
-            <%= render :partial => "pictures/submission_grading_form", :locals => {
-              :picture => @picture }%>
-          <% end %>
-        <% end %>
-        
-        <% if @picture.is_approved == true %>
-          <%= render :partial => "pictures/accepted_submission", :locals => {
-            :picture => @picture }%>
-        <% elsif @picture.is_approved == false %>
-          <%= render :partial => "pictures/rejected_submission", :locals => {
-            :picture => @picture }%>
-        <% end %>
-        
-        
-        <%= render :partial => "pictures/download_original" , :locals => {
-          :picture => @picture
-        }%>
-        
-        
-        
+        <%= render :partial => "pictures/gallery_grade_approval_matters" %>
       <% end %>
       
+      <!-- Picture revision history -->
+      <%= render :partial => "pictures/gallery_picture_history" %>
       
-    
-      
-      
-      <% if @picture.is_original == false %>
-        <%= render :partial => "pictures/grading_show_original", :locals =>{
-          :original_picture => @original_picture,
-          :project_submission => @project_submission
-        }%>
-      <% end %>
-      
-      <% if @all_revisions.count != 0 %>
-        <%= render :partial => "pictures/gallery_grading_revision_list",
-                  :locals => {:all_revisions => @all_revisions, 
-                          :current_display => @picture,
-                          :project_submission => @project_submission,
-                          :project => @project}%>
-                      
-      <% end %>
+   
     </div><!--/span-->
     
   </div><!--/row-->

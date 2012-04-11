@@ -112,6 +112,8 @@ Debita46::Application.routes.draw do
   # gallery mode grading 
   match 'gallery_mode_grading/project/:project_id' => "pictures#gallery_mode_grading" , :as => :gallery_mode_grading
   match 'gallery_picture_grading/project/:project_id/picture/:picture_id' => "pictures#gallery_picture_grading" , :as => :gallery_picture_grading
+  match 'execute_grading_score/picture/:picture_id' => "pictures#execute_grading_score", :as => :execute_grading_score, :method => :post
+  
 =begin
   FOR STUDENTS 
 =end  

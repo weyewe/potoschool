@@ -87,19 +87,25 @@ class Picture < ActiveRecord::Base
   
   
   def highest_approved_pictures_score
+    
+    # people.sort_by { |id, score| score } # ascending . so, last will give the highest score
+    
+    
     original_picture = self.original_picture
-    array = []
-    original_picture.revisions.where(:is_approved => true ).each do |x|
-      array << x.score
+    pic_id_score_hash  = {}
+    original_picture.revisions.where(:is_approved => true, :is_graded => true  ).each do |x|
+      pic_id_score_hash[x.id] = x.score 
     end
-    if original_picture.is_approved == true 
-      array << original_picture.score
+    if original_picture.is_approved == true  and original_picture.is_graded == true 
+      pic_id_score_hash[original_picture.id] = original_picture.score 
     end
     
-    if array.length ==0 
+    
+    if pic_id_score_hash.length == 0 
       return nil
     else
-      return array.max
+      max_id_value_pair  = pic_id_score_hash.sort_by { |id, score| score } .last
+      return max_id_value_pair
     end
   end
   
@@ -107,6 +113,27 @@ class Picture < ActiveRecord::Base
   def allow_comment?(user) 
     # for now, we allow everyone
     return true 
+  end
+  
+  def can_be_graded?
+    # if not rejected, if not accepted, if not graded  , if graded
+    not ( self.is_approved == false ) # so, is_approved == nil will do 
+  end
+  
+  def set_score( score, current_user )
+    
+    project = self.project_submission.project 
+    if ( not project.created_by?(current_user) ) or 
+        ( score < 0   ) or 
+        ( score > 100 ) 
+      return nil
+    end
+    
+    self.is_graded = true 
+    self.score = score
+    
+    self.save
+    
   end
   
   

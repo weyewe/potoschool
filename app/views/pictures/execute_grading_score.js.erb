@@ -1,0 +1,9 @@
+$(document).ready(function(){
+  <% new_value = escape_javascript(
+    render :partial => "pictures/pic_grade", :locals => {
+      :picture => @picture
+    }
+  ) %>
+  
+  $("#score_table_data").html('<%= new_value %>');
+});
