@@ -11,6 +11,8 @@ class Picture < ActiveRecord::Base
   belongs_to :original_picture, :class_name => "Revision",
     :foreign_key => "original_picture_id"
     
+  has_many :score_revisions
+    
   # for the picture has many revisions
   has_many :revisionships
   has_many :revisions, :through => :revisionships

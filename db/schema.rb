@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411060150) do
+ActiveRecord::Schema.define(:version => 20120411112401) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -198,6 +198,15 @@ ActiveRecord::Schema.define(:version => 20120411060150) do
     t.datetime "updated_at"
     t.string   "time_zone",    :default => "UTC"
     t.integer  "utc_offset"
+  end
+
+  create_table "score_revisions", :force => true do |t|
+    t.integer  "picture_id"
+    t.integer  "old_score"
+    t.integer  "new_score"
+    t.integer  "score_reviser_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "subject_registrations", :force => true do |t|
