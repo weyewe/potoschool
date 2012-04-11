@@ -15,6 +15,23 @@ class CommentsController < ApplicationController
     @root_comment = Comment.build_from(@picture, current_user.id, params[:comment][:body])
     @root_comment.save
     
+    
+    
+    Comment.new_user_activity_for_new_comment( EVENT_TYPE[:create_comment],
+                                             current_user, 
+                                             @root_comment , 
+                                             @picture )
+                                             
+                                             
+    # Comment.new_user_activity_for_comment_reply(
+    #         EVENT_TYPE[:create_comment],
+    #         current_user,
+    #         @comment,
+    #         @comment.commented_object
+    #   )
+    #   
+    
+    
     respond_to do |format|
       format.html {  redirect_to root_url }
       format.js
