@@ -119,20 +119,39 @@ class Picture < ActiveRecord::Base
   
   def can_be_graded?
     # if not rejected, if not accepted, if not graded  , if graded
-    not ( self.is_approved == false ) # so, is_approved == nil will do 
+    self.is_approved == true  # so, is_approved == nil will do 
   end
   
-  def set_score( score, current_user )
+  def set_score( new_score, current_user )
     
     project = self.project_submission.project 
     if ( not project.created_by?(current_user) ) or 
-        ( score < 0   ) or 
-        ( score > 100 ) 
+        ( new_score < 0   ) or 
+        ( new_score > 100 ) or
+        ( new_score == self.score )
       return nil
     end
+  
+    if self.is_graded == true 
+      # it is a revision
+      
+      self.score_revisions.create(
+        :old_score => self.score,
+        :new_score => new_score,
+        :score_reviser_id => current_user.id 
+      )
+      self.score = new_score
+      
+      # set the user activity for score change? No
+    elsif self.is_graded == false 
+      # not a revision; a new score 
+      self.is_graded = true 
+      self.is_approved = true 
+      self.score = new_score
+      
+      #set the user activity for grading? No.
+    end
     
-    self.is_graded = true 
-    self.score = score
     
     self.save
     

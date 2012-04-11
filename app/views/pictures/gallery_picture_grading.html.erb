@@ -30,16 +30,11 @@
         <% end %>
         <li class="previous">
           <%= link_to " ← Back to Gallery", 
-          gallery_mode_grading_url(@project) + "#project_submission-#{prev_id}" %>
-          <!-- <a href="http://localhost:3000/grade_project_submission_picture/picture/263"> Prev </a> -->
+              gallery_mode_grading_url(@project) + "#project_submission-#{prev_id}" %>
         </li>
       </ul>
 
-      <!-- <ul class="pager">
-                 <%#= get_previous_project_picture(@picture, true).html_safe %>
-                 <%#= get_next_project_picture(@picture, true ).html_safe %>
-           </ul>
-            -->
+     
       
       
       <% if @picture.picture_filetype != PICTURE_FILETYPE[:image] %>
@@ -91,10 +86,10 @@
     <div class="span4">
       
       <% if @picture.picture_filetype == PICTURE_FILETYPE[:image]  %>
-      
+      <p style="text-align:center;">
        <button data-toggle="button" id="pilipoto-switcher" 
             class="btn btn-primary waitMode">Turn On Feedback Mode</button>
-            
+      </p>
         <hr />
       <% end %>
       

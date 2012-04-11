@@ -8,6 +8,18 @@
 <% if picture.is_approved == true   %>
   <table cellpadding="0" cellspacing="0" border="0" 
         class="table table-striped table-bordered" id="grade_result">
+    <thead>
+      <% if picture.can_be_graded? %>
+        <% head_colspan = 3 %>
+      <% else %>
+        <% head_colspan = 2%>
+      <% end %>
+      <tr>
+        <th colspan="<%= head_colspan %>">
+          <h3 style="text-align:center;">Grade</td>
+        </th>
+      </tr>
+    </thead>
     <tbody>
       <tr>
       
@@ -56,5 +68,6 @@
       </tbody>
     </table>
   <% end %>
-  
+  <hr />
 <% end %>
+

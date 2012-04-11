@@ -17,6 +17,14 @@ class PositionalComment < ActiveRecord::Base
   end
   
   
+  def marker_x_value
+    (self.x_start + self.x_end)/2 #- POSITIONAL_COMMENT_MARKER_WIDTH/2
+  end
+  
+  def marker_y_value
+    (self.y_start + self.y_end)/ 2 #- POSITIONAL_COMMENT_MARKER_WIDTH/2
+  end
+  
   
   
 end

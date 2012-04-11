@@ -45,6 +45,16 @@ module ApplicationHelper
   end
   
   
+  
+=begin
+  For positional comment
+=end
+
+  def adjust_marker_location( initial_spot_value  )
+    initial_spot_value - ( POSITIONAL_COMMENT_MARKER_WIDTH/2  )
+  end
+  
+
 =begin
   For gallery grading
 =end

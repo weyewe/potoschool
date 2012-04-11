@@ -186,6 +186,8 @@ class PicturesController < ApplicationController
         return 
     end
     
+   
+    
     @picture.set_score( params[:picture][:score].to_i, current_user )
     
 

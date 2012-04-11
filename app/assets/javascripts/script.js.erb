@@ -459,6 +459,9 @@ function refreshMap(){
   var $switcher = $("#pilipoto-switcher"); 
   var $wrapper, scaling_ratio; 
   var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
+  var marker_width_adjustment = parseInt(  "<%= POSITIONAL_COMMENT_MARKER_WIDTH %>")/2; 
+  
+  
   
   if(  $switcher.hasClass("croppingMode")){
     $wrapper = $("#cropper_wrapper");
@@ -480,8 +483,8 @@ function refreshMap(){
         var x_start = parseInt(  $(".x_start", $this ).attr("value")) ;
         var y_start = parseInt(  $(".y_start", $this ).attr("value")  )  ; 
   
-        var final_x_start = x_start * scaling_ratio;
-        var final_y_start = y_start * scaling_ratio;
+        var final_x_start = x_start * scaling_ratio - marker_width_adjustment;
+        var final_y_start = y_start * scaling_ratio- marker_width_adjustment;
      
         var $tag = $(".tag", $this);
         $tag.css("left", final_x_start.toString() + "px" );
@@ -497,6 +500,7 @@ function refreshMapAfterClick(){
   var $switcher = $("#pilipoto-switcher"); 
   var $wrapper, scaling_ratio; 
   var normal_image_wrapper_width = parseInt(  "<%= DISPLAY_IMAGE_WIDTH %>");
+  var marker_width_adjustment = parseInt(  "<%= POSITIONAL_COMMENT_MARKER_WIDTH %>")/2; 
   
   if( $switcher.hasClass("croppingMode")){
     // so, the switcher has gone from waitMode to croppingMode to the waitMode
@@ -520,8 +524,8 @@ function refreshMapAfterClick(){
         var x_start = parseInt(  $(".x_start", $this ).attr("value")) ;
         var y_start = parseInt(  $(".y_start", $this ).attr("value")  )  ; 
   
-        var final_x_start = x_start * scaling_ratio;
-        var final_y_start = y_start * scaling_ratio;
+        var final_x_start = x_start * scaling_ratio - marker_width_adjustment ;
+        var final_y_start = y_start * scaling_ratio - marker_width_adjustment ;
      
         var $tag = $(".tag", $this);
         $tag.css("left", final_x_start.toString() + "px" );

@@ -19,4 +19,14 @@
   $(document).ready(function(){
     $("#picture_grading_form-<%= @picture.id %>").replaceWith('<%= grading_replacement %>');
   });
+  
+  <% if @picture.is_approved == true %>
+  //show the grader 
+    <% grader = escape_javascript(
+      render :partial => "pictures/grade_display_edit", :locals => {
+        :picture => @picture 
+      }
+    ) %>
+    $("#approval_status ").after('<%= grader %>');
+  <% end %>
 <% end %> 

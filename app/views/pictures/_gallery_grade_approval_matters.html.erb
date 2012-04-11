@@ -1,19 +1,28 @@
-<% if   @original_picture.any_picture_submission_approved?  %>
+<%# if   @original_picture.any_picture_submission_approved?  %>
   <!-- not putting any form.. just notification -->
   <!-- rejected, approved, or even not graded  -->
-  <% if @picture.is_approved.nil? %>
-    <%= render :partial => "pictures/ungradded_submission", :locals => {
+  <!-- if there are any submissions approved, we are skipping this one. but the logic changed   -->
+  <!--  student can only upload revision if the previous image has been approved or rejected  -->
+  <%# if @picture.is_approved.nil? %>
+    <%#= render :partial => "pictures/ungradded_submission", :locals => {
       :picture => @picture }%>
-  <% end %>
-<% else %>
+  <%# end %>
+<%# else %>
   <!-- display the grading form -->
-  <% if @picture.is_approved.nil? %>
-    <%= render :partial => "pictures/submission_grading_form", :locals => {
+  <%# if @picture.is_approved.nil? %>
+    <%#= render :partial => "pictures/submission_grading_form", :locals => {
       :picture => @picture }%>
-  <% end %>
+  <%# end %>
+<%# end %>
+
+<!-- approval form  -->
+<% if @picture.is_approved.nil? %>
+  <%= render :partial => "pictures/submission_grading_form", :locals => {
+    :picture => @picture }%>
 <% end %>
 
-<h3 style="text-align:center;">Approval</td>
+
+<!-- approval result -->
 <% if @picture.is_approved == true %>
   <%= render :partial => "pictures/accepted_submission", :locals => {
     :picture => @picture }%>
@@ -22,15 +31,12 @@
     :picture => @picture }%>
 <% end %>
 
-<hr />
-
-<h3 style="text-align:center;">Grade</td>
+<!-- displaying the grade editor  -->
 <%= render :partial => "pictures/grade_display_edit", :locals => {
   :picture => @picture 
 } %>
 
-
-<hr />
+<!-- download link for the original image (highest resolution) -->
 <%= render :partial => "pictures/download_original" , :locals => {
   :picture => @picture
 }%>
