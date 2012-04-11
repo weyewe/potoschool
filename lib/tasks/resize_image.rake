@@ -30,3 +30,13 @@ task :change_image_quality => :environment do
     end
   end
 end
+
+
+task :fix_database_to_accomodate_is_graded => :environment do 
+  Picture.all.each do |pic|
+    if pic.score != 0 and pic.is_approved == true 
+      pic.is_graded = true 
+    end
+    pic.save 
+  end
+end

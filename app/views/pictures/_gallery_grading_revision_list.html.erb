@@ -1,0 +1,22 @@
+<h3>Revision List</h3>
+
+<ul class="thumbnails">
+  
+  <% all_revisions.each do |revision| %>
+  <li class="span6">
+    <%= link_to gallery_picture_grading_path(project,revision) + "?gallery_pic_id=#{project_submission.id}",
+            :class => "thumbnail #{class_for_current_displayed_revision(revision, current_display)}" do %>
+      <%#= image_tag revision.revision_image_url %> 
+      <%= image_tag revision.get_icon("revision") %>
+    <% end %>
+    <p>
+      <b><%= revision.name %></b>
+    </p>
+  </li>
+  <% end %>
+
+
+  
+
+</ul>
+  

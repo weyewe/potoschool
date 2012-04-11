@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120404154332) do
+ActiveRecord::Schema.define(:version => 20120411060150) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20120404154332) do
     t.string   "doc_access_key"
     t.integer  "picture_filetype",      :default => 1
     t.boolean  "conversion_status",     :default => false
+    t.boolean  "is_graded"
   end
 
   create_table "positional_comments", :force => true do |t|

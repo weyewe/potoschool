@@ -76,6 +76,33 @@ class Picture < ActiveRecord::Base
     end
   end
   
+  def last_approved_revision
+    last_revision_id = self.original_picture.approved_revision_id
+    if last_revision_id.nil?
+      return self.original_picture
+    else
+      return Picture.find_by_id( last_revision_id )
+    end
+  end
+  
+  
+  def highest_approved_pictures_score
+    original_picture = self.original_picture
+    array = []
+    original_picture.revisions.where(:is_approved => true ).each do |x|
+      array << x.score
+    end
+    if original_picture.is_approved == true 
+      array << original_picture.score
+    end
+    
+    if array.length ==0 
+      return nil
+    else
+      return array.max
+    end
+  end
+  
   # restrict commenting capability to several people 
   def allow_comment?(user) 
     # for now, we allow everyone

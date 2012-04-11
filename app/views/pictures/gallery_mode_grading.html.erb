@@ -12,34 +12,43 @@
         "Submission quota: <b>#{@project.total_submission }</b> " ) .html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
-  <hr />
+  
   
   
   <!-- display the uploaded image here!  -->
  
     <div class="span12">
-      <ul class="thumbnails" id="uploaded_image_container">
-        
-        <% @project_submissions.each do |project_submission| %>
-          <% if project_submission.pictures.count == 0 %>
-            <% next %>
-          <% end %>
+    <% @project_submissions.each do |project_submission| %>
+      <% if project_submission.pictures.count == 0 %>
+        <% next %>
+      <% end %>
+      
+      
+        <h3 style="margin-bottom:20px;" id="project_submission-<%= project_submission.id %>">
+          <%= project_submission.user.nim %>
+        </h3>
+        <ul class="thumbnails" >
           <% pictures = project_submission.original_pictures.order("created_at DESC") %>
           <!-- rendering the pics -->
           <% pictures.each do |picture| %>
             <% if picture.picture_filetype == PICTURE_FILETYPE[:image]%>
               <%= render :partial => "pictures/gallery_mode_picture_display" , :locals => {
                 :picture => picture,
-                :original_picture => picture.original_picture , 
-                :project_submission => project_submission
+                :original_picture => picture , 
+                :project_submission => project_submission,
+                :project => @project
               }%>
             <% end %>
           <% end %>
-        <% end %>
-        
-        
-      </ul>
+
+        </ul>
+      
+      <hr />
+      
+    <% end %>
     </div>
+    
+    
   
 </div><!--/span-->
 
@@ -56,7 +65,7 @@
   </div>
   <div class="modal-footer">
     <a href="#" class="btn modal-closer">Close</a>
-    <a href="#" class="btn btn-primary details-viewer">See Details</a>
+    <a href="#" class="btn btn-primary details-viewer">Grading</a>
   </div>
 </div>
 

@@ -46,6 +46,28 @@ module ApplicationHelper
   
   
 =begin
+  For gallery grading
+=end
+
+  def get_last_revision_score( original_picture )
+    # if only original picture
+    # and not approved == pending
+    # if there is last_approved revision, not graded, shows pending
+    # if no last_approved_revision, shows the original picture
+    last_approved_revision = original_picture.last_approved_revision
+    if last_approved_revision.id == original_picture.id
+      if original_picture.is_graded.nil?
+      elsif not original_picture.is_graded.nil? 
+      end
+    end
+    
+  end
+  
+  def get_highest_score( original_picture )
+  end
+
+
+=begin
   For project creation, select time and hour
 =end
 
@@ -741,6 +763,10 @@ module ApplicationHelper
           {
             :controller => "pictures",
             :action => 'gallery_mode_grading'
+          },
+          {
+            :controller => "pictures",
+            :action => "gallery_picture_grading"
           }
         ]
       },

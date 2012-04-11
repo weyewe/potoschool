@@ -193,6 +193,42 @@ class PicturesController < ApplicationController
                 "Gallery Mode"
   end
   
+  
+  def gallery_picture_grading
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    @project = Project.find_by_id params[:project_id]
+    @picture = Picture.find_by_id params[:picture_id]
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+    end
+    
+    @root_comments = @picture.root_comments.order("created_at ASC")
+    
+    @original_picture = @picture.original_picture
+    @all_revisions = @original_picture.revisions.order("created_at DESC")
+    
+    @project_submission = @picture.project_submission
+    
+    
+    add_breadcrumb "Select Project", "select_project_for_grading_url"
+    set_breadcrumb_for @project, 'select_project_submission_for_grading_path' + "(#{@project.id})", 
+                "Select Student Submission"
+    set_breadcrumb_for @project, 'gallery_mode_grading_path' + "(#{@project.id})", 
+                "Gallery Mode"
+    set_breadcrumb_for @project, 'gallery_picture_grading_path' + "(#{@project.id}, #{@picture.id})", 
+                "Grading"
+                
+  end
+  
+=begin
+  For the school admin
+=end
+  
   def gallery_mode_active_project
     if not current_user.has_role?(:school_admin)
       redirect_to root_url

@@ -4,77 +4,51 @@
 <li class="span3">
   <div class="thumbnail gallery_thumbnail_wrapper">
     
-    <div class="" style="display:none;">
-      <span class="original_image" id="pic_<%= original_picture.id %>"><%= original_picture.display_image_url.html_safe %></span>
-      
-      <% original_picture.revisions.each do |revision| %>
-        <span class="revision_image" id="pic_<%= revision.id %>"><%= revision.display_image_url.html_safe %></span>
-      <% end %>
-    </div>
-   
+    <!-- <div class="" style="display:none;">
+          <span class="original_image" id="pic_<%= original_picture.id %>"><%#= original_picture.display_image_url.html_safe %></span>
+          
+          <%# original_picture.revisions.each do |revision| %>
+            <span class="revision_image" id="pic_<%#= revision.id %>"><%#= revision.display_image_url.html_safe %></span>
+          <%# end %>
+        </div> -->
+    <% last_approved_revision = original_picture.last_approved_revision %>
     
-    <% if  original_picture.any_picture_submission_approved? %>
-      <%= link_to  project_submission_picture_url( project_submission, 
-                    original_picture.approved_picture ),
-          :class => "thumbnail gallery_thumbnail" , 
-          :style => "height:160px; overflow:hidden;",
-          :id => "display-id_#{original_picture.id}" do %>
-        <%= image_tag original_picture.approved_picture.get_icon("index") %>
-      <% end %>
-    <% else %>
-      <%= link_to  project_submission_picture_url( project_submission, picture.last_revision),
-          :class => "thumbnail gallery_thumbnail" , 
-          :style => "height:160px; overflow:hidden;",
-          :id => "display-id_#{original_picture.last_revision.id}" do %>
-        <%= image_tag picture.last_revision.get_icon("index") %>
-      <% end %>
+    <%= link_to  project_submission_picture_url( project_submission, 
+                  last_approved_revision),
+        :class => "thumbnail gallery_thumbnail" , 
+        :style => "height:160px; overflow:hidden;",
+        :id => "display-id_#{last_approved_revision.id}" do %>
+      <%= image_tag last_approved_revision.get_icon("index") %>
     <% end %>
+    
+   
     
     
     <!-- <img alt="" src="http://placehold.it/260x180"> -->
     <div class="caption">
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
-        
         <tbody>
-          
-       
-          
+          <!-- Revisions count  -->
           <tr>
             <td>Revisions</td>
             <td><%= original_picture.revisions.count %></td>
           </tr>
           
-            <% if original_picture.any_picture_submission_approved? %>
-            <!--             <tr>
-                          <td>Approval</td>
-                          <td>YES</td>
-                        </tr> -->
-            <tr>
-              <td>Score</td>
-              <td><%= original_picture.approved_picture.score %></td>
-            </tr>
-            <% else %>
-              <% if original_picture.last_revision.is_approved == false %>
-                <!-- <tr>
-                              <td>Approval</td>
-                              <td>REJECT</td>
-                            </tr> -->
-                <tr>
-                  <td>Score</td>
-                  <td>0</td>
-                </tr>
-              <% else %>
-                <!-- <tr>
-                            <td>Approval</td>
-                            <td>PENDING</td>
-                          </tr> -->
-                <tr>
-                  <td>Score</td>
-                  <td>Pending</td>
-                </tr>
-              <% end %>
-            <% end %>
+          
+          <tr>
+            <td>Last Rev. Score</td>
+            <td>
+              Pending<%#= get_last_revision_score( original_picture ) %>
+            </td>
+          </tr>
+          
+          <tr>
+            <td>Highest</td>
+            <td>
+             11 <%#= get_highest_score( original_picture ) %>
+            </td>
+          </tr>
          </tbody>
       </table>
      

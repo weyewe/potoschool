@@ -22,9 +22,24 @@
 
       <!-- The navigation element (<= Prev)  and (Next =>)-->
       <ul class="pager">
-            <%= get_previous_project_picture(@picture, true).html_safe %>
-            <%= get_next_project_picture(@picture, true ).html_safe %>
+        <% prev_id = ''%>
+        <% if params[:gallery_pic_id].nil? %>
+          <% prev_id = @project_submission.id %>
+        <% else %>
+          <% prev_id = params[:gallery_pic_id] %>
+        <% end %>
+        <li class="previous">
+          <%= link_to " ← Back to Gallery", 
+          gallery_mode_grading_url(@project) + "#project_submission-#{prev_id}" %>
+          <!-- <a href="http://localhost:3000/grade_project_submission_picture/picture/263"> Prev </a> -->
+        </li>
       </ul>
+
+      <!-- <ul class="pager">
+                 <%#= get_previous_project_picture(@picture, true).html_safe %>
+                 <%#= get_next_project_picture(@picture, true ).html_safe %>
+           </ul>
+            -->
       
       
       <% if @picture.picture_filetype != PICTURE_FILETYPE[:image] %>
@@ -100,11 +115,6 @@
           <% end %>
         <% end %>
         
-        
-        <%= render :partial => "pictures/download_original" , :locals => {
-          :picture => @picture
-        }%>
-        
         <% if @picture.is_approved == true %>
           <%= render :partial => "pictures/accepted_submission", :locals => {
             :picture => @picture }%>
@@ -112,6 +122,13 @@
           <%= render :partial => "pictures/rejected_submission", :locals => {
             :picture => @picture }%>
         <% end %>
+        
+        
+        <%= render :partial => "pictures/download_original" , :locals => {
+          :picture => @picture
+        }%>
+        
+        
         
       <% end %>
       
@@ -127,10 +144,11 @@
       <% end %>
       
       <% if @all_revisions.count != 0 %>
-        <%= render :partial => "pictures/grading_revision_list",
+        <%= render :partial => "pictures/gallery_grading_revision_list",
                   :locals => {:all_revisions => @all_revisions, 
                           :current_display => @picture,
-                          :project_submission => @project_submission}%>
+                          :project_submission => @project_submission,
+                          :project => @project}%>
                       
       <% end %>
     </div><!--/span-->
