@@ -131,6 +131,12 @@ Debita46::Application.routes.draw do
   # create child comment
   match 'first_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_first_child_comment", :as => :create_first_child_comment
   match 'create_child_comment/picture/:picture_id/comment/:root_comment_id' => "comments#create_child_comment", :as => :create_child_comment
+  match 'delete_original_image' => "pictures#delete_original_image", :as => :delete_original_image , :method => :post
+  match 'delete_image_from_show' => "pictures#delete_image_from_show", :as => :delete_image_from_show , :method => :post
+  
+  
+  
+  
   
   # setting up the timezone
   match 'timezone_setup' => 'schools#timezone_setup', :as => :timezone_setup 

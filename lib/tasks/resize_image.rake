@@ -40,3 +40,17 @@ task :fix_database_to_accomodate_is_graded => :environment do
     pic.save 
   end
 end
+
+task :move_email_to_development => :environment do 
+  array = ["fotoferdytan@gmail.com", "kurniast@yahoo.com", "kelas_fotografi@yahoo.com"  ]
+  if Rails.env.development?
+    array.each do |email|
+      a =  User.find_by_email email
+      a.password = 'willy1234'
+      a.password_confirmation = 'willy1234'
+      a.save
+    end
+  end
+end
+
+

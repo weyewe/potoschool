@@ -56,6 +56,41 @@ class PicturesController < ApplicationController
   end
   
   
+  def delete_original_image
+    @picture = Picture.find_by_id params[:picture_id]
+    @project = @picture.project_submission.project 
+    @project_submission = @picture.project_submission 
+    
+    if @picture.is_uploaded_by?( current_user ) 
+      # delete code 
+      @picture.set_deleted
+    end
+    
+    redirect_to new_project_submission_picture_url(@project_submission) 
+  end
+  
+  def delete_image_from_show
+    @picture = Picture.find_by_id params[:picture_id]
+    @project = @picture.project_submission.project 
+    @project_submission = @picture.project_submission 
+    
+    if @picture.is_uploaded_by?( current_user ) 
+      # delete code 
+      @picture.set_deleted
+    end
+    
+    if @picture.is_original? 
+      redirect_to new_project_submission_picture_url(@project_submission) 
+      return
+    else
+      # get last approved, show it 
+      last_approved_revision = @picture.last_approved_revision
+      redirect_to project_submission_picture_url( last_approved_revision.project_submission, 
+        last_approved_revision )
+    end
+    
+    
+  end
   
   def show
     @project_submission = ProjectSubmission.find_by_id(params[:project_submission_id])
@@ -69,7 +104,7 @@ class PicturesController < ApplicationController
     
     @picture = Picture.find_by_id( params[:id] )
     @original_picture = @picture.original_picture
-    @all_revisions = @original_picture.revisions.order("created_at DESC")
+    @all_revisions = @original_picture.revisions.where(:is_deleted => false ).order("created_at DESC")
     @root_comments = @picture.root_comments.order("created_at ASC")
     
     add_breadcrumb "Select Project", "project_submissions_url"
@@ -102,7 +137,7 @@ class PicturesController < ApplicationController
     @root_comments = @picture.root_comments.order("created_at ASC")
     
     @original_picture = @picture.original_picture
-    @all_revisions = @original_picture.revisions.order("created_at DESC")
+    @all_revisions = @original_picture.revisions.where(:is_deleted => false). order("created_at DESC")
     
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
@@ -241,7 +276,7 @@ class PicturesController < ApplicationController
     @root_comments = @picture.root_comments.order("created_at ASC")
     
     @original_picture = @picture.original_picture
-    @all_revisions = @original_picture.revisions.order("created_at DESC")
+    @all_revisions = @original_picture.revisions.where(:is_deleted => false).order("created_at DESC")
     
     @project_submission = @picture.project_submission
     

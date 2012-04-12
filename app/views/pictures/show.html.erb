@@ -70,7 +70,20 @@
     
     <!-- Upload new revision, show original picture, and revision list -->
     <div class="span4">
+      <!-- delete image -->
+      <% if @picture.can_be_deleted? %>
+          <%= form_for @picture, 
+                :url => delete_image_from_show_url,
+                :html => {:class => "delete_pic", :style => "text-align:center;" } do |f| %>
+            <%= hidden_field_tag 'picture_id', @picture.id  %>
+            <button href="#" class="btn btn-danger delete_original" >
+              Delete File
+            </button>
+          <% end %>
+      <% end %>
       
+      
+      <!-- interaction with lecturer -->
       <% if @project.allow_student_activities? %>
         <%= render :partial =>"pictures/student_activities" %>
       <% else %>
@@ -80,17 +93,17 @@
       
       
       
-      <% if not @original_picture.any_picture_submission_approved? %>
+      <%# if not @original_picture.any_picture_submission_approved? %>
         <% if @picture.is_approved.nil? %>
           <%= render :partial => "pictures/pending_submission", :locals => {
             :picture => @picture }%>
         <% end %>
-      <% else %>
-        <% if @picture.is_approved.nil? %>
-          <%= render :partial => "pictures/ungradded_submission", :locals => {
+      <%# else %>
+        <%# if @picture.is_approved.nil? %>
+          <%#= render :partial => "pictures/ungradded_submission", :locals => {
             :picture => @picture }%>
-        <% end %>
-      <% end %>
+        <%# end %>
+      <%# end %>
       
       
       

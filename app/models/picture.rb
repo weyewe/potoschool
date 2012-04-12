@@ -122,6 +122,54 @@ class Picture < ActiveRecord::Base
     self.is_approved == true  # so, is_approved == nil will do 
   end
   
+  def can_be_deleted?
+    project = self.project_submission.project
+    project_still_running = project.in_between_starting_and_deadline_time? and ( not project.is_closed? ) 
+    
+    if self.is_original?
+       return  ( project_still_running) && 
+            ( not self.has_revisions? ) && 
+            ( not self.has_comments? ) && 
+            ( self.is_approved.nil? )
+       
+  
+    else 
+      return ( project_still_running) && 
+              ( not self.has_comments? ) && 
+               ( self.is_approved.nil? )
+    end
+    
+  end
+ 
+  def has_revisions?
+    self.revisions.where(:is_deleted => false ).count > 0 
+  end
+  
+  def has_comments?
+    Comment.find(:all, :conditions => {
+          :commentable_id => self.id,
+          :commentable_type => self.class.to_s 
+          }).count > 0
+  end
+  
+=begin
+=end
+  def can_upload_revision?
+    if self.original_picture.revisions.where(:is_deleted => false).count == 0 
+      puts " no revision"
+      (  not self.is_approved.nil? ) 
+    else
+       puts " some revisions" 
+      self.non_approved_uploads.count == 0 
+    end
+    
+    
+  end
+  
+  def non_approved_uploads
+    self.original_picture.revisions.where(:is_approved => nil , :is_deleted => false )
+  end
+  
   def set_score( new_score, current_user )
     
     project = self.project_submission.project 
@@ -157,7 +205,22 @@ class Picture < ActiveRecord::Base
     
   end
   
+  def is_uploaded_by?( current_user ) 
+    self.project_submission.user_id == current_user.id 
+  end
   
+  def set_deleted
+    if self.is_deleted == false  and self.can_be_deleted?
+      project_submission  = self.project_submission
+      if self.is_original?
+        project_submission.total_original_submission -= 1 
+      end 
+      project_submission.total_picture_submission -= 1 
+      project_submission.save 
+      self.is_deleted = true
+      self.save
+    end
+  end
   # def get_root_comments
   #   comment_type = self.class.to_s
   #   Comment.find(:all, :conditions => {:commentable_type => comment_type,

@@ -133,4 +133,4 @@ TOWN_OFFSET_HASH = {"Samoa"=>-11, " International Date Line West"=>-11, " Midway
   " Magadan"=>11, " New Caledonia"=>11, "Auckland"=>12, "Fiji"=>12, " Marshall Is."=>12,
   " Wellington"=>12, "Nuku'alofa"=>13} 
   
-POSITIONAL_COMMENT_MARKER_WIDTH = 32 
+POSITIONAL_COMMENT_MARKER_WIDTH = 44  # 52 - 4padding*2   << left and right

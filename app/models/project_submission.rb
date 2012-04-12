@@ -17,11 +17,11 @@ class ProjectSubmission < ActiveRecord::Base
   end
   
   def original_pictures
-    self.pictures.where(:is_original => true ).order("created_at ASC")
+    self.pictures.where(:is_original => true , :is_deleted => false ).order("created_at ASC")
   end
   
   def original_pictures_id
-    self.pictures.where(:is_original => true ).order("created_at ASC").select(:id).map do |x|
+    self.pictures.where(:is_original => true , :is_deleted => false ).order("created_at ASC").select(:id).map do |x|
       x.id
     end
   end

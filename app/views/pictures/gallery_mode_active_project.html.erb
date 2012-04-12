@@ -31,7 +31,8 @@
               <%= render :partial => "pictures/gallery_mode_picture_display" , :locals => {
                 :picture => picture,
                 :original_picture => picture.original_picture , 
-                :project_submission => project_submission
+                :project_submission => project_submission,
+                :project => @project
               }%>
             <% end %>
           <% end %>

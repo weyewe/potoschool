@@ -41,7 +41,7 @@
           
           <tr>
             <td>Revisions</td>
-            <td><%= original_picture.revisions.count %></td>
+            <td><%= original_picture.revisions.where(:is_deleted => false).count %></td>
           </tr>
           
             <% if original_picture.any_picture_submission_approved? %>

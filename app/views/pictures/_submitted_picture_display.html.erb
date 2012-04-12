@@ -34,7 +34,7 @@
           
           <tr>
             <td>Revisions</td>
-            <td><%= original_picture.revisions.count %></td>
+            <td><%= original_picture.revisions.where(:is_deleted => false ).count %></td>
           </tr>
           
             <% if original_picture.any_picture_submission_approved? %>
@@ -67,6 +67,24 @@
                 </tr>
               <% end %>
             <% end %>
+            
+            <tr>
+              <td colspan="2" style="text-align:center;">
+                <% if original_picture.can_be_deleted?  %>
+                <%= form_for original_picture, 
+                      :url => delete_original_image_url,
+                      :html => {:class => "delete_pic" } do |f| %>
+                  <%= hidden_field_tag 'picture_id', original_picture.id  %>
+                  <button href="#" class="btn btn-danger delete_original" >
+                    Delete
+                  </button>
+                <% end %>
+                  
+                <% else %>
+                  --
+                <% end %>
+              </td>
+            </tr>
          </tbody>
       </table>
      
