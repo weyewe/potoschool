@@ -425,10 +425,22 @@ class Picture < ActiveRecord::Base
     if params[:is_original].to_i == ORIGINAL_PICTURE
       new_picture_hash[:is_original] = true 
       new_picture = Picture.create(new_picture_hash)
+      # UserActivity.create_new_entry(EVENT_TYPE[:submit_document_original], 
+      #                        project_submission.user , 
+      #                        new_picture , 
+      #                        original_picture  )
+                          
+                          
     elsif params[:is_original].to_i == REVISION_PICTURE
       original_picture = Picture.find_by_id(params[:original_picture_id])
       new_picture_hash[:original_id] = original_picture.id 
       new_picture = original_picture.revisions.create( new_picture_hash )
+      # UserActivity.create_new_entry(EVENT_TYPE[:submit_document_revision], 
+      #                      project_submission.user , 
+      #                      new_picture , 
+      #                      original_picture  )
+      
+      
     end
     
     # new_picture.save 
