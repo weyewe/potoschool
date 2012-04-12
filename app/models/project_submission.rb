@@ -73,7 +73,7 @@ class ProjectSubmission < ActiveRecord::Base
    def self.eager_load_project_submissions_for(project)
      self.includes(:pictures, :user).find(:all, :conditions=>{
        :project_id => project.id 
-     })
+     }, :order => "created_at ASC")
    end
    
 
@@ -82,12 +82,16 @@ class ProjectSubmission < ActiveRecord::Base
        self.first_submission_time = picture.created_at
      end
      
-     # puts "********************Gonna update submission data\n"*100
-     if picture.is_original?
-       self.total_original_submission += 1
-     end 
-
-     self.total_picture_submission += 1 
+     # # puts "********************Gonna update submission data\n"*100
+     #      if picture.is_original?
+     #        self.total_original_submission += 1
+     #      end 
+     # 
+     #      self.total_picture_submission += 1 
+     #      self.save
+     
+     self.total_original_submission = self.original_pictures.where(:is_deleted => false).count
+     self.total_picture_submission = self.pictures.where(:is_deleted => false ).count
      self.save
    end
    

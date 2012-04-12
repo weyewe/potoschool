@@ -433,11 +433,11 @@ class Picture < ActiveRecord::Base
     
     # new_picture.save 
     
-    if params[:is_original].to_i == REVISION_PICTURE
+    # if params[:is_original].to_i == REVISION_PICTURE
       project_submission.update_submission_data( new_picture )
-    end
+    # end
     
-    new_picture.upload_to_scribd # this should be delayed
+    new_picture.delay.upload_to_scribd # this should be delayed
     return new_picture 
   end
   
