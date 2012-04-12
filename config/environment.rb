@@ -40,7 +40,7 @@ EVENT_TYPE  = {
   :submit_picture => 3 ,   #added  #notification is working  ## working with background job
   :submit_picture_revision => 4,  #added # notification is working  # working 
   :grade_picture => 5,  #reject is working  
-  :create_project => 6   #added  # notification working  # working with background job,
+  :create_project => 6 ,  #added  # notification working  # working with background job,
   
   :submit_document_original => 100,
   :submit_document_revision => 101

@@ -449,7 +449,12 @@ class Picture < ActiveRecord::Base
       project_submission.update_submission_data( new_picture )
     # end
     
-    new_picture.delay.upload_to_scribd # this should be delayed
+    if Rails.env.production?
+      new_picture.delay.upload_to_scribd 
+    elsif Rails.env.development? 
+      new_picture.upload_to_scribd 
+    end
+    # this should be delayed
     return new_picture 
   end
   
