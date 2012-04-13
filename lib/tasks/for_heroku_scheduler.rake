@@ -2,7 +2,7 @@ desc "Tasks associated with heroku scheduler"
 
 # steps: clean duplicates
 # then, do the final parsing 
-task :store_current => :environment do 
+task :production_clear_polled_deliveries => :environment do 
   # check all schools, check the delivery time. 
   # if the delivery time is between now and one hour from now
   # execute the delivery
