@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120412180001) do
+ActiveRecord::Schema.define(:version => 20120413153607) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -141,12 +141,13 @@ ActiveRecord::Schema.define(:version => 20120412180001) do
   end
 
   create_table "polled_deliveries", :force => true do |t|
-    t.boolean  "is_delivered",             :default => false
+    t.boolean  "is_delivered",                 :default => false
     t.string   "recipient_email"
     t.integer  "user_activity_id"
     t.time     "notification_raised_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "notification_raised_datetime"
   end
 
   create_table "positional_comments", :force => true do |t|

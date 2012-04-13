@@ -16,3 +16,10 @@ task :store_current => :environment do
   end
   
 end
+
+
+task :development_clear_polled_deliveries  => :environment do 
+  school = School.find 1 
+    PolledDelivery.delay.clear_all_pending_delivery( school )  
+  
+end

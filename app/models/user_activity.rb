@@ -87,11 +87,25 @@ a  = UserActivity.find(:first, :conditions => {
     
     case self.event_type
     when EVENT_TYPE[:create_comment]
-      # actor is the teacher 
+      # actor is the teacher # wrong .. actor is the user, can be teacher or student 
       # subject is the comment 
       # secondary subject is the picture
-      @user = @secondary_subject.project_submission.user 
-      return [@user.email ]
+      # @user = @secondary_subject.project_submission.user 
+      #       return [@user.email ]
+      
+      if @actor.has_role?(:student)
+        #student make comment for the teacher
+        @course = @secondary_subject.project_submission.project.course 
+        return [ CourseTeachingAssignment.find(:first, :conditions => {
+                         :course_id => @course.id,
+                         :is_active => true 
+                       }).user.email ]
+                       
+      elsif @actor.has_role?(:teacher)
+        #teacher make comment for the student 
+        @user = @secondary_subject.project_submission.user 
+        return [@user.email ]
+      end
     when EVENT_TYPE[:reply_comment]
       # actor is the user, can be teacher or student   
       # the subject is the comment itself 
@@ -176,6 +190,8 @@ a  = UserActivity.find(:first, :conditions => {
   end
 
   def send_user_activity_update
+    
+    puts "We are inside the send_user_activityy_update\n"*5
     # check if it is development Rails.env.development? 
     # Check if it is production: Rails.env.production? 
     recipients = self.extract_recipient 
@@ -190,16 +206,20 @@ a  = UserActivity.find(:first, :conditions => {
           recipient_user = User.find_by_email recipient 
           school  = recipient_user.get_managed_school
           
+          puts ">>>>>>The email is #{recipient}\n"*5
+          puts "The school delivery method is #{school.delivery_method}\n"*5
+          
           if recipient_user.has_role?(:teacher) && 
               school.delivery_method == NOTIFICATION_DELIVERY_METHOD[:scheduled]
-            
+            puts "Gonna create Polled Delivery\n"*5
             PolledDelivery.create :user_activity_id => self.id , 
                                   :recipient_email => recipient,
-                                  :notification_raised_time => Time.now
+                                  :notification_raised_datetime => DateTime.now
           elsif ( recipient_user.has_role?(:teacher ) && 
                   school.delivery_method == NOTIFICATION_DELIVERY_METHOD[:instant] )  or 
                 ( recipient_user.has_role?(:student) )
                 
+                puts "****Gonna create the realtime \n"*5
             NewsletterMailer.activity_update( recipient , Time.now, self).deliver
             
           end

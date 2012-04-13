@@ -6,11 +6,22 @@ class PolledDelivery < ActiveRecord::Base
         :recipient_email => teacher.email , 
         :is_delivered => false 
       }, :order => "notification_raised_time ASC")
-      if pending.count > 0 
+      if pending_deliveries.count > 0 
         # NewsletterMailer.welcome_email.deliver  # in rails 3, no need for .deliver
-        NewsletterMailer.delay.polled_delivery( teacher.email, pending_deliveries )
+        if Rails.env.production?
+          NewsletterMailer.delay.polled_delivery( teacher.email, pending_deliveries )
+        elsif Rails.env.development?
+          NewsletterMailer.polled_delivery( teacher.email, pending_deliveries ).deliver
+        end
       end
     end
      
+  end
+  
+  
+  def corresponding_user_activity
+    UserActivity.find(:first, :conditions => {
+      :id => self.user_activity_id 
+    })
   end
 end

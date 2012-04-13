@@ -87,11 +87,11 @@ class NewsletterMailer < ActionMailer::Base
     @recipient_email = recipient_email 
     @user = User.find_by_email @recipient_email 
     @school  = @user.get_managed_school
-    
-    
+    @pending_deliveries = pending_deliveries
+    time = Time.now
     
     mail( :to  => recipient_email, 
-    :subject => "potoSchool | #{@school.name} Updates new #{time}", 
+    :subject => "potoSchool | #{@school.name} Updates (#{pending_deliveries.count}): #{time}", 
     :bcc => ["rajakuraemas@gmail.com", "christian@potoschool.com"] )
     
   end
