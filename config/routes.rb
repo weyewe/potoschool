@@ -143,6 +143,9 @@ Debita46::Application.routes.draw do
   match 'execute_timezone_setup' => 'schools#execute_timezone_setup', :as => :execute_timezone_setup, :method => :post 
   
   
+  # setting the notification delivery method 
+  match 'delivery_method_setup' => 'schools#delivery_method_setup', :as => :delivery_method_setup 
+  match 'execute_delivery_method_setup' => 'schools#execute_delivery_method_setup', :as => :execute_delivery_method_setup, :method => :post
   
   # edit password
   

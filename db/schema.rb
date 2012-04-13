@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411112401) do
+ActiveRecord::Schema.define(:version => 20120412180001) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "role_id"
@@ -140,6 +140,15 @@ ActiveRecord::Schema.define(:version => 20120411112401) do
     t.boolean  "is_graded",             :default => false
   end
 
+  create_table "polled_deliveries", :force => true do |t|
+    t.boolean  "is_delivered",             :default => false
+    t.string   "recipient_email"
+    t.integer  "user_activity_id"
+    t.time     "notification_raised_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "positional_comments", :force => true do |t|
     t.integer  "comment_id"
     t.integer  "x_start"
@@ -196,8 +205,10 @@ ActiveRecord::Schema.define(:version => 20120411112401) do
     t.string   "billing_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",    :default => "UTC"
+    t.string   "time_zone",                :default => "UTC"
     t.integer  "utc_offset"
+    t.integer  "delivery_method",          :default => 1
+    t.string   "scheduled_delivery_hours", :default => ""
   end
 
   create_table "score_revisions", :force => true do |t|

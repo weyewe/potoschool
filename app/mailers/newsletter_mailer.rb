@@ -8,6 +8,12 @@ class NewsletterMailer < ActionMailer::Base
   #   en.newsletter_mailer.weekly.subject
   #
   
+  
+  def welcome_email
+    mail(:to => "rajakuraemas@gmail.com", :subject => "Welcome to My Awesome Site")
+  end
+
+    
 =begin
   New User Registration, Course Registration, Subject Registration,
   Course Teaching Assignment, Subject Teaching Assignment
@@ -59,7 +65,7 @@ class NewsletterMailer < ActionMailer::Base
 
 
 =begin
-  Typical Activity updates 
+  Typical Instant Activity updates 
 =end
   
   def activity_update(email, time, user_activity )
@@ -73,6 +79,22 @@ class NewsletterMailer < ActionMailer::Base
     user_activity.mark_notification_sent 
   end
   
+=begin
+  The polled Activity Update
+=end
+
+  def polled_delivery( recipient_email , pending_deliveries )
+    @recipient_email = recipient_email 
+    @user = User.find_by_email @recipient_email 
+    @school  = @user.get_managed_school
+    
+    
+    
+    mail( :to  => recipient_email, 
+    :subject => "potoSchool | #{@school.name} Updates new #{time}", 
+    :bcc => ["rajakuraemas@gmail.com", "christian@potoschool.com"] )
+    
+  end
   
   
   def send_summary(email)

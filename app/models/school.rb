@@ -94,4 +94,39 @@ class School < ActiveRecord::Base
     return self.utc_offset 
   end
   
+=begin
+  delivery hours 
+=end
+
+  def array_of_scheduled_delivery_hours
+    self.scheduled_delivery_hours.split(",").map {|x| x.to_i }
+  end
+  
+  def set_delivery_method( selected_delivery_method, delivery_hours)
+    # the delivery hour is specified at the user's time zone.. we need to convert it to UTC
+    if selected_delivery_method == NOTIFICATION_DELIVERY_METHOD[:instant]
+      self.delivery_method = NOTIFICATION_DELIVERY_METHOD[:instant]
+      self.scheduled_delivery_hours = '' 
+      self.save 
+      # we must clear all the PolledDelivery
+      PolledDelivery.delay.clear_all_pending_delivery( self )
+      
+      return 
+    elsif selected_delivery_method == NOTIFICATION_DELIVERY_METHOD[:scheduled] && 
+        delivery_hours.length != 0  #yeah, he uploaded the schedule 
+      self.delivery_method = NOTIFICATION_DELIVERY_METHOD[:scheduled]
+      self.scheduled_delivery_hours =  delivery_hours.map{ |x| ( x - self.get_utc_offset) %24 }.join(",")
+      self.save 
+      return
+    else
+        
+    end
+  end
+  
+  def delivery_hours_in_school_timezone
+    # converting the delivery hours to user timezone
+    self.scheduled_delivery_hours.split(",").map{|x| ( x.to_i + self.get_utc_offset )%24 }.sort
+   
+  end
+  
 end

@@ -564,6 +564,16 @@ module ApplicationHelper
               :action => "timezone_setup"
             }
           ]
+        },
+        {
+          :title => "Notification Delivery",
+          :destination_link => "delivery_method_setup_url",
+          :conditions => [
+            {
+              :controller => "schools",
+              :action => "delivery_method_setup"
+            }
+          ]
         }
       ]
     }

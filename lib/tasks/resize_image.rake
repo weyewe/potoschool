@@ -54,3 +54,12 @@ task :move_email_to_development => :environment do
 end
 
 
+task :set_all_past_user_activity_to_true => :environment do 
+  UserActivity.all.each do |x|
+    x.is_notification_sent = true 
+    x.save 
+  end
+end
+
+
+

@@ -137,3 +137,10 @@ TOWN_OFFSET_HASH = {"Samoa"=>-11, " International Date Line West"=>-11, " Midway
   " Wellington"=>12, "Nuku'alofa"=>13} 
   
 POSITIONAL_COMMENT_MARKER_WIDTH = 44  # 52 - 4padding*2   << left and right
+
+NOTIFICATION_DELIVERY_METHOD = {
+  :instant => 1, 
+  :scheduled => 2
+}
+
+

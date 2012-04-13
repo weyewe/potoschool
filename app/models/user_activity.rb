@@ -186,7 +186,24 @@ a  = UserActivity.find(:first, :conditions => {
         end
       
         recipients.each do |recipient| 
-          NewsletterMailer.activity_update( recipient , Time.now, self).deliver
+          #  if  recipient == teacher , don't send.
+          recipient_user = User.find_by_email recipient 
+          school  = recipient_user.get_managed_school
+          
+          if recipient_user.has_role?(:teacher) && 
+              school.delivery_method == NOTIFICATION_DELIVERY_METHOD[:scheduled]
+            
+            PolledDelivery.create :user_activity_id => self.id , 
+                                  :recipient_email => recipient,
+                                  :notification_raised_time => Time.now
+          elsif ( recipient_user.has_role?(:teacher ) && 
+                  school.delivery_method == NOTIFICATION_DELIVERY_METHOD[:instant] )  or 
+                ( recipient_user.has_role?(:student) )
+                
+            NewsletterMailer.activity_update( recipient , Time.now, self).deliver
+            
+          end
+          # NewsletterMailer.activity_update( recipient , Time.now, self).deliver
         end
     end
   end

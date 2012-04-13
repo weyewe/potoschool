@@ -1,0 +1,130 @@
+<% if @school.delivery_method == NOTIFICATION_DELIVERY_METHOD[:scheduled] %>
+  <button href="#" class="btn btn-success">Current Delivery Method is Scheduled.</button>
+  
+  <hr />
+  
+  <%#= render :partial => "schools/scheduled_form" %>
+  <%= form_for @school,
+      :url => execute_delivery_method_setup_url ,
+      :html => {:id =>"scheduled_form"} do |f| %>
+     <%= hidden_field_tag 'delivery_method' , NOTIFICATION_DELIVERY_METHOD[:scheduled]  %>
+   
+     
+     <div class="control-group">
+       <%= f.label :scheduled_delivery_hours, :class => "control-label", :text => "Select Delivery Hour" %>
+       
+       <div class="controls">
+         
+         
+             <%= f.select :scheduled_delivery_hours,
+                options_for_select( all_hours , hours_selected(@school) ), 
+                {}, 
+                   :multiple => true, :size =>12 , :id => "model_name_states"  %>
+  
+         
+         
+       
+         
+         
+       
+           <%#= f.select(:scheduled_delivery_hours, [
+               ['Type A', 'Type A'],
+               ['Type B', 'Type B'],
+               ['Type C', 'Type C'],
+               ['Type D', 'Type D'],
+               ['Type E', 'Type E'],
+               ['Type F', 'Type F'],
+               ['Type G', 'Type G'],
+               ['Type H', 'Type H'],
+               ['Type I', 'Type I'],
+               ['Type J', 'Type J'],
+               ['Type K', 'Type K'],
+               ['Type L', 'Type L'],
+               ['Type M', 'Type M'],
+               ['Type N', 'Type N'],
+               ['Type O', 'Type O'],
+               
+               ],{ :prompt => "Please select"},
+               { :multiple => true, :size => 5 }
+             ) %>
+                                          
+                                          
+         <!-- <select id="scheduled_delivery_hours" 
+                name="scheduled_delivery_hours" multiple="multiple" style="height:250px;">
+                 
+                 <%#= selected_delivery_hours(@school).html_safe %>
+               </select> -->
+       </div>
+     </div>
+     
+     <!-- 2,7,11 -->
+     
+     
+     <div class="form-actions">
+       <button class="btn btn-primary" type="submit">Update</button>
+     </div>
+  <% end %>
+  
+  
+<% else %>
+  <button href="#" class="btn btn-danger">Current Delivery Method is Instant.</button>
+  
+  <hr />
+  <%= form_for @school, 
+      :url => execute_delivery_method_setup_url  ,
+      :html => {:id =>"scheduled_form"}  do |f| %>
+     <%= hidden_field_tag 'delivery_method' , NOTIFICATION_DELIVERY_METHOD[:scheduled]  %>
+     
+   
+     <div class="control-group">
+       <%= f.label :scheduled_delivery_hours, :class => "control-label", :text => "Select Delivery Hour" %>
+       <div class="controls">
+         <!-- <div class="controls">
+                     <select id="scheduled_delivery_hours" 
+                      name="scheduled_delivery_hours" multiple="multiple" style="height:250px;">
+
+                       <%#= selected_delivery_hours(@school).html_safe %>
+                     </select>
+                   </div> -->
+                   
+                     <%= f.select :scheduled_delivery_hours,
+                       options_for_select( all_hours , hours_selected(@school) ), 
+                       {}, 
+                          :multiple => true, :size =>12 , :id => "model_name_states"  %>
+        
+        
+                   <%#= f.select(:scheduled_delivery_hours, [
+                      ['Type A', 'Type A'],
+                      ['Type B', 'Type B'],
+                      ['Type C', 'Type C'],
+                      ['Type D', 'Type D'],
+                      ['Type E', 'Type E'],
+                      ['Type F', 'Type F'],
+                      ['Type G', 'Type G'],
+                      ['Type H', 'Type H'],
+                      ['Type I', 'Type I'],
+                      ['Type J', 'Type J'],
+                      ['Type K', 'Type K'],
+                      ['Type L', 'Type L'],
+                      ['Type M', 'Type M'],
+                      ['Type N', 'Type N'],
+                      ['Type O', 'Type O'],
+                      
+                      ],{ :prompt => "Please select"},
+                      { :multiple => true, :size => 5 }
+                    ) %>
+       </div>
+     </div>
+   
+   
+   
+   
+     <div class="form-actions">
+       <button class="btn btn-primary" type="submit">Change Delivery Method to Scheduled</button>
+     </div>
+  <% end %>
+  
+<% end %>
+
+
+
