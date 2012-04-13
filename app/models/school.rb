@@ -123,6 +123,10 @@ class School < ActiveRecord::Base
     end
   end
   
+  def delivery_hours_in_server_time
+    self.scheduled_delivery_hours.split(",").map{|x| ( x.to_i )%24 }.sort
+  end
+  
   def delivery_hours_in_school_timezone
     # converting the delivery hours to user timezone
     self.scheduled_delivery_hours.split(",").map{|x| ( x.to_i + self.get_utc_offset )%24 }.sort

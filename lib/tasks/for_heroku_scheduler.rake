@@ -9,8 +9,8 @@ task :production_clear_polled_deliveries => :environment do
   
   School.all.each do |school|
     current_time = Time.now #utc
-    delivery_hour = school.delivery_hour  #utc 
-    if delivery_hour.include?(  current_time.hour )
+    delivery_hours_in_server_time = school.delivery_hours_in_server_time  #utc 
+    if delivery_hours_in_server_time.include?(  current_time.hour )
       PolledDelivery.delay.clear_all_pending_delivery( school )  
     end
   end
