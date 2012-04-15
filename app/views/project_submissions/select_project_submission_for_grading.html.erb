@@ -29,7 +29,7 @@
             <!-- <th>First Submission Date</th> -->
             <th>Total Original Submission</th>
             <th>Total Submission</th>
-            <th>Approved?</th>
+            <th>Approval Score</th>
           </tr>
         </thead>
         <tbody>
@@ -46,13 +46,21 @@
                     <!-- <td><%= project_submission.first_submission_time %></td> -->
                     <td><%= project_submission.total_original_submission %></td>  
                     <td><%= project_submission.total_picture_submission %></td>
-                    <% if project_submission.is_approved.nil? %>
-                      <td>-</td>
-                    <% elsif project_submission.is_approved == true %>
-                      <td>YES</td>
-                    <% else %>
-                      <td>NO</td>
-                    <% end %>
+                    
+                    <td>
+                      <%= extract_project_submission_result(
+                                project_submission.max_grade ,
+                                nil , 
+                                nil
+                      )  %>
+                    </td>
+                    <!-- <%# if project_submission.is_approved.nil? %>
+                                      <td>-</td>
+                                    <%# elsif project_submission.is_approved == true %>
+                                      <td>YES</td>
+                                    <%# else %>
+                                      <td>NO</td>
+                                    <%# end %> -->
                   <% end %>
 
                 </tr>

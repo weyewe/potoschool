@@ -133,4 +133,19 @@ class ProjectSubmission < ActiveRecord::Base
     self.original_pictures.count  >= project.total_submission
   end 
   
+=begin
+  Show grading 
+=end
+
+  def max_grade
+    graded_pictures_count = self.pictures.where(:is_deleted=> false, :is_graded => true).count
+    if graded_pictures_count == 0 
+      return nil
+    else
+      return self.pictures.
+              where(:is_deleted=> false, :is_graded => true).
+              maximum("score")
+    end
+  end
+  
 end

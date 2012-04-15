@@ -19,7 +19,7 @@
           <tr>
             <th style="text-align:center;">NIM</th>
             <th colspan="<%= get_colspan(@projects)%>"
-               style="text-align:center;">Projects</th>
+               style="text-align:center;">Projects Score</th>
           </tr>
         </thead>
         <thead>
@@ -37,7 +37,7 @@
                   rel="popover" 
                   class="popover-able"
                   data-original-title="<%= @projects[counter-1].title  %>">
-                    <%= counter %>
+                    <%= @projects[counter-1].title %>
                 </a>
               </th>
               
@@ -58,8 +58,9 @@
                 <% else %>
                   <% (1..@projects.length).each do |counter| %>
                     <td id="student_<%=student.id%>-project_<%= @projects[counter-1].id%>">
+                      <%#= @projects[counter-1].get_grade_for( student )%>
                     <%= extract_project_submission_result(
-                              @course.get_score_for(student, @projects[counter-1]) ,
+                              @projects[counter-1].get_grade_for( student ) ,
                               student, 
                               @projects[counter-1] 
                     )  %>

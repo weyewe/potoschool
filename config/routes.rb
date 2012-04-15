@@ -60,6 +60,8 @@ Debita46::Application.routes.draw do
   match 'show_student_grades_for_course/:course_id' => "courses#show_student_grades_for_course", :as => :show_student_grades_for_course 
   match 'show_project_grading_details/project/:project_id/student/:student_id' => "courses#show_project_grading_details", :as => :show_project_grading_details 
   
+  # edit score in grade summary 
+  
   # assign student to the subject and course 
   # use the subject_registrations  
   # use the course_registrations 

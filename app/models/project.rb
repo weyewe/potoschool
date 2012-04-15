@@ -186,4 +186,22 @@ class Project < ActiveRecord::Base
   end
   
  
+=begin
+  grade code 
+=end
+  def get_grade_for( student )
+    project_submission = self.project_submissions.find(:first, :conditions => {
+      :project_id => self.id,
+      :user_id => student.id 
+    })
+   
+    graded_pictures_count = project_submission.pictures.where(:is_deleted=> false, :is_graded => true).count
+    if graded_pictures_count == 0 
+      return nil
+    else
+      return project_submission.pictures.
+              where(:is_deleted=> false, :is_graded => true).
+              maximum("score")
+    end
+  end
 end

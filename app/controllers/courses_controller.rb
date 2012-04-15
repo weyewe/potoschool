@@ -51,7 +51,8 @@ class CoursesController < ApplicationController
     @course  = Course.find_by_id( params[:course_id])
     @students = @course.students 
     @closed_projects = @course.get_closed_projects
-    @projects = @course.projects.order("created_at ASC")
+    # Category.includes(:posts => [{:comments => :guest}, :tags])
+    @projects = @course.projects.includes(:project_submissions => [:pictures] ).order("created_at ASC")
     
     add_breadcrumb "Pick the subject", 'select_course_for_grade_summary_path'
     set_breadcrumb_for @course, 'show_student_grades_for_course_path' + "(#{@course.id})", 
