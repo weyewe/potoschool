@@ -122,6 +122,8 @@ class Project < ActiveRecord::Base
     self.save
   end
   
+ 
+  
   def created_by?(current_user)
     if not current_user.has_role?(:teacher)
       return false 

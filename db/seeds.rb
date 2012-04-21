@@ -30,7 +30,7 @@ school_admin_role = Role.create :name => "SchoolAdmin"
 school_admin = User.create :email => "school_admin@potoschool.com", :password => "school_admin", 
                             :password_confirmation => "school_admin", 
                             :username => UUIDTools::UUID.timestamp_create.to_s
-                            
+  
 school_admin.roles << school_admin_role
 school_admin.save 
 

@@ -192,6 +192,8 @@ class ProjectsController < ApplicationController
     @project.deactivate
   end
   
+
+  
   def recover_project
     if not current_user.has_role?(:teacher)
       redirect_to root_url
@@ -207,6 +209,8 @@ class ProjectsController < ApplicationController
     
     @project.re_activate
   end
+  
+  
   
   
 =begin

@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
   
   
   # after_create :send_invitation 
+  after_destroy :delete_registrations
   
   
   def User.retrieve_or_create( user_params )
@@ -464,38 +465,76 @@ class User < ActiveRecord::Base
   
   protected
   def self.find_for_database_authentication(conditions)
-       login = conditions.delete(:login)
-       where(conditions).where({:username => login} | { :email => login}).first
-     end
-   
-     def self.find_or_initialize_with_errors(required_attributes, attributes, error=:invalid)
-       case_insensitive_keys.each { |k| attributes[k].try(:downcase!) }
-   
-       attributes = attributes.slice(*required_attributes)
-       attributes.delete_if { |key, value| value.blank? }
-   
-       if attributes.size == required_attributes.size
-         if attributes.has_key?(:login)
-           login = attributes.delete(:login)
-           record = find_record(login)
-         else
-           record = where(attributes).first
-         end
-       end
-   
-       unless record
-         record = new
-   
-         required_attributes.each do |key|
-           value = attributes[key]
-           record.send("#{key}=", value)
-           record.errors.add(key, value.present? ? error : :blank)
-         end
-       end
-       record
-     end
-   
-     def self.find_record(login)
-       where({:username => login} | { :email => login}).first
-     end
+    login = conditions.delete(:login)
+    where(conditions).where({:username => login} | { :email => login}).first
+  end
+
+  def self.find_or_initialize_with_errors(required_attributes, attributes, error=:invalid)
+    case_insensitive_keys.each { |k| attributes[k].try(:downcase!) }
+
+    attributes = attributes.slice(*required_attributes)
+    attributes.delete_if { |key, value| value.blank? }
+
+    if attributes.size == required_attributes.size
+      if attributes.has_key?(:login)
+        login = attributes.delete(:login)
+        record = find_record(login)
+      else
+        record = where(attributes).first
+      end
+    end
+
+    unless record
+      record = new
+
+      required_attributes.each do |key|
+        value = attributes[key]
+        record.send("#{key}=", value)
+        record.errors.add(key, value.present? ? error : :blank)
+      end
+    end
+    record
+  end
+
+  def self.find_record(login)
+    where({:username => login} | { :email => login}).first
+  end
+
+
+  def delete_registrations
+    #  to destroy : project submission id 616, 622,  619
+=begin
+  [616,622,619].each do |x|
+    user = ProjectSubmission.find(x).user
+    user.destroy 
+  end
+=end
+    
+    if self.has_role?(:student)
+      
+      self.course_registrations.each do |course_reg|
+        course_reg.destroy 
+      end
+      
+      self.subject_registrations.each do |subject_reg|
+        subject_reg.destroy 
+      end
+      
+      self.project_submissions.each do |project_submission|
+        project_submission.pictures.each {|pic| pic.is_deleted = true; pic.save; }
+        project_submission.destroy 
+      end
+      
+    elsif self.has_role(:teacher)
+      self.course_teaching_assignments.each do |cta|
+        cta.destroy 
+      end
+      
+      self.subject_teaching_assignments.each do |sta|
+        sta.destroy 
+      end
+      
+    end
+    
+  end
 end

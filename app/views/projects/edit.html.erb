@@ -88,6 +88,7 @@
             <%= f.text_field :deadline_datetime, 
               :class=>"input-xlarge"  ,'data-datepicker'=>'datepicker',
               :value =>format_date_from_datetime(@project.deadline_datetime)  %>
+              <!-- move this value to @project.get_deadline_datetime_local_time -->
             <p class="help-block"></p>
           </div>
         </div>
