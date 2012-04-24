@@ -96,14 +96,30 @@
       <%# if not @original_picture.any_picture_submission_approved? %>
         <% if @picture.is_approved.nil? %>
           <%= render :partial => "pictures/pending_submission", :locals => {
-            :picture => @picture }%>
+            :picture => @picture } %>
+            
+          <% if @picture.can_be_deleted? %>
+            <div class="alert alert-error">
+              <strong>Revision</strong> 
+              <br /> 
+              Revision upload is only available if the lecturer has
+              <b>approved</b> or <b>rejected</b> this submission. 
+                Meanwhile, if you want to upload another 
+              picture, just <b>Delete</b> and upload the new one.
+              <br />
+              <b>Don't</b> comment on the picture if you want to 
+              upload the new one.
+            </div>
+          <% else %>
+            <div class="alert alert-error">
+              <strong>Revision</strong> 
+              <br /> 
+              Revision upload is only available if the lecturer has
+              <b>approved</b> or <b>rejected</b> this submission. 
+            </div>
+          <% end %>
         <% end %>
-      <%# else %>
-        <%# if @picture.is_approved.nil? %>
-          <%#= render :partial => "pictures/ungradded_submission", :locals => {
-            :picture => @picture }%>
-        <%# end %>
-      <%# end %>
+      
       
       
       
