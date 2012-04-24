@@ -821,6 +821,16 @@ module ApplicationHelper
         ]
       },
       {
+        :title => "Publish Project Grade",
+        :destination_link => "select_project_to_publish_grade_url",
+        :conditions => [
+          {
+            :controller => 'projects',
+            :action => 'select_project_to_publish_grade'
+          }
+        ]
+      },
+      {
         :title => "Recent Submission",
         :destination_link => "select_project_for_grading_url",
         :conditions => [

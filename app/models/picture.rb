@@ -171,8 +171,8 @@ class Picture < ActiveRecord::Base
   end
   
   def set_score( new_score, current_user )
-    
-    project = self.project_submission.project 
+    project_submission = self.project_submission
+    project = project_submission.project 
     if ( not project.created_by?(current_user) ) or 
         ( new_score < 0   ) or 
         ( new_score > 100 ) or
@@ -189,19 +189,16 @@ class Picture < ActiveRecord::Base
         :score_reviser_id => current_user.id 
       )
       self.score = new_score
-      
-      # set the user activity for score change? No
     elsif self.is_graded == false 
       # not a revision; a new score 
       self.is_graded = true 
       self.is_approved = true 
       self.score = new_score
-      
-      #set the user activity for grading? No.
     end
     
     
     self.save
+    project_submission.update_score
     
   end
   

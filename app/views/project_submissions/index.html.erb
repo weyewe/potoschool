@@ -17,7 +17,7 @@
             <th>Subject</th>
             <th>Description</th>
             <th>Deadline</th>
-            <th>Approved</th>
+            <th>Grade</th>
           </tr>
         </thead>
         <tbody>
@@ -38,17 +38,29 @@
               <td><%= project.description %></td>
               <td><%= project.deadline_datetime.strftime('%b %d, %Y') %></td>
               
-              <% if project_submission.is_approved.nil? %>
-                <td>Pending</td>
-              <% elsif project_submission.approved? %>
-                <td>
-                  	<span class="label label-success">Yes</span>
-                </td>
-              <% else %>
-                <td>
-                  <span class="label label-important">No</span>
-                </td>
-              <% end %>
+              <!-- <%# if project_submission.is_approved.nil? %>
+                         <td>Pending</td>
+                       <%# elsif project_submission.approved? %>
+                         <td>
+                            <span class="label label-success">Yes</span>
+                         </td>
+                       <%# else %>
+                         <td>
+                           <span class="label label-important">No</span>
+                         </td>
+                       <%# end %> -->
+              <td>
+                <% if project.publish_grade == true %>
+                  <% if project_submission.has_score? %>
+                    <span class="label label-success"><%= project_submission.max_grade %></span>
+                  <% else %>
+                    <span class="label label-important">0</span>
+                  <% end %>
+                <% elsif %>
+                  <span class="label">Pending</span>
+                <% end %>
+              </td>
+              
             </tr>
           <% end %>
 

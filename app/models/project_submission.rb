@@ -36,15 +36,8 @@ class ProjectSubmission < ActiveRecord::Base
   end
 
   def update_score
-    total_score = 0
-    total_asked_submission = self.project.total_submission
-    if not( total_asked_submission == 0 or total_asked_submission.nil?   ) 
-      self.original_pictures.order("created_at ASC").limit(total_asked_submission).each do | picture |
-        total_score += picture.score 
-      end
-      self.score = (total_score.to_f)/total_asked_submission 
-      self.save 
-    end
+    self.score = self.max_grade
+    self.save 
   end
 
   def self.refresh_score
@@ -146,6 +139,10 @@ class ProjectSubmission < ActiveRecord::Base
               where(:is_deleted=> false, :is_graded => true).
               maximum("score")
     end
+  end
+  
+  def has_score?
+     not self.max_grade.nil?
   end
   
 end

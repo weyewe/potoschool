@@ -1,0 +1,22 @@
+<tr id="entry_row_<%= project.id %>">
+ 
+  <td><%= project.title %></td>
+  <td><%= project.course.subject.name  + "-"  + project.course.name  %> </td>
+
+  <td><%= project.deadline_datetime.in_time_zone("Jakarta") %></td>
+  
+  <td><%= project.course.students.count %></td>
+  <td><%= project.total_completed_submissions %></td>
+  <td><%= project.total_graded_submissions %></td>
+  <td>
+    <% if project.publish_grade  == false %>
+      <%= link_to "Publish", '#', 
+              :class => "btn btn-success entry-link entry-closer",
+              :id => "entry_#{project.id}" %>
+    <% else %>
+      <span class="label label-success">Published</span>
+    <% end %>
+  </td>
+  
+    
+</tr>

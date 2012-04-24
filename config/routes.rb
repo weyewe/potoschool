@@ -116,6 +116,10 @@ Debita46::Application.routes.draw do
   match 'gallery_picture_grading/project/:project_id/picture/:picture_id' => "pictures#gallery_picture_grading" , :as => :gallery_picture_grading
   match 'execute_grading_score/picture/:picture_id' => "pictures#execute_grading_score", :as => :execute_grading_score, :method => :post
   
+  
+  # finalize project: publish grade  to student + mark score as 0 for those non submitted 
+  match 'select_project_to_publish_grade' => "projects#select_project_to_publish_grade", :as => :select_project_to_publish_grade
+  match 'execute_publish_grade' => "projects#execute_publish_grade", :as => :execute_publish_grade, :method => :post 
 =begin
   FOR STUDENTS 
 =end  

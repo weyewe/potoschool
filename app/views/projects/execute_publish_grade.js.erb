@@ -1,0 +1,9 @@
+$(document).ready(function(){
+  <% new_row = escape_javascript(
+      render :partial => "projects/publish_grade", :locals => {
+        :project => @project 
+      }
+  ) %>
+  $("#entry_<%= @project.id %>").hideLoading();
+  $("#entry_row_<%= @project.id %>").replaceWith('<%= new_row %>');
+});

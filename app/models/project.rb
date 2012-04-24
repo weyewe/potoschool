@@ -191,19 +191,43 @@ class Project < ActiveRecord::Base
 =begin
   grade code 
 =end
+
+  def total_graded_submissions
+    #  we want to find those submissions where the score is not nil
+    self.project_submissions.
+          where{
+            ( score.not_eq nil ) | 
+            ( score.not_eq 0 )
+          }.count 
+  end
+  
+# ps = ProjectSubmission.find(:first, :conditions => {:user_id => student.id, :project_id => uts.id } ) 
+  
+  def total_completed_submissions
+    self.project_submissions.where{
+      total_original_submission.gt 0 
+    }.count
+  end
+  
   def get_grade_for( student )
     project_submission = self.project_submissions.find(:first, :conditions => {
       :project_id => self.id,
       :user_id => student.id 
     })
    
-    graded_pictures_count = project_submission.pictures.where(:is_deleted=> false, :is_graded => true).count
-    if graded_pictures_count == 0 
-      return nil
-    else
-      return project_submission.pictures.
-              where(:is_deleted=> false, :is_graded => true).
-              maximum("score")
-    end
+    # graded_pictures_count = project_submission.pictures.where(:is_deleted=> false, :is_graded => true).count
+    # if graded_pictures_count == 0 
+    #   return nil
+    # else
+    #   return project_submission.pictures.
+    #           where(:is_deleted=> false, :is_graded => true).
+    #           maximum("score")
+    # end
+    project_submission.score 
+  end
+  
+  def activate_publish_grade
+    self.publish_grade = true 
+    self.save 
   end
 end

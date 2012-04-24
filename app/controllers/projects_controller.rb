@@ -210,8 +210,32 @@ class ProjectsController < ApplicationController
     @project.re_activate
   end
   
+# publish grade projects
+
+  def select_project_to_publish_grade
+    @projects = current_user.all_projects.order("deadline_datetime ASC")
+    add_breadcrumb "Select Project", "select_project_to_publish_grade_url"
+  end
   
-  
+  def execute_publish_grade
+    
+    
+    if not current_user.has_role?(:teacher)
+      redirect_to root_url
+      return
+    end
+    
+    @project = Project.find_by_id( params[:entry_id])
+    
+    if @project.nil? or not @project.created_by?(current_user)
+      redirect_to root_url 
+      return 
+    end
+    
+    @project.activate_publish_grade
+    
+    
+  end
   
 =begin
   School admin perspective 
