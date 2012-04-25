@@ -82,6 +82,22 @@
           <% end %>
       <% end %>
       
+      <div class="alert alert-error">
+        <strong>Delete Upload</strong> 
+        Delete Upload hanya dapat dilakukan jika:
+        <ol>
+          <li>
+            <b>Belum terjadi aktifitas</b> di file yang diupload, seperti: anda memberi comment, guru memberi comment, approve atau reject. 
+          </li>
+          <li>
+            Belum melewati <b>batas deadline</b>.
+          </li>
+          <li>
+            Project belum <b>ditutup</b>.
+          </li>
+        </ol>
+      </div>
+      
       
       <!-- interaction with lecturer -->
       <% if @project.allow_student_activities? %>
@@ -97,30 +113,23 @@
         <% if @picture.is_approved.nil? %>
           <%= render :partial => "pictures/pending_submission", :locals => {
             :picture => @picture } %>
-            
-          <% if @picture.can_be_deleted? %>
-            <div class="alert alert-error">
-              <strong>Revision</strong> 
-              <br /> 
-              Revision upload is only available if the lecturer has
-              <b>approved</b> or <b>rejected</b> this submission. 
-                Meanwhile, if you want to upload another 
-              picture, just <b>Delete</b> and upload the new one.
-              <br />
-              <b>Don't</b> comment on the picture if you want to 
-              upload the new one.
-            </div>
-          <% else %>
-            <div class="alert alert-error">
-              <strong>Revision</strong> 
-              <br /> 
-              Revision upload is only available if the lecturer has
-              <b>approved</b> or <b>rejected</b> this submission. 
-            </div>
-          <% end %>
         <% end %>
       
-      
+        <div class="alert alert-error">
+          <strong>Upload Revisi</strong> 
+          Upload Revisi hanya dapat dilakukan jika:
+          <ol>
+            <li>
+              Guru telah <b>reject</b> atau <b>approve</b> foto yang di upload. 
+            </li>
+            <li>
+              Belum melewati <b>batas deadline</b>.
+            </li>
+            <li>
+              Project belum <b>ditutup</b>.
+            </li>
+          </ol>
+        </div>
       
       
   
