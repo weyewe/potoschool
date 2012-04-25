@@ -70,6 +70,7 @@ class Picture < ActiveRecord::Base
   end
   
   def last_revision
+    #  how can we cater for deleted? 
     last_revision  = self.original_picture.revisions.last 
     if last_revision.nil?
       return self.original_picture
