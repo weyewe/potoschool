@@ -13,8 +13,7 @@
     </div>
     <% last_approved_revision = original_picture.last_approved_revision %>
     
-    <%= link_to  project_submission_picture_url( project_submission, 
-                  last_approved_revision),
+    <%= link_to  gallery_picture_grading_url( @project, last_approved_revision)  ,
         :class => "thumbnail gallery_thumbnail" , 
         :style => "height:160px; overflow:hidden;",
         :id => "display-id_#{last_approved_revision.id}" do %>

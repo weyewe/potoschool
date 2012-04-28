@@ -1,7 +1,9 @@
 
 <div class="span9 content">
   <%= create_guide("Submission List ", 
-        "All submissions for project:  <b>#{@project.title}</b>").html_safe %>
+        "All submissions for project:  <b>#{@project.title}</b>" + "<br />" + 
+        "Student Name: <b>#{@user.name}</b>"+ "<br />" + 
+        "Student NIM : <b>#{@user.nim}</b>").html_safe %>
   
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   

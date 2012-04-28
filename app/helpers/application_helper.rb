@@ -187,7 +187,7 @@ module ApplicationHelper
 =begin
   Getting prev and next button for the pictures#show
 =end
-  def get_next_project_picture( pic , is_grading_mode)
+  def get_next_project_picture( pic , is_grading_mode, is_gallery_mode)
     next_pic = pic.next_pic
     
     if not next_pic.nil?
@@ -198,6 +198,11 @@ module ApplicationHelper
         destination_url = grade_project_submission_picture_url( next_pic ) 
       end
       
+      if is_gallery_mode
+        destination_url = gallery_picture_grading_url( pic.project_submission.project, next_pic)
+        # link_to "#{score}", gallery_picture_grading_url( project, picture)
+      end
+      
       
       return  create_galery_navigation_button( NEXT_BUTTON_TEXT, "next",destination_url )
     else
@@ -205,7 +210,7 @@ module ApplicationHelper
     end
   end
   
-  def get_previous_project_picture( pic , is_grading_mode )
+  def get_previous_project_picture( pic , is_grading_mode, is_gallery_mode  )
     prev_pic = pic.prev_pic
     
     if not prev_pic.nil?
@@ -215,6 +220,11 @@ module ApplicationHelper
         destination_url = project_submission_picture_url( pic.project_submission, prev_pic)
       else
         destination_url = grade_project_submission_picture_url( prev_pic ) 
+      end
+      
+      if is_gallery_mode
+        destination_url = gallery_picture_grading_url( pic.project_submission.project, prev_pic)
+        # link_to "#{score}", gallery_picture_grading_url( project, picture)
       end
       
       

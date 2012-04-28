@@ -23,9 +23,9 @@
         <% next %>
       <% end %>
       
-      
+        <% user = project_submission.user %>
         <h3 style="margin-bottom:20px;" id="project_submission-<%= project_submission.id %>">
-          <%= project_submission.user.nim %>
+          <%= user.name %> | <%= user.nim %> 
         </h3>
         <ul class="thumbnails" >
           <% pictures = project_submission.original_pictures.order("created_at DESC") %>

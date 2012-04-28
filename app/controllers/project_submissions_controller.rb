@@ -52,6 +52,7 @@ class ProjectSubmissionsController < ApplicationController
     
     
     @original_pictures = @project_submission.original_pictures #.includes(:positional_comments) 
+    @user = @project_submission.user 
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
     set_breadcrumb_for @subject, 'select_project_submission_for_grading_path' + "(#{@project.id})", 

@@ -128,6 +128,7 @@ class PicturesController < ApplicationController
     @picture = Picture.find_by_id( params[:picture_id] )
     @project_submission = @picture.project_submission
     @project = @project_submission.project
+    @user = @project_submission.user 
     
     if @project.nil? or not @project.created_by?(current_user)
       redirect_to root_url 
@@ -279,6 +280,7 @@ class PicturesController < ApplicationController
     @all_revisions = @original_picture.revisions.where(:is_deleted => false).order("created_at DESC")
     
     @project_submission = @picture.project_submission
+    @user = @project_submission.user 
     
     
     add_breadcrumb "Select Project", "select_project_for_grading_url"
