@@ -31,7 +31,7 @@
           <% prev_id = params[:gallery_pic_id] %>
         <% end %>
         <li class="previous">
-          <%= link_to " ← Back to Project Display in Gallery", 
+          <%= link_to " ← Back to #{@user.name} Project", 
               gallery_mode_grading_url(@project) + "#project_submission-#{prev_id}" %>
         </li>
       </ul>
