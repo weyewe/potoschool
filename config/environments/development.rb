@@ -28,8 +28,19 @@ Debita46::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  # config.cache_store = :dalli_store
+  # config.action_controller.perform_caching = true
+  # # config.cache_store = :dalli_store, '127.0.0.1' 
+  # config.cache_store = :dalli_store, 'localhost:11211'
+  # config.action_controller.perform_caching  = true
+  # config.cache_classes = true
+  # config.cache_store = :mem_cache_store, '127.0.0.1:11211', {:namespace => "dev_with_caching"}
+  # http://www.jeffmdean.com/2008/7/5/rails-cache-memcached-development-mode-and-offline-cache-invalidation
   
   
+  config.action_controller.perform_caching = true
+  config.cache_store = :dalli_store
+  # http://www.arailsdemo.com/posts/17
   
   config.action_mailer.default_url_options = { host: "localhost", :port => 3000 }
   config.action_mailer.raise_delivery_errors = true

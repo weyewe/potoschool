@@ -7,7 +7,10 @@
       <%= image_tag original_picture.get_icon("revision") %>
     <% end %>
     <p>
-      <b><%= original_picture.name %></b>
+      <%= get_picture_status_label(original_picture).html_safe %>
+      
+   
+      
     </p>
   </li>
 </ul>

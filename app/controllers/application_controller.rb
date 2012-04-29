@@ -73,6 +73,13 @@ class ApplicationController < ActionController::Base
   end
   
   
+=begin
+  Cleaning out those caching
+=end
+
+  def expire_grading_gallery_list_cache( project ) 
+    expire_fragment( "gallery_grading_list_#{project.id}"  )
+  end
   
   protected
   def add_breadcrumb name, url = ''

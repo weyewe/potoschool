@@ -14,19 +14,27 @@
       <%# end %>
     <%# end %>
     
-    <% if not original_picture.any_picture_submission_approved? %>
-      <%= link_to  grade_project_submission_picture_path( original_picture.last_revision),
-       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
-        <%#= image_tag original_picture.last_revision.index_image_url %>
-        <%= image_tag original_picture.last_revision.get_icon("index") %>
-      <% end %>
-    <% else %>
-      <%= link_to  grade_project_submission_picture_path( original_picture.approved_picture),
-       :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
-        <%#= image_tag original_picture.approved_picture.index_image_url %>
-        <%= image_tag original_picture.approved_picture.get_icon("index") %>
-      <% end %>
+    <!--  in all cases, show the latest revision  -->
+    <!-- <%# if not original_picture.any_picture_submission_approved? %>
+         <%#= link_to  grade_project_submission_picture_path( original_picture.last_revision),
+          :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+           <%#= image_tag original_picture.last_revision.get_icon("index") %>
+         <%# end %>
+       <%# else %>
+         <%#= link_to  grade_project_submission_picture_path( original_picture.approved_picture),
+          :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+         
+           <%#= image_tag original_picture.approved_picture.get_icon("index") %>
+         <%# end %>
+       <%# end %> -->
+    
+    
+    <%= link_to  grade_project_submission_picture_path( original_picture.last_revision),
+     :class => "thumbnail" , :style => "height:160px; overflow:hidden;" do %>
+      <%#= image_tag original_picture.last_revision.index_image_url %>
+      <%= image_tag original_picture.last_revision.get_icon("index") %>
     <% end %>
+  
     
     
     <!-- <img alt="" src="http://placehold.it/260x180"> -->
@@ -44,36 +52,22 @@
             <td><%= original_picture.revisions.where(:is_deleted => false).count %></td>
           </tr>
           
-            <% if original_picture.any_picture_submission_approved? %>
-            <tr>
-              <td>Approval</td>
-              <td>YES</td>
-            </tr>
-            <tr>
-              <td>Score</td>
-              <td><%= original_picture.approved_picture.score %></td>
-            </tr>
-            <% else %>
-              <% if original_picture.last_revision.is_approved == false %>
-                <tr>
-                  <td>Approval</td>
-                  <td>REJECT</td>
-                </tr>
-                <tr>
-                  <td>Score</td>
-                  <td>0</td>
-                </tr>
-              <% else %>
-                <tr>
-                  <td>Approval</td>
-                  <td>PENDING</td>
-                </tr>
-                <tr>
-                  <td>Score</td>
-                  <td>Pending</td>
-                </tr>
-              <% end %>
-            <% end %>
+          <tr>
+            <td>Past Approval?</td>
+            <td><%= original_picture.revisions.where(:is_approved => true ).count %></td>
+          </tr>
+          
+          <% last_revision =  original_picture.last_revision %>
+          <tr>
+            <td> Approval</td>
+            <td><%= get_picture_status_label(last_revision).html_safe %></td>
+          </tr>
+          
+          <tr>
+            <td> Score</td>
+            <td><%= last_revision.score  %></td>
+          </tr>
+          
          </tbody>
       </table>
      

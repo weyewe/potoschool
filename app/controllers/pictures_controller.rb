@@ -46,6 +46,11 @@ class PicturesController < ApplicationController
       
     end 
       
+      # expiring the fragment used in gallery_mode_grading
+    if not new_picture.nil?  
+      expire_fragment( "gallery_grading_list_project_submission_#{@project_submission.id}" )
+    end
+      
     if params[:original_picture_id].nil?
       # it is from new picture page
       redirect_to new_project_submission_picture_path(@project_submission)
@@ -66,6 +71,10 @@ class PicturesController < ApplicationController
       @picture.set_deleted
     end
     
+    # expires cache
+    expire_fragment( "gallery_grading_list_project_submission_#{@project_submission.id}" )
+    
+    
     redirect_to new_project_submission_picture_url(@project_submission) 
   end
   
@@ -78,6 +87,10 @@ class PicturesController < ApplicationController
       # delete code 
       @picture.set_deleted
     end
+    
+    # expires cache
+    expire_fragment( "gallery_grading_list_project_submission_#{@project_submission.id}" )
+    
     
     if @picture.is_original? 
       redirect_to new_project_submission_picture_url(@project_submission) 
@@ -204,6 +217,10 @@ class PicturesController < ApplicationController
       @picture.project_submission.project   #the project where that picture belongs to 
     )
     
+    # cache expiring
+    if not @picture.is_approved.nil?
+      expire_fragment( "gallery_grading_list_project_submission_#{@project_submission.id}" )
+    end
     
     respond_to do |format|
       format.html {  redirect_to project_submission_picture_path(@picture ,@picture) }
@@ -225,7 +242,13 @@ class PicturesController < ApplicationController
    
     
     @picture.set_score( params[:picture][:score].to_i, current_user )
+    @project_submission = @picture.project_submission
     
+    # cache expiring
+    if not @picture.is_approved.nil?
+      expire_fragment( "gallery_grading_list_project_submission_#{@project_submission.id}" )
+    end
+
 
     respond_to do |format|
       format.html {  redirect_to root_url  }

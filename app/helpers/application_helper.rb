@@ -45,6 +45,21 @@ module ApplicationHelper
   end
   
   
+=begin  
+  Picture Grading status
+=end
+
+  def get_picture_status_label(picture)
+    result = ""
+    if picture.is_approved.nil? 
+      result = "<span class='label label-info'>Pending</span>"
+    elsif picture.is_approved == true 
+      result =  "<span class='label label-success'>Approved</span>"
+    elsif picture.is_approved == false 
+      result =  "<span class='label label-important'>Rejected</span>"
+    end 
+    return result
+  end
   
 =begin
   For positional comment

@@ -16,37 +16,41 @@
   
   
   <!-- display the uploaded image here!  -->
- 
-    <div class="span12">
-    <% @project_submissions.each do |project_submission| %>
-      <% if project_submission.pictures.count == 0 %>
-        <% next %>
-      <% end %>
-      
-        <% user = project_submission.user %>
-        <h3 style="margin-bottom:20px;" id="project_submission-<%= project_submission.id %>">
-          <%= user.name %> | <%= user.nim %> 
-        </h3>
-        <ul class="thumbnails" >
-          <% pictures = project_submission.original_pictures.order("created_at DESC") %>
-          <!-- rendering the pics -->
-          <% pictures.each do |picture| %>
-            <% if picture.picture_filetype == PICTURE_FILETYPE[:image]%>
-              <%= render :partial => "pictures/gallery_mode_picture_display" , :locals => {
-                :picture => picture,
-                :original_picture => picture , 
-                :project_submission => project_submission,
-                :project => @project
-              }%>
-            <% end %>
-          <% end %>
+    
+    <%# cache( "gallery_grading_list_#{@project.id}" )  do %>
+      <div class="span12">
+        <% @project_submissions.each do |project_submission| %>
+          
+            <%# if project_submission.pictures.count == 0 %>
+              <%# next %>
+            <%# end %>
+          <% cache( "gallery_grading_list_project_submission_#{project_submission.id}" )  do %> 
+            <% user = project_submission.user %>
+            <h3 style="margin-bottom:20px;" id="project_submission-<%= project_submission.id %>">
+              <%= user.name %> | <%= user.nim %> 
+            </h3>
+            <ul class="thumbnails" >
+              <% pictures = project_submission.original_pictures.order("created_at DESC") %>
+              <!-- rendering the pics -->
+              <% pictures.each do |picture| %>
+                <% if picture.picture_filetype == PICTURE_FILETYPE[:image]%>
+                  <%= render :partial => "pictures/gallery_mode_picture_display" , :locals => {
+                    :picture => picture,
+                    :original_picture => picture , 
+                    :project_submission => project_submission,
+                    :project => @project
+                  }%>
+                <% end %>
+              <% end %>
 
-        </ul>
-      
-      <hr />
-      
-    <% end %>
-    </div>
+            </ul>
+    
+            <hr />
+          <% end %>  <!-- end of caching -->
+    
+        <% end %>
+      </div>
+    <%# end %>
     
     
   

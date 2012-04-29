@@ -34,9 +34,10 @@ gem 'hirefireapp'
 gem "daemons"
 
 
+
 gem 'fastercsv'
  #http://stackoverflow.com/questions/1328250/how-do-i-import-using-fastercsv-a-row-with-a-name-like-ciaran
-
+gem 'dalli'
 
 # http://szeryf.wordpress.com/2008/06/13/easy-and-flexible-breadcrumbs-for-rails/
 #  breadcrumb
@@ -67,3 +68,7 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
+
+
+
+

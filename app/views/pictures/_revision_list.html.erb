@@ -10,7 +10,7 @@
     <% end %>
     
     <p>
-      <b><%= revision.name %></b>
+      <%= get_picture_status_label(revision ).html_safe %>
     </p>
   </li>
   <% end %>
