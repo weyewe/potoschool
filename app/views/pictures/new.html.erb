@@ -13,6 +13,15 @@
   
   <div class="row-fluid">
     <% if @project.possible_to_upload_more?(current_user) %>
+      <button href="#" class="btn btn-info" id="loading_uploader_notification" style="margin-bottom:20px;">Loading Uploader...</button>
+      
+      <button href="#" class="btn btn-success" id="uploading_progress_notification" style="margin-bottom:20px; display:none;">Uploading...</button>
+      
+      <button href="#" class="btn btn-warning" id="refreshing_progress_notification" style="margin-bottom:20px; display:none;">Refreshing..</button>
+      
+      
+      <br />
+      
       <%= render :partial => "pictures/uploader" %>
     <% else %>
       <%= render :partial => "pictures/no_uploader_feedback", 

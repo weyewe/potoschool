@@ -231,8 +231,15 @@ class Picture < ActiveRecord::Base
 =end
 
   def images_size
-    self.original_image_size + 
+    size = 0
+    if self.picture_filetype == PICTURE_FILETYPE[:image]  
+     size =  self.original_image_size + 
       self.byproduct_image_size
+    else 
+      size = self.original_image_size 
+    end
+    
+    return size
   end
   
   def byproduct_to_original_ratio

@@ -3,7 +3,7 @@
   <li><a href="#document_tab" data-toggle="tab">Upload Document</a></li>
 </ul>
 
-<div class="tab-content">
+<div class="tab-content" id="tab_content_wrapper" style="display:none;">
   <div class="tab-pane active" id="image_tab">
     <%= render :partial => "pictures/new_picture_upload" %>
   </div>
@@ -22,7 +22,14 @@
          pollTimeout : 15000,
          processZeroFiles : false,
          onStart : function(assembly){
-         
+           $("#tab_content_wrapper").fadeOut();
+           $("#uploading_progress_notification").fadeIn();
+           action_tracker_status = 1 ;
+         },
+         onCancel: function(){
+           $("#uploading_progress_notification").hide();
+           $("#refreshing_progress_notification").fadeIn();
+           window.location.reload(true);
          }
        });
      
@@ -31,6 +38,14 @@
           pollTimeout : 15000,
           processZeroFiles : false,
           onStart : function(assembly){
+             $("#tab_content_wrapper").fadeOut();
+             $("#uploading_progress_notification").fadeIn();
+             action_tracker_status = 1 ;
+          },
+          onCancel: function(){
+            $("#uploading_progress_notification").hide();
+            $("#refreshing_progress_notification").fadeIn();
+            window.location.reload(true);
           }
         });
      });
