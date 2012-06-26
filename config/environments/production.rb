@@ -51,7 +51,7 @@ Debita46::Application.configure do
                           
                           
   config.assets.precompile += %w(  image_map.css 
-                          jquery.Jcrop.min.js phototagging_exe.js jcrop.css bootstrap_email.css jquery.jqplot.css
+                          jquery.Jcrop.min.js phototagging_exe.js jcrop.css bootstrap_email.css jquery.jqplot.min.css
                           jquery.jqplot.min.js ) 
                             
                             
