@@ -78,7 +78,7 @@ Debita46::Application.routes.draw do
   
   match 'select_active_project_for_admin' => "projects#select_active_project_for_admin", :as => :select_active_project_for_admin
   match 'gallery_mode_active_project/teacher/:teacher_id/project/:project_id' => "pictures#gallery_mode_active_project" , :as => :gallery_mode_active_project
-  
+  match 'view_submission_rate/:project_id' => 'projects#view_submission_rate', :as => :view_submission_rate
   # FOR THE TEACHER
   #   create project for course (can be group project or personal project) 
   match 'select_subject_for_project' => "projects#select_subject_for_project", :as => :select_subject_for_project

@@ -1,0 +1,79 @@
+
+<div class="span9 content">
+  
+  
+  <%= create_guide("Submission Rate", 
+        "See the submission behavior." + "<br />" + 
+        "Starting date: <b>#{@project.starting_datetime.to_date}</b>" + "<br />" + 
+        "Ending date: <b>#{@project.deadline_datetime.to_date}</b>").html_safe %>
+  
+  <%= create_breadcrumb(@breadcrumbs).html_safe %>
+  
+  
+  
+  <div class="row-fluid">
+    
+   
+    <div id="picture_submission_source" style="display:none;">
+      <% @project.day_and_total_submission_pairs.each do |key,value| %>
+        <span><%= "#{key},#{value}"%></span>
+      <% end %>
+    </div>
+    
+    <div class="span12">
+      <div id="chartdiv" style="height:400px;width:600px; "></div>
+
+    </div>    <!--/span12 -->
+  </div><!--/row-->
+
+</div><!--/span-->
+
+<% content_for :additional_js  do %>
+  <%= javascript_include_tag "jquery.jqplot.min.js" %> 
+  <script type="text/javascript">
+  $(document).ready(function(){
+    
+    var picture_submission_graph_data_point_container = [];
+    $("#picture_submission_source span").each(function(){
+      var day_count_pair = $(this).text();
+      console.log("the day count pair: " + day_count_pair);
+      var day = parseInt( day_count_pair.split(",")[0] );
+      var count = parseInt( day_count_pair.split(",")[1] );
+      console.log("the day: "+ day);
+      console.log("The count: " + count);
+      picture_submission_graph_data_point_container.push( [day, count ]);
+    });
+    
+    
+    var graph = [];
+    graph.push(picture_submission_graph_data_point_container);
+    $.jqplot('chartdiv', graph );
+    
+    // $.jqplot('chartdiv',  [
+    //    [  [1, 2],
+    //      [3,5.12],
+    //      [5,13.1],
+    //      [7,33.6], + 
+    //      [9,85.9],
+    //      [11,219.9]
+    //    ]
+    //  
+    //  ]);
+  });
+  </script>
+<% end %>
+
+<% content_for :additional_css  do %>
+  <%= stylesheet_link_tag  "jquery.jqplot.min.css" %> 
+<% end %>
+
+
+
+
+
+
+
+
+
+
+

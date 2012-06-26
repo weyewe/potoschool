@@ -237,6 +237,7 @@ class ProjectsController < ApplicationController
     
   end
   
+  
 =begin
   School admin perspective 
 =end
@@ -254,6 +255,18 @@ class ProjectsController < ApplicationController
     add_breadcrumb "Select Project", "select_active_project_for_admin_url"
   end
 
+
+=begin
+  Data Analysis
+=end
+
+  def view_submission_rate
+    @project = Project.find_by_id params[:project_id]
+    
+    add_breadcrumb "Select Project", "select_active_project_for_admin_url"
+    set_breadcrumb_for @project, 'view_submission_rate_url' + "(#{@project.id})", 
+                "Submission Data"
+  end
 
   protected
   

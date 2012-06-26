@@ -230,4 +230,34 @@ class Project < ActiveRecord::Base
     self.publish_grade = true 
     self.save 
   end
+  
+=begin
+  DATA PLOTTING AND ANALYSIS
+=end
+
+  def active_days
+    starting_date = self.starting_datetime.to_date 
+    ending_date  = self.deadline_datetime.to_date
+    (ending_date-starting_date).to_i
+  end
+  
+  def day_and_total_submission_pairs
+    project_submission_id_list = self.project_submissions.map {|x| x.id }
+    
+    active_days = self.active_days
+    result_hash = {}
+    (0..active_days).each do |day_count|
+      start_datetime = self.starting_datetime + day_count.day
+      end_datetime  = self.starting_datetime + (day_count + 1  ).day - 1.second
+      # Client.where(:created_at => (params[:start_date].to_date)..(params[:end_date].to_date))
+      submitted_picture_count = Picture.find(:all, :conditions => {
+        :project_submission_id => project_submission_id_list,
+        :created_at => (start_datetime..end_datetime)
+      }).count
+      
+      result_hash[day_count] = submitted_picture_count
+    end
+    return result_hash
+  end
+
 end

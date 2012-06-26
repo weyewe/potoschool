@@ -645,6 +645,10 @@ module ApplicationHelper
           {
             :controller => "pictures",
             :action => "gallery_mode_active_project"
+          },  
+          {
+              :controller => "projects",
+              :action => "view_submission_rate"
           }
         ]
       }

@@ -25,6 +25,7 @@
             <th>Total Student</th>
             <th>Completed Submission</th>
             <th>Close</th>
+            <th>Graph</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +45,12 @@
                   <%= link_to "Close", '#', 
                             :class => "btn btn-danger entry-link entry-closer",
                             :id => "entry_#{project.id}" %>
+                </td>
+                
+                <td>
+                  <%= link_to "Graph", view_submission_rate_url(project), 
+                            :class => "btn",
+                            :id => "graph_entry_#{project.id}" %>
                 </td>
               
                 
