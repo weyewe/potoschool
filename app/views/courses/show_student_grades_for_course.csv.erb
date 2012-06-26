@@ -1,0 +1,24 @@
+<%- headers = ["NIM"] -%>
+<%- if @projects.length == 0 -%> 
+  <%- headers << "No Closed Projects" -%>
+<%- else -%>
+  <%- (1..@projects.length).each do |counter| -%>
+    <%- headers << @projects[counter-1].title -%>
+  <%- end -%>
+<%- end -%>
+<%= CSV.generate_line(headers, :row_sep => nil).html_safe %>
+<%- @students.each do |student| -%> 
+  <%- row = [student.nim] -%>
+  <%- if @projects.length == 0 -%>
+    <%- row << "-" -%>
+  <%- else -%> 
+    <%- (1..@projects.length).each do |counter| -%>
+      <%- row << extract_project_submission_result(
+                @projects[counter-1].get_grade_for( student ) ,
+                student, 
+                @projects[counter-1] 
+      )  -%>
+    <%- end -%>
+  <%- end -%> 
+  <%=   CSV.generate_line(row, :row_sep => nil).html_safe %>
+<%- end -%>

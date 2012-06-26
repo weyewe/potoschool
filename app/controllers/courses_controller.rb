@@ -1,3 +1,5 @@
+require "csv"
+
 class CoursesController < ApplicationController
   def new 
     
@@ -49,14 +51,27 @@ class CoursesController < ApplicationController
   
   def show_student_grades_for_course
     @course  = Course.find_by_id( params[:course_id])
+    @subject = @course.subject
     @students = @course.students 
     @closed_projects = @course.get_closed_projects
     # Category.includes(:posts => [{:comments => :guest}, :tags])
     @projects = @course.projects.includes(:project_submissions => [:pictures] ).order("created_at ASC")
     
-    add_breadcrumb "Pick the subject", 'select_course_for_grade_summary_path'
-    set_breadcrumb_for @course, 'show_student_grades_for_course_path' + "(#{@course.id})", 
-              'Student Grades'
+    
+    respond_to do |format|
+      format.html do 
+        add_breadcrumb "Pick the subject", 'select_course_for_grade_summary_path'
+        set_breadcrumb_for @course, 'show_student_grades_for_course_path' + "(#{@course.id})", 
+                  'Student Grades'
+      end
+      format.csv  do
+        render_csv("#{@subject.name}-#{@course.name}-#{Time.now.strftime("%Y%m%d")}")
+      end
+    end
+    
+    
+    
+    
   end
   
   def show_project_grading_details
@@ -73,6 +88,8 @@ class CoursesController < ApplicationController
               'Grading Details'
     
   end
+  
+  
   
   
   

@@ -5,6 +5,15 @@
         "Score for subject: <b>#{@course.subject.name}</b><br />" + 
         "Course : <b>#{@course.name}</b>").html_safe %>
   
+  
+  
+
+  <div class="alert alert-success">
+    <strong>Download CSV (use Excel to open!)</strong> 
+    <%= link_to "Download", show_student_grades_for_course_url(@course, :csv), :class => "btn" %>
+  </div>
+
+
   <%= create_breadcrumb(@breadcrumbs).html_safe %>
   
 
