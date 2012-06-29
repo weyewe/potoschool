@@ -1,4 +1,4 @@
-<%- headers = ["NIM"] -%>
+<%- headers = ["NIM", "Name"] -%>
 <%- if @projects.length == 0 -%> 
   <%- headers << "No Closed Projects" -%>
 <%- else -%>
@@ -9,6 +9,7 @@
 <%= CSV.generate_line(headers, :row_sep => nil).html_safe %>
 <%- @students.each do |student| -%> 
   <%- row = [student.nim] -%>
+  <%- row << student.name -%>
   <%- if @projects.length == 0 -%>
     <%- row << "-" -%>
   <%- else -%> 
