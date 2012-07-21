@@ -71,14 +71,14 @@
             <tr>
               <td colspan="2" style="text-align:center;">
                 <% if original_picture.can_be_deleted?  %>
-                <%= form_for original_picture, 
-                      :url => delete_original_image_url,
-                      :html => {:class => "delete_pic" } do |f| %>
-                  <%= hidden_field_tag 'picture_id', original_picture.id  %>
-                  <button href="#" class="btn btn-danger delete_original" >
-                    Delete
-                  </button>
-                <% end %>
+                  <%= form_for original_picture, 
+                        :url => delete_original_image_url,
+                        :html => {:class => "delete_pic" } do |f| %>
+                    <%= hidden_field_tag 'picture_id', original_picture.id  %>
+                    <button href="#" class="btn btn-danger delete_original" >
+                      Delete
+                    </button>
+                  <% end %>
                   
                 <% else %>
                   --
