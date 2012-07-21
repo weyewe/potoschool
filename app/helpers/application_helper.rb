@@ -493,6 +493,26 @@ module ApplicationHelper
          ]
        },
        {
+           :title => "Add Term",
+           :destination_link => "new_subject_url",
+           :conditions => [
+             {
+               :controller => "subjects", 
+               :action => "new"
+              }
+             ]
+         },
+       {
+           :title => "Close Term",
+           :destination_link => "new_subject_url",
+           :conditions => [
+             {
+               :controller => "subjects", 
+               :action => "new"
+              }
+             ]
+         },
+       {
           :title => "Create Subject",
           :destination_link => "new_subject_url",
           :conditions => [
