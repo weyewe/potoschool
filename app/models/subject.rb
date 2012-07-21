@@ -11,6 +11,8 @@ class Subject < ActiveRecord::Base
   has_many :users, :through => :subject_registrations
   has_many :subject_registrations
   
+  belongs_to :term 
+  
   
   def find_course_by_name( name ) 
     Course.find(:first, :conditions => {

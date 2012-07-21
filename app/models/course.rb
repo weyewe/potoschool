@@ -14,6 +14,7 @@ class Course < ActiveRecord::Base
   has_many :groups
   
   has_many :projects 
+  belongs_to :term 
   
   
   #  wtf is this?

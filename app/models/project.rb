@@ -6,6 +6,8 @@ class Project < ActiveRecord::Base
   has_many :users, :through => :project_submissions
   has_many :project_submissions
   
+  belongs_to :term 
+  
   
   def Project.create_project_by_project_creator( project_creator , new_project)
     if new_project.save 
