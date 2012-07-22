@@ -494,21 +494,15 @@ module ApplicationHelper
        },
        {
            :title => "Add Term",
-           :destination_link => "new_subject_url",
+           :destination_link => "new_term_url",
            :conditions => [
              {
-               :controller => "subjects", 
+               :controller => "terms", 
                :action => "new"
-              }
-             ]
-         },
-       {
-           :title => "Close Term",
-           :destination_link => "new_subject_url",
-           :conditions => [
-             {
-               :controller => "subjects", 
-               :action => "new"
+              },
+              {
+                :controller => "terms",
+                :action => "create"
               }
              ]
          },

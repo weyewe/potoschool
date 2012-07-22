@@ -21,6 +21,7 @@
           <tr>
             <th>Subject Name</th>
             <th>Subject Code</th>
+            <th>Term</th>
             <th>Total Course</th>
           </tr>
         </thead>
@@ -29,6 +30,11 @@
             <tr>
               <td><%= link_to "#{subject.name}", new_subject_course_url(subject) %></td>
               <td><%= subject.code %></td>
+              <td>
+                <% if not subject.term.nil?%>
+                <%= subject.term.title  %>
+                <% end%>
+              </td>
               <td><%= subject.courses.count %></td>
             </tr>
           <% end %>

@@ -1,0 +1,8 @@
+$(document).ready(function(){
+
+  <% new_row = escape_javascript(  render :partial => "terms/active_term", :locals => {
+            :term => @term
+          }) %>
+          
+  $("#active_term-<%= @term.id %>").replaceWith('<%= new_row %>');
+});

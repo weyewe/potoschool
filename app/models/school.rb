@@ -9,6 +9,26 @@ class School < ActiveRecord::Base
   has_many :failed_registrations
   
 =begin
+  Active Terms
+=end
+  def active_terms
+    self.terms.where(:is_active => true ).order("created_at DESC")
+  end
+  
+  def all_active_terms_selection
+    result = []
+    active_terms.each do |active_term|
+      result << [ "#{active_term.title}", 
+                  active_term.id
+        ]
+    end
+    return result 
+    
+    
+  end
+  
+
+=begin
   For setup
 =end
 

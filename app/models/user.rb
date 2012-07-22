@@ -525,7 +525,7 @@ class User < ActiveRecord::Base
         project_submission.destroy 
       end
       
-    elsif self.has_role(:teacher)
+    elsif self.has_role?(:teacher)
       self.course_teaching_assignments.each do |cta|
         cta.destroy 
       end

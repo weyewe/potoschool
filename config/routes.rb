@@ -8,6 +8,7 @@ Debita46::Application.routes.draw do
   
   match 'raise_exception' => 'home#raise_exception', :as => :raise_exception 
   
+  resources :terms   
   # to create teacher, create students , to create admin
   resources :enrollments
   resources :subjects do
@@ -38,6 +39,15 @@ Debita46::Application.routes.draw do
     resources :group_memberships
   end
   resources :group_memberships
+  
+=begin
+  CREATE SUBJECT, TERM_based
+=end
+
+  match 'select_term_to_create_subject' => 'terms#select_term_to_create_subject', :as => :select_term_to_create_subject
+  match 'execute_close_term' => 'terms#execute_close_term', :as => :execute_close_term, :method => :post 
+  match 'closed_terms' => 'terms#closed_terms', :as => :closed_terms
+  
   
   match 'active_subjects_management' => "subjects#active_subjects_management", :as => :active_subjects_management
   match 'passive_subjects_management' => "subjects#passive_subjects_management", :as => :passive_subjects_management

@@ -9,28 +9,17 @@
     <div class="span8">
 
 
-      <%= form_for @new_subject  , :html => {:class => "form-horizontal"} do |f| %>
+      <%= simple_form_for @new_subject  , :html => {:class => "form-horizontal"} do |f| %>
 
 
-
-        <div class="control-group">
-          <%= f.label :name, "Nama Pelajaran" %>
-          <div class="controls">
-            <%= f.text_field :name, :class=>"input-xlarge" %>
-            <p class="help-block">Masukkan nama pelajaran.</p>
-          </div>
-        </div>
+        <%= f.input :name , :input_html => {:class => "input-xlarge"}, 
+         :label => "Nama Pelajaran", :hint => "Nama subject, seperti: Fotografi Pemula" %>
+         <%= f.input :code , :input_html => {:class => "input-xlarge"}, 
+          :label => "Kode Pelajaran", :hint => "Kode pelajaran seperti FF234, jika ada" %> 
         
         
         
-        <div class="control-group">
-          <%= f.label :code, "Kode Pelajaran" %>
-          <div class="controls">
-            <%= f.text_field :code, :class=>"input-xlarge" %>
-            <p class="help-block">Masukkan kode pelajaran (jika ada).</p>
-          </div>
-        </div>
-        
+       
         
         <div class="control-group">
           <%= f.label :starting_date, "Tanggal Mulai" %>
@@ -57,8 +46,14 @@
             <p class="help-block">Masukkan deskripsi pelajaran.</p>
           </div>
         </div>
-
-
+        
+        
+        <%= f.input :term_id, :hint => "Select Term", :label => "Term" do %>
+           <%= f.select :term_id, 
+               current_school.all_active_terms_selection %>
+         <% end %>
+         
+       
 
         <%= hidden_field_tag 'school_id', current_user.get_managed_school.id   %>
 
@@ -79,12 +74,19 @@
       <table cellpadding="0" cellspacing="0" border="0" 
             class="table table-striped table-bordered" id="example">
         <thead>
-          <tr><th>Total Subjects: <%= @active_subjects.count %></th></tr>
+          <tr><th colspan="2">Total Subjects: <%= @active_subjects.count %></th></tr>
         </thead>
         <tbody>
           <% @active_subjects.each do |subject| %>
             <tr>
               <td><%= subject.name %></td>
+              <td>
+                <!-- we need to migrate the data -->
+                <% if not subject.term.nil? %>
+                  <%= subject.term.title %>
+                <% else %>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         </tbody>

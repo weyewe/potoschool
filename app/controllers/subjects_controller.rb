@@ -29,6 +29,7 @@ class SubjectsController < ApplicationController
     @subject.ending_date = parse_date(@ending_date)
     
     @subject.school_id = @school.id
+    @subject.term_id = params[:subject][:term_id]
     @subject.save
     
     redirect_to new_subject_url 

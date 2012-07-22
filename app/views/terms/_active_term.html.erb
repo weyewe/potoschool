@@ -1,0 +1,20 @@
+<tr id="active_term-<%= term.id %>">
+  <td><%= term.title  %></td>
+  <td>
+    <% if term.is_active == true %>
+     	<span class="label label-success">Yes</span>
+    <% else %>
+    <span class="label label-important">No</span>
+    <% end %>
+  </td>
+  <td style="text-align:center;">
+    <% if term.is_active == true %>
+    <a href="#" class="btn propose action true_check"
+      id="finalize-<%= term.id %>">De-Activate</a>
+    <% else %>
+    <a href="#" class="btn propose action false_check"
+      id="finalize-<%= term.id %>">Activate</a>
+    <% end %>
+    
+  </td>
+</tr>

@@ -4,6 +4,19 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
 
   layout :layout_by_resource
+  helper_method :current_school
+  
+  def current_school
+    if @current_school.nil?
+      if current_user.nil?
+        return nil
+      end
+    
+      @current_school = current_user.get_managed_school
+    end
+    
+    return @current_school
+  end
 
   def only_role(role_symbol)
     if not current_user.has_role?(role_symbol)
