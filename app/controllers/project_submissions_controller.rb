@@ -2,9 +2,14 @@ class ProjectSubmissionsController < ApplicationController
   def index
     # assume that current user is student 
     
-    @project_submissions = ProjectSubmission.find(:all, :conditions => {
-      :user_id => current_user.id
-    })
+    # @project_submissions = ProjectSubmission.find(:all, :conditions => {
+    #      :user_id => current_user.id
+    #    })
+    
+    # joins(:orders).where(:orders => {:created_at => time_range})
+    @project_submissions = ProjectSubmission.joins(:project => :term).
+            where(:user_id => current_user.id, :project=> {:term => {:is_active => true } }).
+            order("created_at DESC")
     
     add_breadcrumb "Select Project", "project_submissions_url"
     
