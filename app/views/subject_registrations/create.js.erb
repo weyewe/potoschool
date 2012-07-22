@@ -1,9 +1,9 @@
 $(document).ready(function(){
 
-  var $checkbox = $("#provider_<%=  @subject_id %>-consumer_<%=  @user_id %>");
-  var $row = $checkbox.parents("tr");
-  var $td_membership = $(".total-subjects-taken", $row );
-  $td_membership.text('<%= @student.subject_registrations.count %>');
-
-
+  <% new_row = escape_javascript(  render :partial => "subject_registrations/subject_registration_entry", :locals => {
+            :subject => @subject,
+            :student => @student 
+          }) %>
+          
+  $("#subject_registration_entry-<%= @student.id %>").replaceWith('<%= new_row %>');
 });

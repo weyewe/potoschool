@@ -28,7 +28,7 @@ class CourseRegistrationsController < ApplicationController
     @course = Course.find_by_id( params[:course_id] )
     @subject  = @course.subject
     
-    @students = @subject.school.students
+    @students = @subject.students
     
     
     add_breadcrumb "Pick the subject", 'select_subject_for_course_registration_path'

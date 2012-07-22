@@ -34,8 +34,13 @@ class Subject < ActiveRecord::Base
      }
   end
   
+  def students
+    self.subject_registrations
+    User.where(:id => self.subject_registrations.map{|x| x.user_id }).order("nim DESC")
+  end
+  
   def students_count
-    self.subject_registrations.count
+    self.students.count
   end
   
 =begin

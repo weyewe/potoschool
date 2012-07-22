@@ -708,61 +708,61 @@ module ApplicationHelper
            :action => "update"
          }
        ]
-     },
-     {
-       :title => "Create Group",
-       :destination_link => "select_subject_for_group_url",
-       :conditions => [
-         {
-           :controller => "groups",
-           :action => "select_subject_for_group"
-         },
-         {
-           :controller => "groups",
-           :action => "select_course_for_group"
-         },
-         {
-           :controller => "groups",
-           :action => "new"
-         }
-       ]
-     },
-     {
-       :title => "Assign Student to Group",
-       :destination_link => "select_subject_for_group_membership_path",
-       :conditions => [
-         {
-           :controller => "group_memberships",
-           :action => "select_subject_for_group_membership"
-         },
-         {
-           :controller => "group_memberships",
-           :action => "select_course_for_group_membership"
-         },
-         {
-           :controller => "group_memberships",
-           :action => "select_group"
-         },
-         {
-           :controller => "group_memberships",
-           :action => "new"
-         }
-       ]
-     },
-     {
-       :title => "Select Group Leader",
-       :destination_link => "select_group_for_group_leader_path",
-       :conditions => [
-         {
-           :controller => "groups",
-           :action => "select_group_for_group_leader"
-         },
-         {
-           :controller => "groups",
-           :action => "select_group_leader"
-         }
-       ]
-     }
+     }#,
+     # {
+     #   :title => "Create Group",
+     #   :destination_link => "select_subject_for_group_url",
+     #   :conditions => [
+     #     {
+     #       :controller => "groups",
+     #       :action => "select_subject_for_group"
+     #     },
+     #     {
+     #       :controller => "groups",
+     #       :action => "select_course_for_group"
+     #     },
+     #     {
+     #       :controller => "groups",
+     #       :action => "new"
+     #     }
+     #   ]
+     # },
+     # {
+     #   :title => "Assign Student to Group",
+     #   :destination_link => "select_subject_for_group_membership_path",
+     #   :conditions => [
+     #     {
+     #       :controller => "group_memberships",
+     #       :action => "select_subject_for_group_membership"
+     #     },
+     #     {
+     #       :controller => "group_memberships",
+     #       :action => "select_course_for_group_membership"
+     #     },
+     #     {
+     #       :controller => "group_memberships",
+     #       :action => "select_group"
+     #     },
+     #     {
+     #       :controller => "group_memberships",
+     #       :action => "new"
+     #     }
+     #   ]
+     # },
+     # {
+     #   :title => "Select Group Leader",
+     #   :destination_link => "select_group_for_group_leader_path",
+     #   :conditions => [
+     #     {
+     #       :controller => "groups",
+     #       :action => "select_group_for_group_leader"
+     #     },
+     #     {
+     #       :controller => "groups",
+     #       :action => "select_group_leader"
+     #     }
+     #   ]
+     # }
     ]
   }
   
@@ -872,27 +872,27 @@ module ApplicationHelper
             :action => 'select_project_to_publish_grade'
           }
         ]
-      },
-      {
-        :title => "Recent Submission",
-        :destination_link => "select_project_for_grading_url",
-        :conditions => [
-          {
-            :controller => '',
-            :action => ''
-          }
-        ]
-      },
-      {
-        :title => "Recent Comments",
-        :destination_link => "select_project_for_grading_url",
-        :conditions => [
-          {
-            :controller => '',
-            :action => ''
-          }
-        ]
-      }
+      }#,
+      # {
+      #   :title => "Recent Submission",
+      #   :destination_link => "select_project_for_grading_url",
+      #   :conditions => [
+      #     {
+      #       :controller => '',
+      #       :action => ''
+      #     }
+      #   ]
+      # },
+      # {
+      #   :title => "Recent Comments",
+      #   :destination_link => "select_project_for_grading_url",
+      #   :conditions => [
+      #     {
+      #       :controller => '',
+      #       :action => ''
+      #     }
+      #   ]
+      # }
     ]
   }
   

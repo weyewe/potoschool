@@ -15,7 +15,13 @@ class Course < ActiveRecord::Base
   
   has_many :projects 
   belongs_to :term 
+  after_create :hook_to_term
   
+  
+  def hook_to_term
+    self.term_id = self.subject.term_id 
+    self.save
+  end
   
   #  wtf is this?
   def teachers_count_for(subject)

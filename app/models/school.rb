@@ -43,6 +43,14 @@ class School < ActiveRecord::Base
     self.students.find_by_nim( nim.upcase )
   end
 
+
+  def school_admins
+    school_admin_role = Role.find_by_name ROLE_NAME[:school_admin]
+
+    self.users.includes(:assignments).where{
+      (assignments.role_id == school_admin_role.id )
+    }
+  end
   
   def teachers
     teacher_role = Role.find_by_name ROLE_NAME[:teacher]
@@ -72,9 +80,13 @@ class School < ActiveRecord::Base
   
   
   def all_active_subjects
-    self.subjects.where(:is_active => true ).
-                includes(:courses, :subject_registrations ).
-                order("created_at DESC")
+    # self.subjects.where(:is_active => true, : ).
+    #             includes(:courses, :subject_registrations ).
+    #             order("created_at DESC")
+    #             
+    Subject.joins( :term ).
+          where(:is_active => true, :term => {:is_active => true }, :school_id => self.id ).
+          order("created_at DESC")
   end
   
   def all_passive_subjects

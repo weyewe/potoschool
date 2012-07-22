@@ -186,30 +186,34 @@ class User < ActiveRecord::Base
   end
   
   def total_courses_count
-    CourseTeachingAssignment.find(:all, :conditions => {
-      :user_id => self.id,
-      :is_active => true 
-    }).count
+    # CourseTeachingAssignment.find(:all, :conditions => {
+    #   :user_id => self.id,
+    #   :is_active => true 
+    # }).count
+    
+    all_courses_taught_id_list = all_courses_taught.map{|x| x.id }
+    CourseTeachingAssignment.where(:is_active => true, :user_id => self.id,
+      :course_id =>all_courses_taught_id_list ).count
   end
   
   def all_courses_for_subject(subject)
-    Course.joins(:course_teaching_assignments => :user ).
+    Course.joins(:term, :course_teaching_assignments => :user ).
           where(
           { :course_teaching_assignments => {:user => {:id => self.id } } }    &
           { :course_teaching_assignments => {:is_active => true}} & 
-          { :subject_id => subject.id}
+          { :subject_id => subject.id} & 
+          {   :term => {:is_active => true }}
           
           )
   end
   
   def all_courses_taught
 
-    Course.joins(:course_teaching_assignments => :user ).
+    Course.joins(:term, :course_teaching_assignments => :user ).
           where(
           { :course_teaching_assignments => {:user => {:id => self.id } } }    &
-          { :course_teaching_assignments => {:is_active => true}}
-          
-          )
+          { :course_teaching_assignments => {:is_active => true}} & 
+          {   :term => {:is_active => true }} )
     
   end
   
@@ -228,16 +232,22 @@ class User < ActiveRecord::Base
   end
   
   def total_subjects_count
-    SubjectTeachingAssignment.find(:all, :conditions => {
-      :user_id => self.id,
-      :is_active => true 
-    }).count
+    
+    # SubjectTeachingAssignment.find(:all, :conditions => {
+    #   :user_id => self.id,
+    #   :is_active => true 
+    # }).count
+    all_subjects_taught_id_list = all_subjects_taught.map {|x| x.id }
+    
+    SubjectTeachingAssignment.where( :user_id => self.id, :is_active => true, 
+          :subject_id => all_subjects_taught_id_list).count
   end
   
   def all_subjects_taught 
-    Subject.joins(:subject_teaching_assignments => :user ).
+    Subject.joins( :term, :subject_teaching_assignments => :user ).
           where({   :subject_teaching_assignments => {:user => {:id => self.id } } }  & 
-                {   :subject_teaching_assignments => {:is_active => true }   })
+                {   :subject_teaching_assignments => {:is_active => true }   } & 
+                {   :term => {:is_active => true }}  )
   end
   
   def all_active_projects
@@ -329,6 +339,33 @@ class User < ActiveRecord::Base
 =begin
   Code for student
 =end
+
+  def total_registered_subject_count
+    # CourseTeachingAssignment.find(:all, :conditions => {
+    #   :user_id => self.id,
+    #   :is_active => true 
+    # }).count
+    
+    
+    all_subjects_registered_id_list = all_subjects_registered.map{|x| x.id }
+    SubjectRegistration.where(:is_active => true, :user_id => self.id,
+      :subject_id =>all_subjects_registered_id_list ).count
+      
+      
+    # all_courses_taught_id_list = all_courses_taught.map{|x| x.id }
+    # CourseTeachingAssignment.where(:is_active => true, :user_id => self.id,
+    #   :course_id =>all_courses_taught_id_list ).count
+  end
+  
+  def all_subjects_registered
+
+    Subject.joins(:term, :subject_registrations => :user ).
+          where(
+          { :subject_registrations => {:user => {:id => self.id } } }    &
+          { :subject_registrations => {:is_active => true}} & 
+          {   :term => {:is_active => true }} )
+    
+  end
 
   def update_with_params( user_params, password )
     self.name = user_params[:name]

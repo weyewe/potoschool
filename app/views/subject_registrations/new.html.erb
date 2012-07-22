@@ -24,24 +24,11 @@
         </thead>
         <tbody>
           <% @students.each do |student| %>
-            <tr>
-              <td><%= student.nim %>: <%= student.email %></td>
-              <td class="total-subjects-taken"><%=  student.subject_registrations.count %></td>
-              
-              <td class="well">
-                <label class="checkbox">
-                  <% checkbox_value = student.is_subject_registered?(@subject) %>
-                  <%#= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
-                      checkbox_value, :class => 'is_checked_class', 
-                      :id => "studentId_#{student.id}" %> <!-- Assign -->
-                      
-                  <%= check_box_tag 'is_checked', get_checkbox_value(checkbox_value )   , 
-                      checkbox_value, :class => 'checkbox_tracker', 
-                      :id => "provider_#{@subject.id}-consumer_#{student.id}" %> Taking
-                </label>
-
-              </td>
-            </tr>
+            <%= render :partial => "subject_registrations/subject_registration_entry", :locals => {
+              :student => student,
+              :subject => @subject 
+            }%>
+    
           <% end %>
 
 
